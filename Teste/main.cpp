@@ -2,32 +2,51 @@
 #include <vector>
 
 using namespace std;
+using uint = unsigned int;
 
 struct Grafo {
     vector<vector <int>> adjacencias;
     vector<string> nomes;
 
-    void inserirVertice(string nome){
+    bool inserirVertice(string nome){
+        if (obterIndice(nome) >= 0) {
+            //Nome já existe
+            return false;
+        }
+
         this->nomes.push_back(nome);
-        int tam = this->adjacencias.size();
+        uint tam = this->adjacencias.size();
         vector<int> vetor;
-        for(int i=0; i<tam; i++){
+        for(uint i=0; i<tam; i++){
             vetor.push_back(0);
         }
-         this->adjacencias.push_back(vetor);
+        //Nova linha (cresce verticalmente)
+        this->adjacencias.push_back(vetor);
 
-        for(int i=0; i<this->adjacencias.size(); i++){
+        //Nova coluna (cresce horizontalmente
+        for(uint i=0; i<this->adjacencias.size(); i++){
             this->adjacencias[i].push_back(0);
         }
+
+        return true;
     }
 
-    void inserirArco(int origem, int destino){
-        this->adjacencias[origem][destino] = 1;
+    bool existeIndice(uint vertice) {
+        return vertice < adjacencias.size();
+    }
+
+    bool inserirArco(int origem, int destino, int peso = 1){
+        if (existeIndice(origem) && existeIndice(destino)) {
+            this->adjacencias[origem][destino] = peso;
+            return true;
+        }
+
+        return false;
     }
 
     void imprimir(){
-        for(int i=0; i<this->adjacencias.size(); i++){
-            for(int j=0; j<this->adjacencias[i].size(); j++){
+        for(uint i=0; i<this->adjacencias.size(); i++){
+            for(uint j=0; j<this->adjacencias[i].size(); j++){
                 cout<<this->adjacencias[i][j];
             }
             cout<<"\n";
@@ -35,22 +54,26 @@ struct Grafo {
     }
 
     bool existeAresta(int origem, int destino){
-        if(this->adjacencias[origem][destino] == 0)
+        if(consultarPeso(origem, destino) == 0)
             return false;
         return true;
     }
 
     vector<int> obterVerticesAdjacentes(int origem){
         vector<int> vetor;
-        for(int j=0; j<this->adjacencias[origem].size();j++){
-            if(existeAresta(origem, j))
-                vetor.push_back(j);
+
+        if (existeIndice(origem)) {
+            for(uint j=0; j<this->adjacencias[origem].size();j++){
+                if(existeAresta(origem, j))
+                    vetor.push_back(j);
+            }
         }
-       return vetor;
+
+        return vetor;
     }
 
-    int retornarVertice(string nome){
-        for(int i=0; i< nomes.size(); i++){
+    int obterIndice(string nome){
+        for(uint i=0; i< nomes.size(); i++){
             if(nome == nomes[i]){
                 return i;
             }
@@ -58,8 +81,13 @@ struct Grafo {
         return -1;
     }
 
+    int consultarPeso(int origem, int destino) {
+        if (!existeIndice(origem) || !existeIndice(destino)) {
+            return 0;
+        }
 
-
+        return this->adjacencias[origem][destino];
+    }
 };
 
 
