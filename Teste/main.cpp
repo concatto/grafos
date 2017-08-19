@@ -34,6 +34,32 @@ struct Grafo {
         }
     }
 
+    bool existeAresta(int origem, int destino){
+        if(this->adjacencias[origem][destino] == 0)
+            return false;
+        return true;
+    }
+
+    vector<int> obterVerticesAdjacentes(int origem){
+        vector<int> vetor;
+        for(int j=0; j<this->adjacencias[origem].size();j++){
+            if(existeAresta(origem, j))
+                vetor.push_back(j);
+        }
+       return vetor;
+    }
+
+    int retornarVertice(string nome){
+        for(int i=0; i< nomes.size(); i++){
+            if(nome == nomes[i]){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+
+
 };
 
 
