@@ -35,7 +35,7 @@ struct Grafo {
         return vertice < adjacencias.size();
     }
 
-    bool inserirArco(int origem, int destino, int peso = 1){
+    bool inserirArco(uint origem, uint destino, int peso = 1){
         if (existeIndice(origem) && existeIndice(destino)) {
             this->adjacencias[origem][destino] = peso;
             return true;
@@ -53,13 +53,13 @@ struct Grafo {
         }
     }
 
-    bool existeAresta(int origem, int destino){
+    bool existeAresta(uint origem, uint destino){
         if(consultarPeso(origem, destino) == 0)
             return false;
         return true;
     }
 
-    vector<int> obterVerticesAdjacentes(int origem){
+    vector<int> obterVerticesAdjacentes(uint origem){
         vector<int> vetor;
 
         if (existeIndice(origem)) {
@@ -81,7 +81,7 @@ struct Grafo {
         return -1;
     }
 
-    int consultarPeso(int origem, int destino) {
+    int consultarPeso(uint origem, uint destino) {
         if (!existeIndice(origem) || !existeIndice(destino)) {
             return 0;
         }
