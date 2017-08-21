@@ -13,7 +13,6 @@ struct Grafo {
             //Nome já existe
             return false;
         }
-
         this->nomes.push_back(nome);
         uint tam = this->adjacencias.size();
         vector<int> vetor;
@@ -88,6 +87,16 @@ struct Grafo {
 
         return this->adjacencias[origem][destino];
     }
+
+    bool removerVertice(string nome){
+        uint indice = obterIndice(nome);
+        adjacencias.erase(adjacencias.begin() + indice);
+        for(uint i = 0; i < adjacencias.size(); i++){
+            adjacencias[i].erase(adjacencias[i].begin() + indice);
+        }
+        nomes.erase(nomes.begin() + indice);
+    }
+
 };
 
 
@@ -105,6 +114,9 @@ int main()
     grafo.inserirArco(3,2);
     grafo.inserirArco(1,2);
     grafo.inserirArco(2,0);
+
+    grafo.removerVertice("2");
+    grafo.removerVertice("3");
 
     grafo.imprimir();
 
