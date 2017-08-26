@@ -10,3 +10,7 @@ CONFIG += c++11
 include(deployment.pri)
 qtcAddDeployment()
 
+HEADERS += \
+    grafo.h \
+    mgrafo.h
+

@@ -49,7 +49,8 @@ OBJECTS_DIR   = debug
 SOURCES       = main.cpp 
 OBJECTS       = debug/main.o
 
-DIST          =   main.cpp
+DIST          =  grafo.h \
+		mgrafo.h main.cpp
 QMAKE_TARGET  = Teste
 DESTDIR        = debug\ #avoid trailing-slash linebreak
 TARGET         = Teste.exe
@@ -97,7 +98,8 @@ compiler_clean:
 
 ####### Compile
 
-debug/main.o: main.cpp 
+debug/main.o: main.cpp mgrafo.h \
+		grafo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o main.cpp
 
 ####### Install
