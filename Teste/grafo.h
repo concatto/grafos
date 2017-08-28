@@ -2,12 +2,14 @@
 #define GRAFO_H
 #include <vector>
 #include <string>
+#include <stack.h>
 
 using namespace std;
 using uint = unsigned int;
 
 struct Grafo {
     vector<string> nomes;
+    Stack stack;
 
     virtual bool inserirVertice(string nome) = 0;
     virtual bool existeIndice(uint vertice) = 0;
@@ -16,6 +18,7 @@ struct Grafo {
     virtual bool existeArco(uint origem, uint destino) = 0;
     virtual vector<int> obterVerticesAdjacentes(uint origem) = 0;
     virtual bool removerArco(uint origem, uint destino) = 0;
+    virtual void dfs(string nome) = 0;
 
     bool removerAresta(uint origem, uint destino){
         if(removerArco(origem, destino)){

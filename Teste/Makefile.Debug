@@ -50,7 +50,8 @@ SOURCES       = main.cpp
 OBJECTS       = debug/main.o
 
 DIST          =  grafo.h \
-		mgrafo.h main.cpp
+		mgrafo.h \
+		stack.h main.cpp
 QMAKE_TARGET  = Teste
 DESTDIR        = debug\ #avoid trailing-slash linebreak
 TARGET         = Teste.exe

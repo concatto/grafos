@@ -95,6 +95,38 @@ struct MGrafo: public Grafo {
         return inserirArco(origem, destino, 0);
     }
 
+    void dfs_aux(string nome, vector <bool> &visitados){
+        for(uint i = 0; i < nomes.size(); i++){
+            if(adjacencias[obterIndice(nome)][i] > 0 && visitados.at(i) == false){
+                cout<<nomes.at(i)<<"\n";
+                visitados.at(i) = true;
+                dfs_aux(nomes.at(i), visitados);
+            }
+        }
+    }
+
+    void dfs(string nome){
+        if(!obterIndice(nome))
+            return;
+        vector <bool> visitados;
+
+        for(uint i = 0; i < nomes.size(); i++){
+            visitados.push_back(false);
+        }
+
+        visitados.at(obterIndice(nome)) = true;
+        cout<<nomes.at(obterIndice(nome))<<"\n";
+
+        dfs_aux(nome, visitados);
+
+        for(uint i = 0; i < visitados.size(); i++){
+            if(visitados.at(i) == false){
+                cout<<nomes.at(i)<<"\n";
+            }
+        }
+
+    }
+
 };
 
 #endif // MGRAFO_H
