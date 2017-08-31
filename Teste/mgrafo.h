@@ -97,31 +97,48 @@ struct MGrafo: public Grafo {
 
     void dfs_aux(string nome, vector <bool> &visitados){
         for(uint i = 0; i < nomes.size(); i++){
-            if(adjacencias[obterIndice(nome)][i] > 0 && visitados.at(i) == false){
-                cout<<nomes.at(i)<<"\n";
-                visitados.at(i) = true;
-                dfs_aux(nomes.at(i), visitados);
+            if(adjacencias[obterIndice(nome)][i] > 0 && visitados[i] == false){
+                cout<<nomes[i]<<"\n";
+                visitados[i] = true;
+                dfs_aux(nomes[i], visitados);
+            }
+        }
+    }
+
+    void dfs_aux2(string nome, vector <bool> &visitados){
+        vector <int> adj = obterVerticesAdjacentes(obterIndice(nome));
+
+        for(uint i = 0; i < adj.size(); i++){
+            if(visitados[adj[i]] == false){
+                cout<<nomes[adj[i]]<<"\n";
+                visitados[adj[i]] = true;
+                dfs_aux2(nomes[adj[i]], visitados);
             }
         }
     }
 
     void dfs(string nome){
-        if(!obterIndice(nome))
+        int indice = obterIndice(nome);
+
+        if(indice == -1)
             return;
+
         vector <bool> visitados;
 
         for(uint i = 0; i < nomes.size(); i++){
             visitados.push_back(false);
         }
 
-        visitados.at(obterIndice(nome)) = true;
-        cout<<nomes.at(obterIndice(nome))<<"\n";
+        visitados[indice] = true;
+        cout<<nomes[indice]<<"\n";
 
-        dfs_aux(nome, visitados);
+        dfs_aux2(nome, visitados);
 
         for(uint i = 0; i < visitados.size(); i++){
-            if(visitados.at(i) == false){
-                cout<<nomes.at(i)<<"\n";
+            if(visitados[i] == false){
+                cout<<nomes[i]<<"\n";
+                visitados[i] = true;
+                dfs_aux2(nome, visitados);
             }
         }
 
