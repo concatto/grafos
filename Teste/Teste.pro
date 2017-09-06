@@ -6,6 +6,7 @@ CONFIG -= qt
 SOURCES += main.cpp
 
 CONFIG += c++11
+QMAKE_CXXFLAGS += -Wno-sign-compare #Ignora "comparison between signed and unsigned"
 
 include(deployment.pri)
 qtcAddDeployment()
