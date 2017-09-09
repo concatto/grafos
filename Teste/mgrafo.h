@@ -4,7 +4,7 @@
 
 using namespace std;
 
-struct MGrafo: public Grafo {
+struct MGrafo : public Grafo {
     vector<vector<int>> adjacencias;
 
     bool inserirVertice(string nome) override {
@@ -79,15 +79,14 @@ struct MGrafo: public Grafo {
         return this->adjacencias[origem][destino];
     }
 
-    bool removerVertice(string nome) override {
-        int indice = obterIndice(nome);
-        if (!existeIndice(indice))
+    bool removerVertice(int vertice) override {
+        if (!existeIndice(vertice))
             return false;
-        adjacencias.erase(adjacencias.begin() + indice);
+        adjacencias.erase(adjacencias.begin() + vertice);
         for (int i = 0; i < adjacencias.size(); i++) {
-            adjacencias[i].erase(adjacencias[i].begin() + indice);
+            adjacencias[i].erase(adjacencias[i].begin() + vertice);
         }
-        nomes.erase(nomes.begin() + indice);
+        nomes.erase(nomes.begin() + vertice);
         return true;
     }
 

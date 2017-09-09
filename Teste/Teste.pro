@@ -14,5 +14,6 @@ qtcAddDeployment()
 HEADERS += \
     grafo.h \
     mgrafo.h \
-    stack.h
+    stack.h \
+    lgrafo.h
 

@@ -2,6 +2,7 @@
 #define GRAFO_H
 #include <vector>
 #include <string>
+#include <queue>
 
 using namespace std;
 
@@ -16,7 +17,7 @@ struct Grafo {
     virtual vector<int> obterVerticesAdjacentes(int origem) = 0;
     virtual bool removerArco(int origem, int destino) = 0;
     virtual int consultarPeso(int origem, int destino) = 0;
-    virtual bool removerVertice(string nome) = 0;
+    virtual bool removerVertice(int vertice) = 0;
 
     //Remove o arco origem -> destino e o arco destino -> origem
     bool removerAresta(int origem, int destino){
@@ -63,11 +64,7 @@ struct Grafo {
         if(!existeIndice(origem))
             return;
 
-        vector <bool> visitados;
-
-        for(int i = 0; i < nomes.size(); i++){
-            visitados.push_back(false);
-        }
+        vector<bool> visitados (nomes.size(), false);
 
         visitados[origem] = true;
         cout<<nomes[origem]<<"\n";
@@ -83,9 +80,42 @@ struct Grafo {
         }
     }
 
+    void buscaEmLarguraPrincipal(int origem, vector<bool> &visitados) {
+        if(!existeIndice(origem))
+            return;
+
+        queue<int> fila;
+        fila.push(origem);
+
+        while(!fila.empty())
+        {
+            int frente = fila.front();
+            fila.pop();
+            visitados[frente] = true;
+            cout<<nomes[frente]<<"\n";
+
+            vector <int> adj = obterVerticesAdjacentes(frente);
+
+            for(int v : adj){
+                if(visitados[v] != false){
+                    fila.push(v);
+                }
+
+            }
+        }
+
+    }
+
     //Realiza uma busca em largura (BFS) sem destino.
     void buscaEmLargura(int origem) {
-        //TODO
+        vector<bool> visitados (nomes.size(), false);
+        buscaEmLarguraPrincipal(origem, visitados);
+
+        for (int i = 0; i < visitados.size(); i++) {
+            if (visitados[i] == false) {
+                buscaEmLarguraPrincipal(i, visitados);
+            }
+        }
     }
 };
 
