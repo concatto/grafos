@@ -10,18 +10,18 @@ struct Grafo {
     vector<string> nomes;
 
     virtual bool inserirVertice(string nome) = 0;
-    virtual bool existeIndice(int vertice) = 0;
+    virtual bool existeVertice(int vertice) = 0;
     virtual bool inserirArco(int origem, int destino, int peso = 1) = 0;
     virtual void imprimir() = 0;
-    virtual bool existeArco(int origem, int destino) = 0;
     virtual vector<int> obterVerticesAdjacentes(int origem) = 0;
     virtual bool removerArco(int origem, int destino) = 0;
     virtual int consultarPeso(int origem, int destino) = 0;
     virtual bool removerVertice(int vertice) = 0;
+    virtual int obterGrau(int vertice) = 0;
 
     //Remove o arco origem -> destino e o arco destino -> origem
-    bool removerAresta(int origem, int destino){
-        if(removerArco(origem, destino)){
+    bool removerAresta(int origem, int destino) {
+        if (removerArco(origem, destino)) {
             removerArco(destino, origem);
             return true;
         }
@@ -30,8 +30,8 @@ struct Grafo {
 
     //Descobre o índice do vértice a partir de um nome. Caso não exista, retorna -1
     int obterIndice(string nome) {
-        for(int i = 0; i < nomes.size(); i++){
-            if(nome == nomes[i]){
+        for (int i = 0; i < nomes.size(); i++) {
+            if (nome == nomes[i]) {
                 return i;
             }
         }
@@ -39,7 +39,7 @@ struct Grafo {
     }
 
     //Insere um arco origem -> destino e um arco destino -> origem, ambos com o peso especificado
-    bool inserirAresta(int origem, int destino, int peso) {
+    bool inserirAresta(int origem, int destino, int peso = 1) {
         if (inserirArco(origem, destino, peso)) {
             inserirArco(destino, origem, peso);
             return true;
@@ -47,68 +47,73 @@ struct Grafo {
         return false;
     }
 
-    void dfs_aux2(int vertice, vector <bool> &visitados){
-        vector <int> adj = obterVerticesAdjacentes(vertice);
+    //Descobre se existe um arco origem -> destino através do peso entre os mesmos
+    bool existeArco(int origem, int destino) {
+        if (consultarPeso(origem, destino) == 0)
+            return false;
 
-        for(int i = 0; i < adj.size(); i++){
-            if(visitados[adj[i]] == false){
-                cout<<nomes[adj[i]]<<"\n";
+        return true;
+    }
+
+    void buscaEmProfundidadePrincipal(int vertice, vector <bool> &visitados) {
+        vector<int> adj = obterVerticesAdjacentes(vertice);
+
+        for (int i = 0; i < adj.size(); i++) {
+            if (visitados[adj[i]] == false) {
+                cout << nomes[adj[i]] << "\n";
                 visitados[adj[i]] = true;
-                dfs_aux2(adj[i], visitados);
+                buscaEmProfundidadePrincipal(adj[i], visitados);
             }
         }
     }
 
     //Realiza uma busca em profundidade (DFS) sem destino.
     void buscaEmProfundidade(int origem) {
-        if(!existeIndice(origem))
+        if (!existeVertice(origem))
             return;
 
-        vector<bool> visitados (nomes.size(), false);
+        vector<bool> visitados(nomes.size(), false);
 
         visitados[origem] = true;
-        cout<<nomes[origem]<<"\n";
+        cout << nomes[origem] << "\n";
 
-        dfs_aux2(origem, visitados);
+        buscaEmProfundidadePrincipal(origem, visitados);
 
-        for(int i = 0; i < visitados.size(); i++){
-            if(visitados[i] == false){
-                cout<<nomes[i]<<"\n";
+        for (int i = 0; i < visitados.size(); i++) {
+            if (visitados[i] == false){
+                cout << nomes[i] << "\n";
                 visitados[i] = true;
-                dfs_aux2(i, visitados);
+                buscaEmProfundidadePrincipal(i, visitados);
             }
         }
     }
 
     void buscaEmLarguraPrincipal(int origem, vector<bool> &visitados) {
-        if(!existeIndice(origem))
+        if(!existeVertice(origem))
             return;
 
         queue<int> fila;
         fila.push(origem);
 
-        while(!fila.empty())
-        {
+        while(!fila.empty()) {
             int frente = fila.front();
             fila.pop();
             visitados[frente] = true;
-            cout<<nomes[frente]<<"\n";
+            cout << nomes[frente] << "\n";
 
-            vector <int> adj = obterVerticesAdjacentes(frente);
+            vector<int> adj = obterVerticesAdjacentes(frente);
 
-            for(int v : adj){
-                if(visitados[v] != false){
+            for (int v : adj){
+                if (visitados[v] != false){
                     fila.push(v);
                 }
-
             }
         }
-
     }
 
     //Realiza uma busca em largura (BFS) sem destino.
     void buscaEmLargura(int origem) {
-        vector<bool> visitados (nomes.size(), false);
+        vector<bool> visitados(nomes.size(), false);
         buscaEmLarguraPrincipal(origem, visitados);
 
         for (int i = 0; i < visitados.size(); i++) {

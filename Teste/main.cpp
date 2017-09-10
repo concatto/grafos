@@ -3,11 +3,20 @@
 #include <locale>
 #include "grafo.h"
 #include "mgrafo.h"
+#include "lgrafo.h"
 
 using namespace std;
 
 void menuPrincipal(Grafo& grafo) {
+    grafo.inserirVertice("A");
+    grafo.inserirVertice("B");
+    grafo.inserirVertice("C");
+    grafo.inserirVertice("D");
+    grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("B"));
+    grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("D"));
+    grafo.inserirAresta(grafo.obterIndice("C"), grafo.obterIndice("D"));
 
+    grafo.imprimir();
 }
 
 int exibirMenu(vector<string> opcoes) {
@@ -41,25 +50,9 @@ int main()
         MGrafo g;
         menuPrincipal(g);
     } else if (estrutura == 1) {
-        //...
+        LGrafo g;
+        menuPrincipal(g);
     }
-
-    return 0;
-
-    MGrafo grafo;
-
-    grafo.inserirVertice("A");
-    grafo.inserirVertice("B");
-    grafo.inserirVertice("C");
-    grafo.inserirVertice("D");
-
-    grafo.inserirArco(0,3);
-    grafo.inserirArco(3,2);
-    grafo.inserirArco(1,2);
-    grafo.inserirArco(2,0);
-
-    grafo.buscaEmProfundidade(grafo.obterIndice("D"));
-//    grafo.imprimir();
 
     return 0;
 }

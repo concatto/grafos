@@ -29,40 +29,42 @@ struct MGrafo : public Grafo {
         return true;
     }
 
-    bool existeIndice(int vertice) override {
+    bool existeVertice(int vertice) override {
         return vertice >= 0 && vertice < adjacencias.size();
     }
 
-    bool inserirArco(int origem, int destino, int peso = 1) override {
-        if (existeIndice(origem) && existeIndice(destino)) {
-            this->adjacencias[origem][destino] = peso;
-            return true;
+    bool inserirArco(int origem, int destino, int peso) override {
+        if (!existeVertice(origem) || !existeVertice(destino)) {
+            return false;
         }
 
-        return false;
+        this->adjacencias[origem][destino] = peso;
+        return true;
     }
 
     void imprimir() override {
         for (int i = 0; i < this->adjacencias.size(); i++) {
-            for (int j = 0; j < this->adjacencias[i].size(); j++) {
-                cout<<this->adjacencias[i][j];
-            }
-            cout<<"\n";
-        }
-    }
+            cout << "|";
 
-    bool existeArco(int origem, int destino) override {
-        if (consultarPeso(origem, destino) == 0)
-            return false;
-        return true;
+            for (int j = 0; j < this->adjacencias[i].size(); j++) {
+                cout << this->adjacencias[i][j] << "|";
+            }
+
+            cout << "\n";
+        }
+
+        cout << "\n";
+        for (int i = 0; i < this->nomes.size(); i++) {
+            cout << i << ": " << this->nomes[i] << "\n";
+        }
     }
 
     vector<int> obterVerticesAdjacentes(int origem) override {
         vector<int> vetor;
 
-        if (existeIndice(origem)) {
+        if (existeVertice(origem)) {
             for (int j = 0; j < this->adjacencias[origem].size(); j++) {
-                if(existeArco(origem, j))
+                if (existeArco(origem, j))
                     vetor.push_back(j);
             }
         }
@@ -72,7 +74,7 @@ struct MGrafo : public Grafo {
 
 
     int consultarPeso(int origem, int destino) override {
-        if (!existeIndice(origem) || !existeIndice(destino)) {
+        if (!existeVertice(origem) || !existeVertice(destino)) {
             return 0;
         }
 
@@ -80,29 +82,26 @@ struct MGrafo : public Grafo {
     }
 
     bool removerVertice(int vertice) override {
-        if (!existeIndice(vertice))
+        if (!existeVertice(vertice))
             return false;
+
         adjacencias.erase(adjacencias.begin() + vertice);
         for (int i = 0; i < adjacencias.size(); i++) {
             adjacencias[i].erase(adjacencias[i].begin() + vertice);
         }
+
         nomes.erase(nomes.begin() + vertice);
         return true;
     }
 
-    bool removerArco(int origem, int destino) override{
+    bool removerArco(int origem, int destino) override {
         return inserirArco(origem, destino, 0);
     }
 
-//    void dfs_aux(string nome, vector <bool> &visitados){
-//        for(int i = 0; i < nomes.size(); i++){
-//            if(adjacencias[obterIndice(nome)][i] > 0 && visitados[i] == false){
-//                cout<<nomes[i]<<"\n";
-//                visitados[i] = true;
-//                dfs_aux(nomes[i], visitados);
-//            }
-//        }
-//    }
+    int obterGrau(int vertice) override {
+        return obterVerticesAdjacentes(vertice).size();
+    }
+
 };
 
 #endif // MGRAFO_H
