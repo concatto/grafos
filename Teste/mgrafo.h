@@ -4,6 +4,20 @@
 
 using namespace std;
 
+struct Path{
+    //int vertice;
+    int distancia;
+    int anterior;
+    bool aberto;
+
+    Path(){
+        anterior = -1;
+        distancia = -1;
+        aberto = false;
+    }
+
+};
+
 struct MGrafo : public Grafo {
     vector<vector<int>> adjacencias;
 
@@ -100,6 +114,38 @@ struct MGrafo : public Grafo {
 
     int obterGrau(int vertice) override {
         return obterVerticesAdjacentes(vertice).size();
+    }
+
+
+    //Dijkstra possívelmente funcionando de uma forma, aparentemente, feia, vou arrumar e tornar recursivo, se possível
+    void dijkstra(int vertice){
+        vector <Path> lista(adjacencias.size());
+
+        int backup = vertice;
+
+        lista[vertice].aberto = false;
+        lista[vertice].distancia = 0;
+        lista[vertice].anterior = -1;
+
+
+        for(int i : obterVerticesAdjacentes(vertice)){
+            for(int l : obterVerticesAdjacentes(vertice)){
+                if(lista[l].distancia == -1 || lista[l].distancia > adjacencias[vertice][l] + lista[vertice].distancia){
+                    lista[l].anterior = vertice;
+                    lista[l].distancia = adjacencias[vertice][l] + lista[vertice].distancia;
+                }
+            }
+            lista[vertice].aberto = false;
+            vertice = i;
+        }
+
+        for(int i = 0; i < lista.size(); i++){
+            if(i == backup)
+                lista[i].anterior = backup;
+            cout<<"\n"<<"Vertice: "<<nomes[i]<<" - Anterior: "<<nomes[lista[i].anterior]<<" - Distancia: "<<lista[i].distancia;
+        }
+        cout<<"\n";
+
     }
 
 };

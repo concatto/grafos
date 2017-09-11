@@ -18,6 +18,7 @@ struct Grafo {
     virtual int consultarPeso(int origem, int destino) = 0;
     virtual bool removerVertice(int vertice) = 0;
     virtual int obterGrau(int vertice) = 0;
+    virtual void dijkstra(int vertice) = 0;
 
     //Remove o arco origem -> destino e o arco destino -> origem
     bool removerAresta(int origem, int destino) {

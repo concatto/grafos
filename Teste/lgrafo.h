@@ -126,6 +126,12 @@ struct LGrafo : public Grafo {
     int obterGrau(int vertice) override {
         return adjacencias[vertice].size();
     }
+
+    void dijkstra(int vertice){
+        //TODO
+        (void)vertice;
+    }
+
 };
 
 
