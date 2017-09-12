@@ -14,13 +14,17 @@ void menuPrincipal(Grafo& grafo) {
     grafo.inserirVertice("D");
     grafo.inserirVertice("E");
     grafo.inserirVertice("F");
-    grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("B"), 3);
     grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("D"), 6);
+
     grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("E"), 8);
-    grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("C"), 5);
-    grafo.inserirAresta(grafo.obterIndice("E"), grafo.obterIndice("B"), 11);
-    grafo.inserirAresta(grafo.obterIndice("C"), grafo.obterIndice("E"), 2);
-    grafo.inserirAresta(grafo.obterIndice("B"), grafo.obterIndice("D"), 2);
+
+    grafo.inserirAresta(grafo.obterIndice("E"), grafo.obterIndice("B"), 1);
+
+    grafo.inserirAresta(grafo.obterIndice("C"), grafo.obterIndice("E"), 4);
+
+    grafo.inserirAresta(grafo.obterIndice("B"), grafo.obterIndice("D"), 5);
+
+    grafo.inserirAresta(grafo.obterIndice("B"), grafo.obterIndice("C"), 2);
 
     grafo.imprimir();
     grafo.dijkstra(0);

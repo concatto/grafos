@@ -13,7 +13,7 @@ struct Path{
     Path(){
         anterior = -1;
         distancia = -1;
-        aberto = false;
+        aberto = true;
     }
 
 };
@@ -118,7 +118,7 @@ struct MGrafo : public Grafo {
 
 
     //Dijkstra possívelmente funcionando de uma forma, aparentemente, feia, vou arrumar e tornar recursivo, se possível
-    void dijkstra(int vertice){
+    void dijkstra2(int vertice){
         vector <Path> lista(adjacencias.size());
 
         int backup = vertice;
@@ -137,6 +137,40 @@ struct MGrafo : public Grafo {
             }
             lista[vertice].aberto = false;
             vertice = i;
+        }
+
+        for(int i = 0; i < lista.size(); i++){
+            if(i == backup)
+                lista[i].anterior = backup;
+            cout<<"\n"<<"Vertice: "<<nomes[i]<<" - Anterior: "<<nomes[lista[i].anterior]<<" - Distancia: "<<lista[i].distancia;
+        }
+        cout<<"\n";
+
+    }
+
+    void dijkstra(int vertice){
+        vector <Path> lista(adjacencias.size());
+
+        int backup = vertice;
+
+        //lista[vertice].aberto = false;
+        lista[vertice].distancia = 0;
+        lista[vertice].anterior = -1;
+
+        for(int i = 0; i < lista.size(); i++){
+            for(int j : obterVerticesAdjacentes(vertice)){
+                for(int l : obterVerticesAdjacentes(vertice)){
+                    if(lista[l].aberto == false)
+                        continue;
+                    if(lista[l].distancia == -1 || lista[l].distancia > adjacencias[vertice][l] + lista[vertice].distancia){
+                        lista[l].anterior = vertice;
+                        lista[l].distancia = adjacencias[vertice][l] + lista[vertice].distancia;
+                    }
+                }
+                lista[vertice].aberto = false;
+                vertice = j;
+            }
+            cout<<nomes[vertice];
         }
 
         for(int i = 0; i < lista.size(); i++){
