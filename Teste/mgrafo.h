@@ -4,6 +4,10 @@
 
 using namespace std;
 
+bool operator > (pair<int, int> n1, pair<int,int> n2){
+    return (n1.second > n2.second);
+}
+
 struct Path{
     //int vertice;
     int distancia;
@@ -117,10 +121,10 @@ struct MGrafo : public Grafo {
     }
 
 
-    //Possívelmente uma implementação final de dijkstra
+    //Possívelmente uma implementação final de dijkstraK
     void dijkstra(int origem){
         vector <Path> lista(adjacencias.size());
-        queue <int> pq;
+        priority_queue <pair<int, int>> pq;
 
         int backup = origem;
 
@@ -128,15 +132,15 @@ struct MGrafo : public Grafo {
         lista[origem].distancia = 0;
         lista[origem].anterior = -1;
 
-        pq.push(origem);
+        pq.push(make_pair(origem, lista[origem].distancia));
 
         while(!pq.empty()){
-            origem = pq.front();
+            origem = pq.top().first;
             pq.pop();
             lista[origem].aberto = false;
             for(int adj : obterVerticesAdjacentes(origem)){
                 if(lista[adj].aberto == true){
-                    pq.push(adj);
+                    pq.push(make_pair(adj, lista[adj].distancia));
                 }
                 if((lista[adj].distancia == -1) || (lista[adj].distancia > adjacencias[origem][adj] + lista[origem].distancia)){
                     lista[adj].distancia = adjacencias[origem][adj] + lista[origem].distancia;

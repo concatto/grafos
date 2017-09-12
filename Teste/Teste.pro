@@ -15,5 +15,6 @@ HEADERS += \
     grafo.h \
     mgrafo.h \
     stack.h \
-    lgrafo.h
+    lgrafo.h \
+    terminal_ui.h
 

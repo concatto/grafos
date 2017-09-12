@@ -20,6 +20,10 @@ struct Grafo {
     virtual int obterGrau(int vertice) = 0;
     virtual void dijkstra(int vertice) = 0;
 
+    string obterNome(int vertice) {
+        return this->nomes[vertice];
+    }
+
     //Remove o arco origem -> destino e o arco destino -> origem
     bool removerAresta(int origem, int destino) {
         if (removerArco(origem, destino)) {
@@ -56,20 +60,33 @@ struct Grafo {
         return true;
     }
 
-    void buscaEmProfundidadePrincipal(int vertice, vector <bool> &visitados) {
+    bool existaAresta(int origem, int destino) {
+        return existeArco(origem, destino) && existeArco(destino, origem);
+    }
+
+    bool buscaEmProfundidadePrincipal(int vertice, vector <bool> &visitados, int destino) {
         vector<int> adj = obterVerticesAdjacentes(vertice);
 
         for (int i = 0; i < adj.size(); i++) {
             if (visitados[adj[i]] == false) {
                 cout << nomes[adj[i]] << "\n";
                 visitados[adj[i]] = true;
-                buscaEmProfundidadePrincipal(adj[i], visitados);
+
+                if (adj[i] == destino) {
+                    return true;
+                }
+
+                if (buscaEmProfundidadePrincipal(adj[i], visitados, destino)) {
+                    return true;
+                }
             }
         }
+
+        return false;
     }
 
     //Realiza uma busca em profundidade (DFS) sem destino.
-    void buscaEmProfundidade(int origem) {
+    void buscaEmProfundidade(int origem, int destino = -1) {
         if (!existeVertice(origem))
             return;
 
@@ -78,18 +95,20 @@ struct Grafo {
         visitados[origem] = true;
         cout << nomes[origem] << "\n";
 
-        buscaEmProfundidadePrincipal(origem, visitados);
+        buscaEmProfundidadePrincipal(origem, visitados, destino);
+
+        if (destino != -1) return;
 
         for (int i = 0; i < visitados.size(); i++) {
             if (visitados[i] == false){
                 cout << nomes[i] << "\n";
                 visitados[i] = true;
-                buscaEmProfundidadePrincipal(i, visitados);
+                buscaEmProfundidadePrincipal(i, visitados, destino);
             }
         }
     }
 
-    void buscaEmLarguraPrincipal(int origem, vector<bool> &visitados) {
+    void buscaEmLarguraPrincipal(int origem, vector<bool> &visitados, int destino) {
         if(!existeVertice(origem))
             return;
 
@@ -102,10 +121,14 @@ struct Grafo {
             visitados[frente] = true;
             cout << nomes[frente] << "\n";
 
+            if (destino == frente) {
+                return;
+            }
+
             vector<int> adj = obterVerticesAdjacentes(frente);
 
             for (int v : adj){
-                if (visitados[v] != false){
+                if (visitados[v] == false){
                     fila.push(v);
                 }
             }
@@ -113,13 +136,15 @@ struct Grafo {
     }
 
     //Realiza uma busca em largura (BFS) sem destino.
-    void buscaEmLargura(int origem) {
+    void buscaEmLargura(int origem, int destino = -1) {
         vector<bool> visitados(nomes.size(), false);
-        buscaEmLarguraPrincipal(origem, visitados);
+        buscaEmLarguraPrincipal(origem, visitados, destino);
+
+        if (destino != -1) return;
 
         for (int i = 0; i < visitados.size(); i++) {
             if (visitados[i] == false) {
-                buscaEmLarguraPrincipal(i, visitados);
+                buscaEmLarguraPrincipal(i, visitados, destino);
             }
         }
     }

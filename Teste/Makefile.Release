@@ -52,7 +52,8 @@ OBJECTS       = release/main.o
 DIST          =  grafo.h \
 		mgrafo.h \
 		stack.h \
-		lgrafo.h main.cpp
+		lgrafo.h \
+		terminal_ui.h main.cpp
 QMAKE_TARGET  = Teste
 DESTDIR        = release\ #avoid trailing-slash linebreak
 TARGET         = Teste.exe
@@ -102,7 +103,8 @@ compiler_clean:
 
 release/main.o: main.cpp grafo.h \
 		mgrafo.h \
-		lgrafo.h
+		lgrafo.h \
+		terminal_ui.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main.o main.cpp
 
 ####### Install
