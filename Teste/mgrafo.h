@@ -117,26 +117,32 @@ struct MGrafo : public Grafo {
     }
 
 
-    //Dijkstra possívelmente funcionando de uma forma, aparentemente, feia, vou arrumar e tornar recursivo, se possível
-    void dijkstra2(int vertice){
+    //Possívelmente uma implementação final de dijkstra
+    void dijkstra(int origem){
         vector <Path> lista(adjacencias.size());
+        queue <int> pq;
 
-        int backup = vertice;
+        int backup = origem;
 
-        lista[vertice].aberto = false;
-        lista[vertice].distancia = 0;
-        lista[vertice].anterior = -1;
+        //lista[vertice].aberto = false;
+        lista[origem].distancia = 0;
+        lista[origem].anterior = -1;
 
+        pq.push(origem);
 
-        for(int i : obterVerticesAdjacentes(vertice)){
-            for(int l : obterVerticesAdjacentes(vertice)){
-                if(lista[l].distancia == -1 || lista[l].distancia > adjacencias[vertice][l] + lista[vertice].distancia){
-                    lista[l].anterior = vertice;
-                    lista[l].distancia = adjacencias[vertice][l] + lista[vertice].distancia;
+        while(!pq.empty()){
+            origem = pq.front();
+            pq.pop();
+            lista[origem].aberto = false;
+            for(int adj : obterVerticesAdjacentes(origem)){
+                if(lista[adj].aberto == true){
+                    pq.push(adj);
+                }
+                if((lista[adj].distancia == -1) || (lista[adj].distancia > adjacencias[origem][adj] + lista[origem].distancia)){
+                    lista[adj].distancia = adjacencias[origem][adj] + lista[origem].distancia;
+                    lista[adj].anterior = origem;
                 }
             }
-            lista[vertice].aberto = false;
-            vertice = i;
         }
 
         for(int i = 0; i < lista.size(); i++){
@@ -148,7 +154,9 @@ struct MGrafo : public Grafo {
 
     }
 
-    void dijkstra(int vertice){
+    // Primeira tentativa de dijkstra, não está correto.
+/*
+    void dijkstra2(int vertice){
         vector <Path> lista(adjacencias.size());
 
         int backup = vertice;
@@ -162,7 +170,7 @@ struct MGrafo : public Grafo {
                 for(int l : obterVerticesAdjacentes(vertice)){
                     if(lista[l].aberto == false)
                         continue;
-                    if(lista[l].distancia == -1 || lista[l].distancia > adjacencias[vertice][l] + lista[vertice].distancia){
+                    if((lista[l].distancia == -1) || (lista[l].distancia > adjacencias[vertice][l] + lista[vertice].distancia)){
                         lista[l].anterior = vertice;
                         lista[l].distancia = adjacencias[vertice][l] + lista[vertice].distancia;
                     }
@@ -180,7 +188,7 @@ struct MGrafo : public Grafo {
         }
         cout<<"\n";
 
-    }
+    }*/
 
 };
 

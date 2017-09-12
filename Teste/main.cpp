@@ -14,6 +14,9 @@ void menuPrincipal(Grafo& grafo) {
     grafo.inserirVertice("D");
     grafo.inserirVertice("E");
     grafo.inserirVertice("F");
+    grafo.inserirVertice("G");
+    grafo.inserirVertice("H");
+    grafo.inserirVertice("I");
     grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("D"), 6);
 
     grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("E"), 8);
@@ -25,6 +28,12 @@ void menuPrincipal(Grafo& grafo) {
     grafo.inserirAresta(grafo.obterIndice("B"), grafo.obterIndice("D"), 5);
 
     grafo.inserirAresta(grafo.obterIndice("B"), grafo.obterIndice("C"), 2);
+
+    grafo.inserirAresta(grafo.obterIndice("C"), grafo.obterIndice("F"), 10);
+    grafo.inserirAresta(grafo.obterIndice("F"), grafo.obterIndice("G"), 30);
+    grafo.inserirAresta(grafo.obterIndice("F"), grafo.obterIndice("H"), 10);
+    grafo.inserirAresta(grafo.obterIndice("H"), grafo.obterIndice("I"), 10);
+    grafo.inserirAresta(grafo.obterIndice("G"), grafo.obterIndice("I"), 5);
 
     grafo.imprimir();
     grafo.dijkstra(0);
