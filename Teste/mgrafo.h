@@ -3,24 +3,10 @@
 #include "grafo.h"
 
 using namespace std;
-
+/*
 bool operator > (pair<int, int> n1, pair<int,int> n2){
     return (n1.second > n2.second);
-}
-
-struct Path{
-    //int vertice;
-    int distancia;
-    int anterior;
-    bool aberto;
-
-    Path(){
-        anterior = -1;
-        distancia = -1;
-        aberto = true;
-    }
-
-};
+}*/
 
 struct MGrafo : public Grafo {
     vector<vector<int>> adjacencias;
@@ -132,18 +118,18 @@ struct MGrafo : public Grafo {
         lista[origem].distancia = 0;
         lista[origem].anterior = -1;
 
-        pq.push(make_pair(origem, lista[origem].distancia));
+        pq.push(make_pair(lista[origem].distancia, origem));
 
         while(!pq.empty()){
-            origem = pq.top().first;
+            origem = pq.top().second;
             pq.pop();
             lista[origem].aberto = false;
             for(int adj : obterVerticesAdjacentes(origem)){
                 if(lista[adj].aberto == true){
-                    pq.push(make_pair(adj, lista[adj].distancia));
+                    pq.push(make_pair(lista[adj].distancia, adj));
                 }
-                if((lista[adj].distancia == -1) || (lista[adj].distancia > adjacencias[origem][adj] + lista[origem].distancia)){
-                    lista[adj].distancia = adjacencias[origem][adj] + lista[origem].distancia;
+                if((lista[adj].distancia == -1) || (lista[adj].distancia > consultarPeso(origem, adj) + lista[origem].distancia)){
+                    lista[adj].distancia = consultarPeso(origem, adj) + lista[origem].distancia;
                     lista[adj].anterior = origem;
                 }
             }

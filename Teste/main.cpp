@@ -93,6 +93,39 @@ void menuPrincipal(Grafo& grafo) {
 
 int main()
 {
+    LGrafo grafo;
+    grafo.inserirVertice("A");
+        grafo.inserirVertice("B");
+        grafo.inserirVertice("C");
+        grafo.inserirVertice("D");
+        grafo.inserirVertice("E");
+        grafo.inserirVertice("F");
+        grafo.inserirVertice("G");
+        grafo.inserirVertice("H");
+        grafo.inserirVertice("I");
+        grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("D"), 6);
+
+        grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("E"), 8);
+
+        grafo.inserirAresta(grafo.obterIndice("E"), grafo.obterIndice("B"), 1);
+
+        grafo.inserirAresta(grafo.obterIndice("C"), grafo.obterIndice("E"), 4);
+
+        grafo.inserirAresta(grafo.obterIndice("B"), grafo.obterIndice("D"), 5);
+
+        grafo.inserirAresta(grafo.obterIndice("B"), grafo.obterIndice("C"), 2);
+
+        grafo.inserirAresta(grafo.obterIndice("C"), grafo.obterIndice("F"), 10);
+        grafo.inserirAresta(grafo.obterIndice("F"), grafo.obterIndice("G"), 30);
+        grafo.inserirAresta(grafo.obterIndice("F"), grafo.obterIndice("H"), 10);
+        grafo.inserirAresta(grafo.obterIndice("H"), grafo.obterIndice("I"), 10);
+        grafo.inserirAresta(grafo.obterIndice("G"), grafo.obterIndice("I"), 5);
+
+        grafo.imprimir();
+        grafo.dijkstra(0);
+
+        return 0;
+
     cout << "Boas vindas a interface de grafos.\n";
     cout << "Selecione o tipo de estrutura desejada.\n";
     int estrutura = exibirMenu({"Matriz de Adjacencias", "Lista de Adjacencias"});

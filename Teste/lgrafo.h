@@ -127,11 +127,6 @@ struct LGrafo : public Grafo {
         return adjacencias[vertice].size();
     }
 
-    void dijkstra(int vertice){
-        //TODO
-        (void)vertice;
-    }
-
 };
 
 
