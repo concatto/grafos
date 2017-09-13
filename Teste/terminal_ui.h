@@ -92,7 +92,7 @@ void consultarAdjacentes(Grafo& grafo) {
     }
 }
 
-void buscaEmLargura(Grafo& grafo) {
+void realizarBusca(Grafo& grafo, bool largura) {
     cout << "Informe o nome do vertice de origem: ";
     string origem;
     cin >> origem;
@@ -114,36 +114,24 @@ void buscaEmLargura(Grafo& grafo) {
         indiceDestino = grafo.obterIndice(destino);
     }
 
-    for (int v : grafo.buscaEmLargura(indiceOrigem, indiceDestino)) {
+    vector<int> resultado;
+    if (largura) {
+        resultado = grafo.buscaEmLargura(indiceOrigem, indiceDestino);
+    } else {
+        resultado = grafo.buscaEmProfundidade(indiceOrigem, indiceDestino);
+    }
+
+    for (int v : resultado) {
         cout << grafo.obterNome(v) << "\n";
     }
 }
 
+void buscaEmLargura(Grafo& grafo) {
+    realizarBusca(grafo, true);
+}
+
 void buscaEmProfundidade(Grafo& grafo) {
-    cout << "Informe o nome do vertice de origem: ";
-    string origem;
-    cin >> origem;
-
-    int indiceOrigem = grafo.obterIndice(origem);
-    if (!grafo.existeVertice(indiceOrigem)) {
-        cout << "O vertice nao existe.\n";
-        return;
-    }
-
-    int indiceDestino = -1;
-    cout << "A busca possui destino? (s/n): ";
-    char op;
-    cin >> op;
-    if (op == 's' || op == 'S') {
-        cout << "Informe o nome do vertice de destino: ";
-        string destino;
-        cin >> destino;
-        indiceDestino = grafo.obterIndice(destino);
-    }
-
-    for (int v : grafo.buscaEmProfundidade(indiceOrigem, indiceDestino)) {
-        cout << grafo.obterNome(v) << "\n";
-    }
+    realizarBusca(grafo, false);
 }
 
 #endif // TERMINAL_UI_H
