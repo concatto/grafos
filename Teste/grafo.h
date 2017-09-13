@@ -16,6 +16,19 @@ struct Arco {
     }
 };
 
+struct Path{
+    //int vertice;
+    int distancia;
+    int anterior;
+    bool aberto;
+
+    Path(){
+        anterior = -1;
+        distancia = -1;
+        aberto = true;
+    }
+};
+
 struct Grafo {
     vector<string> nomes;
 
@@ -29,9 +42,49 @@ struct Grafo {
     virtual int consultarPeso(int origem, int destino) = 0;
     virtual bool removerVertice(int vertice) = 0;
     virtual int obterGrau(int vertice) = 0;
-    virtual void dijkstra(int vertice) = 0;
 
+    //Acho que agora foi, rapazeada, esperando o aval do mestre Fernando.
+    void dijkstra(int origem){
+        vector <Path> lista(nomes.size());
+        priority_queue <pair<int, int>> pq;
+
+        int backup = origem;
+
+        //lista[vertice].aberto = false;
+        lista[origem].distancia = 0;
+        lista[origem].anterior = -1;
+
+        pq.push(make_pair(lista[origem].distancia, origem));
+
+        while(!pq.empty()){
+            origem = pq.top().second;
+            pq.pop();
+            lista[origem].aberto = false;
+            for(int adj : obterVerticesAdjacentes(origem)){
+                if(lista[adj].aberto == true){
+                    pq.push(make_pair(lista[adj].distancia, adj));
+                }
+                if((lista[adj].distancia == -1) || (lista[adj].distancia > consultarPeso(origem, adj) + lista[origem].distancia)){
+                    lista[adj].distancia = consultarPeso(origem, adj) + lista[origem].distancia;
+                    lista[adj].anterior = origem;
+                }
+            }
+        }
+
+        for(int i = 0; i < lista.size(); i++){
+            if(i == backup)
+                lista[i].anterior = backup;
+            cout<<"\n"<<"Vertice: "<<nomes[i]<<" - Anterior: "<<nomes[lista[i].anterior]<<" - Distancia: "<<lista[i].distancia;
+        }
+        cout<<"\n";
+    }
+
+    //Recupera o nome do vértice desejado. Se não existir, retorna a string vazia.
     string obterNome(int vertice) {
+        if (!existeVertice(vertice)) {
+            return string();
+        }
+
         return this->nomes[vertice];
     }
 
@@ -75,6 +128,7 @@ struct Grafo {
         return true;
     }
 
+    //Verifica se existe uma aresta entre o vértice origem e o vértice destino.
     bool existeAresta(int origem, int destino) {
         return existeArco(origem, destino) && existeArco(destino, origem);
     }
@@ -93,8 +147,6 @@ struct Grafo {
 
         for (int i = 0; i < adj.size(); i++) {
             if (visitados[adj[i]] == false) {
-                visitados[adj[i]] = true;
-
                 vector<int> adicoes = buscaEmProfundidadePrincipal(adj[i], visitados, destino);
 
                 //Insere os vértices visitados pela chamada recursiva na própria sequência

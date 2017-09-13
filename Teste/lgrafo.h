@@ -10,7 +10,7 @@ struct LGrafo : public Grafo {
 
     bool inserirVertice(string nome) override {
         if (obterIndice(nome) >= 0) {
-            //Existe
+            //Já existe
             return false;
         }
 
@@ -73,6 +73,7 @@ struct LGrafo : public Grafo {
             return false;
         }
 
+        //Remove os arcos que possuiam o vértice sendo removido como destino.
         for (int i = 0; i < adjacencias.size(); i++) {
             if (existeArco(i, vertice)) {
                 removerArco(i, vertice);
@@ -122,11 +123,6 @@ struct LGrafo : public Grafo {
 
     int obterGrau(int vertice) override {
         return adjacencias[vertice].size();
-    }
-
-    void dijkstra(int vertice){
-        //TODO
-        (void)vertice;
     }
 
 };
