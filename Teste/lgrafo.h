@@ -5,17 +5,6 @@
 
 using namespace std;
 
-struct Arco{
-    int peso;
-    int vdestino;
-
-    Arco(int peso, int vdestino) {
-        this->peso = peso;
-        this->vdestino = vdestino;
-    }
-};
-
-
 struct LGrafo : public Grafo {
     vector<vector<Arco>> adjacencias;
 
@@ -34,7 +23,7 @@ struct LGrafo : public Grafo {
     }
 
     bool inserirArco(int origem, int destino, int peso) override {
-        if (!existeVertice(origem) || !existeVertice(destino)) {
+        if (!existeVertice(origem) || !existeVertice(destino) || existeArco(origem, destino)) {
             return false;
         }
 
@@ -54,6 +43,14 @@ struct LGrafo : public Grafo {
         }
 
         return copia;
+    }
+
+    vector<Arco> obterVerticesAdjacentesComPeso(int origem) override {
+        if (!existeVertice(origem)) {
+            return vector<Arco>();
+        }
+
+        return adjacencias[origem];
     }
 
     bool removerArco(int origem, int destino) override {

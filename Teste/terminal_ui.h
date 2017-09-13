@@ -2,6 +2,7 @@
 #define TERMINAL_UI_H
 
 #include <iostream>
+#include <vector>
 #include "grafo.h"
 using namespace std;
 
@@ -102,7 +103,7 @@ void buscaEmLargura(Grafo& grafo) {
         return;
     }
 
-    int destino = -1;
+    int indiceDestino = -1;
     cout << "A busca possui destino? (s/n): ";
     char op;
     cin >> op;
@@ -110,10 +111,12 @@ void buscaEmLargura(Grafo& grafo) {
         cout << "Informe o nome do vertice de destino: ";
         string destino;
         cin >> destino;
-        destino = grafo.obterIndice(destino);
+        indiceDestino = grafo.obterIndice(destino);
     }
 
-    grafo.buscaEmLargura(indiceOrigem, destino);
+    for (int v : grafo.buscaEmLargura(indiceOrigem, indiceDestino)) {
+        cout << grafo.obterNome(v) << "\n";
+    }
 }
 
 void buscaEmProfundidade(Grafo& grafo) {
@@ -127,7 +130,7 @@ void buscaEmProfundidade(Grafo& grafo) {
         return;
     }
 
-    int destino = -1;
+    int indiceDestino = -1;
     cout << "A busca possui destino? (s/n): ";
     char op;
     cin >> op;
@@ -135,10 +138,12 @@ void buscaEmProfundidade(Grafo& grafo) {
         cout << "Informe o nome do vertice de destino: ";
         string destino;
         cin >> destino;
-        destino = grafo.obterIndice(destino);
+        indiceDestino = grafo.obterIndice(destino);
     }
 
-    grafo.buscaEmProfundidade(indiceOrigem, destino);
+    for (int v : grafo.buscaEmProfundidade(indiceOrigem, indiceDestino)) {
+        cout << grafo.obterNome(v) << "\n";
+    }
 }
 
 #endif // TERMINAL_UI_H

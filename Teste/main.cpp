@@ -1,12 +1,28 @@
 #include <iostream>
 #include <vector>
 #include <locale>
+#include <cstdlib>
+#include <limits>
 #include "grafo.h"
 #include "mgrafo.h"
 #include "lgrafo.h"
 #include "terminal_ui.h"
 
 using namespace std;
+
+void limparTela() {
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear");
+#endif
+}
+
+void aguardarTecla() {
+    cout << "\nPressione qualquer tecla para continuar...\n";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.get();
+}
 
 int exibirMenu(vector<string> opcoes) {
     for (int i = 0; i < opcoes.size(); i++) {
@@ -34,9 +50,35 @@ void menuPrincipal(Grafo& grafo) {
     grafo.inserirVertice("B");
     grafo.inserirVertice("C");
     grafo.inserirVertice("D");
+    grafo.inserirVertice("E");
+    grafo.inserirVertice("F");
+    grafo.inserirVertice("G");
+    grafo.inserirVertice("H");
+    grafo.inserirVertice("I");
+    grafo.inserirVertice("J");
+    grafo.inserirVertice("K");
+    grafo.inserirVertice("L");
+    grafo.inserirVertice("M");
     grafo.inserirAresta(0, 1);
-    grafo.inserirAresta(0, 2);
+    grafo.inserirAresta(0, 10);
+    grafo.inserirAresta(1, 2);
+    grafo.inserirAresta(1, 4);
+    grafo.inserirAresta(1, 10);
     grafo.inserirAresta(2, 3);
+    grafo.inserirAresta(2, 4);
+    grafo.inserirAresta(3, 4);
+    grafo.inserirAresta(4, 5);
+    grafo.inserirAresta(4, 7);
+    grafo.inserirAresta(4, 10);
+    grafo.inserirAresta(5, 6);
+    grafo.inserirAresta(6, 7);
+    grafo.inserirAresta(7, 8);
+    grafo.inserirAresta(7, 10);
+    grafo.inserirAresta(8, 9);
+    grafo.inserirAresta(8, 12);
+    grafo.inserirAresta(9, 10);
+    grafo.inserirAresta(9, 11);
+    grafo.inserirAresta(9, 10);
 
     cout << "Escolha a orientacao do grafo\n";
     bool orientado = exibirMenu({"Orientado", "Nao orientado"}) == 0;
@@ -45,6 +87,7 @@ void menuPrincipal(Grafo& grafo) {
 
     bool finalizado = false;
     do {
+        cout << "Selecione a operacao desejada.\n";
         int opcao = exibirMenu({
             "Inserir vertice",
             "Inserir " + string(orientado ? "arco" : "aresta"),
@@ -86,13 +129,15 @@ void menuPrincipal(Grafo& grafo) {
             finalizado = true;
             break;
         }
+
+        if (!finalizado) {
+            aguardarTecla();
+            limparTela();
+        }
     } while (!finalizado);
-
-
 }
 
-int main()
-{
+int main() {
     cout << "Boas vindas a interface de grafos.\n";
     cout << "Selecione o tipo de estrutura desejada.\n";
     int estrutura = exibirMenu({"Matriz de Adjacencias", "Lista de Adjacencias"});

@@ -90,6 +90,15 @@ struct MGrafo : public Grafo {
         return vetor;
     }
 
+    vector<Arco> obterVerticesAdjacentesComPeso(int origem) override {
+        vector<Arco> vetor;
+
+        for (int v : obterVerticesAdjacentes(origem)) {
+            Arco arco(consultarPeso(origem, v), v);
+            vetor.push_back(arco);
+        }
+    }
+
 
     int consultarPeso(int origem, int destino) override {
         if (!existeVertice(origem) || !existeVertice(destino)) {

@@ -6,6 +6,16 @@
 
 using namespace std;
 
+struct Arco {
+    int peso;
+    int vdestino;
+
+    Arco(int peso, int vdestino) {
+        this->peso = peso;
+        this->vdestino = vdestino;
+    }
+};
+
 struct Grafo {
     vector<string> nomes;
 
@@ -14,6 +24,7 @@ struct Grafo {
     virtual bool inserirArco(int origem, int destino, int peso = 1) = 0;
     virtual void imprimir() = 0;
     virtual vector<int> obterVerticesAdjacentes(int origem) = 0;
+    virtual vector<Arco> obterVerticesAdjacentesComPeso(int origem) = 0;
     virtual bool removerArco(int origem, int destino) = 0;
     virtual int consultarPeso(int origem, int destino) = 0;
     virtual bool removerVertice(int vertice) = 0;
@@ -45,6 +56,10 @@ struct Grafo {
 
     //Insere um arco origem -> destino e um arco destino -> origem, ambos com o peso especificado
     bool inserirAresta(int origem, int destino, int peso = 1) {
+        if (existeAresta(origem, destino)) {
+            return false;
+        }
+
         if (inserirArco(origem, destino, peso)) {
             inserirArco(destino, origem, peso);
             return true;
@@ -60,93 +75,113 @@ struct Grafo {
         return true;
     }
 
-    bool existaAresta(int origem, int destino) {
+    bool existeAresta(int origem, int destino) {
         return existeArco(origem, destino) && existeArco(destino, origem);
     }
 
-    bool buscaEmProfundidadePrincipal(int vertice, vector <bool> &visitados, int destino) {
+    //Procedimento que executa a busca em profundidade propriamente dita.
+    vector<int> buscaEmProfundidadePrincipal(int vertice, vector <bool> &visitados, int destino) {
+        visitados[vertice] = true;
+
+        //A sequência de vértices visitados desta invocação começa com o próprio vértice
+        vector<int> sequencia{vertice};
+        if (vertice == destino) {
+            return sequencia;
+        }
+
         vector<int> adj = obterVerticesAdjacentes(vertice);
 
         for (int i = 0; i < adj.size(); i++) {
             if (visitados[adj[i]] == false) {
-                cout << nomes[adj[i]] << "\n";
                 visitados[adj[i]] = true;
 
-                if (adj[i] == destino) {
-                    return true;
-                }
+                vector<int> adicoes = buscaEmProfundidadePrincipal(adj[i], visitados, destino);
 
-                if (buscaEmProfundidadePrincipal(adj[i], visitados, destino)) {
-                    return true;
+                //Insere os vértices visitados pela chamada recursiva na própria sequência
+                sequencia.insert(sequencia.end(), adicoes.begin(), adicoes.end());
+
+                //Se o destino foi atingido, parar
+                if (sequencia.back() == destino) {
+                    return sequencia;
                 }
             }
         }
 
-        return false;
+        return sequencia;
     }
 
-    //Realiza uma busca em profundidade (DFS) sem destino.
-    void buscaEmProfundidade(int origem, int destino = -1) {
+    //Realiza uma busca em profundidade (DFS). Um destino igual a -1 indica nenhum destino.
+    vector<int> buscaEmProfundidade(int origem, int destino = -1) {
         if (!existeVertice(origem))
-            return;
+            return vector<int>();
 
         vector<bool> visitados(nomes.size(), false);
+        vector<int> sequencia = buscaEmProfundidadePrincipal(origem, visitados, destino);
 
-        visitados[origem] = true;
-        cout << nomes[origem] << "\n";
-
-        buscaEmProfundidadePrincipal(origem, visitados, destino);
-
-        if (destino != -1) return;
-
-        for (int i = 0; i < visitados.size(); i++) {
-            if (visitados[i] == false){
-                cout << nomes[i] << "\n";
-                visitados[i] = true;
-                buscaEmProfundidadePrincipal(i, visitados, destino);
+        //Sem destino?
+        if (destino == -1) {
+            for (int i = 0; i < visitados.size(); i++) {
+                if (visitados[i] == false){
+                    vector<int> extra = buscaEmProfundidadePrincipal(i, visitados, destino);
+                    sequencia.insert(sequencia.end(), extra.begin(), extra.end());
+                }
             }
         }
+
+        return sequencia;
     }
 
-    void buscaEmLarguraPrincipal(int origem, vector<bool> &visitados, int destino) {
-        if(!existeVertice(origem))
-            return;
+    //Procedimento que executa a busca em largura propriamente dita.
+    vector<int> buscaEmLarguraPrincipal(int origem, vector<bool> &visitados, int destino) {
+        if (!existeVertice(origem))
+            return vector<int>();
 
+        vector<int> sequencia;
         queue<int> fila;
         fila.push(origem);
+        visitados[origem] = true;
 
-        while(!fila.empty()) {
+        while (!fila.empty()) {
             int frente = fila.front();
             fila.pop();
-            visitados[frente] = true;
-            cout << nomes[frente] << "\n";
+            sequencia.push_back(frente);
 
+            //Destino foi atingido; parar o algoritmo.
             if (destino == frente) {
-                return;
+                break;
             }
 
             vector<int> adj = obterVerticesAdjacentes(frente);
 
-            for (int v : adj){
-                if (visitados[v] == false){
+            for (int v : adj) {
+                if (visitados[v] == false) {
+                    //Marcar como visitado assim que inserir na fila.
+                    visitados[v] = true;
                     fila.push(v);
                 }
             }
         }
+
+        return sequencia;
     }
 
-    //Realiza uma busca em largura (BFS) sem destino.
-    void buscaEmLargura(int origem, int destino = -1) {
+    //Realiza uma busca em largura (BFS). Um destino igual a -1 indica nenhum destino.
+    vector<int> buscaEmLargura(int origem, int destino = -1) {
         vector<bool> visitados(nomes.size(), false);
-        buscaEmLarguraPrincipal(origem, visitados, destino);
+        vector<int> sequencia = buscaEmLarguraPrincipal(origem, visitados, destino);
 
-        if (destino != -1) return;
+        //Se não há destino, reiniciar a busca em componentes não atingidos
+        if (destino == -1) {
+            for (int i = 0; i < visitados.size(); i++) {
+                if (visitados[i] == false) {
+                    vector<int> extra = buscaEmLarguraPrincipal(i, visitados, destino);
 
-        for (int i = 0; i < visitados.size(); i++) {
-            if (visitados[i] == false) {
-                buscaEmLarguraPrincipal(i, visitados, destino);
+                    sequencia.insert(sequencia.end(), extra.begin(), extra.end());
+                }
             }
         }
+
+        return sequencia;
     }
 };
 
