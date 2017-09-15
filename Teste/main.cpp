@@ -138,6 +138,7 @@ void menuPrincipal(Grafo& grafo) {
 }
 
 int main() {
+    /*
     LGrafo grafo;
     grafo.inserirVertice("A");
     grafo.inserirVertice("B");
@@ -170,7 +171,7 @@ int main() {
     grafo.dijkstra(0);
 
     return 0;
-
+    */
     cout << "Boas vindas a interface de grafos.\n";
     cout << "Selecione o tipo de estrutura desejada.\n";
     int estrutura = exibirMenu({"Matriz de Adjacencias", "Lista de Adjacencias"});

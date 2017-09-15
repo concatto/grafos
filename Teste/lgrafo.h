@@ -83,6 +83,15 @@ struct LGrafo : public Grafo {
         adjacencias.erase(adjacencias.begin() + vertice);
         nomes.erase(nomes.begin() + vertice);
 
+        //Reduz em 1 o identificador dos vértices que estavam à frente do removido.
+        for (int i = 0; i < adjacencias.size(); i++) {
+            for (int j = 0; j < adjacencias[i].size(); j++) {
+                if (adjacencias[i][j].vdestino > vertice) {
+                    adjacencias[i][j].vdestino--;
+                }
+            }
+        }
+
         return true;
     }
 
