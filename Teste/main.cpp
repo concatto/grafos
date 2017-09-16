@@ -46,39 +46,43 @@ int exibirMenu(vector<string> opcoes) {
 }
 
 void menuPrincipal(Grafo& grafo) {
-    grafo.inserirVertice("A");
-    grafo.inserirVertice("B");
-    grafo.inserirVertice("C");
-    grafo.inserirVertice("D");
-    grafo.inserirVertice("E");
-    grafo.inserirVertice("F");
-    grafo.inserirVertice("G");
-    grafo.inserirVertice("H");
-    grafo.inserirVertice("I");
-    grafo.inserirVertice("J");
-    grafo.inserirVertice("K");
-    grafo.inserirVertice("L");
-    grafo.inserirVertice("M");
-    grafo.inserirAresta(0, 1);
-    grafo.inserirAresta(0, 10);
-    grafo.inserirAresta(1, 2);
-    grafo.inserirAresta(1, 4);
-    grafo.inserirAresta(1, 10);
-    grafo.inserirAresta(2, 3);
-    grafo.inserirAresta(2, 4);
-    grafo.inserirAresta(3, 4);
-    grafo.inserirAresta(4, 5);
-    grafo.inserirAresta(4, 7);
-    grafo.inserirAresta(4, 10);
-    grafo.inserirAresta(5, 6);
-    grafo.inserirAresta(6, 7);
-    grafo.inserirAresta(7, 8);
-    grafo.inserirAresta(7, 10);
-    grafo.inserirAresta(8, 9);
-    grafo.inserirAresta(8, 12);
-    grafo.inserirAresta(9, 10);
-    grafo.inserirAresta(9, 11);
-    grafo.inserirAresta(9, 10);
+    cout << "Deseja carregar o grafo de testes?\n";
+    bool teste = exibirMenu({"Sim", "Nao"}) == 0;
+    if (teste) {
+        grafo.inserirVertice("A");
+        grafo.inserirVertice("B");
+        grafo.inserirVertice("C");
+        grafo.inserirVertice("D");
+        grafo.inserirVertice("E");
+        grafo.inserirVertice("F");
+        grafo.inserirVertice("G");
+        grafo.inserirVertice("H");
+        grafo.inserirVertice("I");
+        grafo.inserirVertice("J");
+        grafo.inserirVertice("K");
+        grafo.inserirVertice("L");
+        grafo.inserirVertice("M");
+        grafo.inserirAresta(0, 1);
+        grafo.inserirAresta(0, 10);
+        grafo.inserirAresta(1, 2);
+        grafo.inserirAresta(1, 4);
+        grafo.inserirAresta(1, 10);
+        grafo.inserirAresta(2, 3);
+        grafo.inserirAresta(2, 4);
+        grafo.inserirAresta(3, 4);
+        grafo.inserirAresta(4, 5);
+        grafo.inserirAresta(4, 7);
+        grafo.inserirAresta(4, 10);
+        grafo.inserirAresta(5, 6);
+        grafo.inserirAresta(6, 7);
+        grafo.inserirAresta(7, 8);
+        grafo.inserirAresta(7, 10);
+        grafo.inserirAresta(8, 9);
+        grafo.inserirAresta(8, 12);
+        grafo.inserirAresta(9, 10);
+        grafo.inserirAresta(9, 11);
+        grafo.inserirAresta(9, 10);
+    }
 
     cout << "Escolha a orientacao do grafo\n";
     bool orientado = exibirMenu({"Orientado", "Nao orientado"}) == 0;
