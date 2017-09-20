@@ -12,15 +12,14 @@ GraphicsView::GraphicsView() : scene()
     this->menuList.addAction("Inserir vértice");
     this->menuList.addAction("Imprimir");
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-    setSceneRect(0, 0, 400, 600);
     //menuList.addAction("");
+//    setFixedSize(800, 600);
 }
 
 
 void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
 {
     if(Vertex *item = (Vertex*)itemAt(event->pos())){
-        item->contextMenuEvent((QGraphicsSceneContextMenuEvent*) event);
         QMenu *tmp;
         tmp = item->getMenu();
         QAction *action = NULL;
@@ -57,6 +56,5 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
             scene.addVertex(text);
             emit addVertex(text);
         }
-    }
-
+     }
 }

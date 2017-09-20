@@ -8,7 +8,6 @@ class Vertex : public QGraphicsEllipseItem
 {
 public:
     Vertex(float radius, QString name);
-    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event) override;
     QMenu *getMenu();
     QString getName();
 

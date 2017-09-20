@@ -3,7 +3,7 @@
 
 GraphicsScene::GraphicsScene()
 {
-
+    setSceneRect(0, 0, 800, 600);
 }
 
 void GraphicsScene::addVertex(QString name)
