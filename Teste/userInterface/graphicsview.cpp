@@ -4,8 +4,7 @@
 #include <QDebug>
 #include <QInputDialog>
 #include <QDir>
-#include <QGraphicsSceneContextMenuEvent>
-
+#include <QMessageBox>
 
 GraphicsView::GraphicsView() : scene()
 {
@@ -22,6 +21,27 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
 {
     if(Vertex *item = (Vertex*)itemAt(event->pos())){
         item->contextMenuEvent((QGraphicsSceneContextMenuEvent*) event);
+        QMenu *tmp;
+        tmp = item->getMenu();
+        QAction *action = NULL;
+        action = tmp->exec(QCursor::pos());
+
+        if(action == NULL)
+            return;
+
+        if(action->text() == QString("Remover vértice")){
+            QMessageBox::StandardButton reply;
+            reply = QMessageBox::question(this, "Remover vértice", "Você tem certeza que deseja remover este vértice?",
+                                          QMessageBox::Yes|QMessageBox::No);
+            if(reply == QMessageBox::Yes){
+                qDebug()<<"yes";
+            }else{
+                qDebug()<<"no";
+            }
+
+            emit removeVertex(item->getName());
+            scene.removeItem(item);
+        }
     }else{
         QAction *action = NULL;
         action = menuList.exec(QCursor::pos());

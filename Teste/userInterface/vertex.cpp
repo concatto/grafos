@@ -3,9 +3,13 @@
 #include <QDebug>
 #include <QGraphicsSceneMoveEvent>
 
-Vertex::Vertex(float radius) : QGraphicsEllipseItem(0, 0, radius, radius)
+
+Vertex::Vertex(float radius, QString name) : QGraphicsEllipseItem(0, 0, radius, radius)
 {
+    this->name = name;
     setBrush(QBrush(Qt::red));
+    menuList = new QMenu();
+    menuList->addAction("Remover vértice");
 }
 
 void Vertex::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -30,5 +34,26 @@ void Vertex::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void Vertex::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
-    qDebug()<<"papai chegou";
+//    QAction *action = NULL;
+//    action = menuList.exec(QCursor::pos());
+
+//    if(action == NULL)
+//        return;
+
+//    if(action->text() == QString("Remover vértice")){
+//        bool ok;
+//        QString text = QInputDialog::getText(this, QObject::tr("QInputDialog::getText()"),
+//                                             QObject::tr("Nome do Vértice:"), QLineEdit::Normal,
+//                                             "", &ok);
+//    }
+}
+
+QMenu* Vertex::getMenu()
+{
+    return menuList;
+}
+
+QString Vertex::getName()
+{
+    return name;
 }

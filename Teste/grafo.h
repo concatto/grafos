@@ -37,6 +37,11 @@ public slots:
     void addVertex(QString str){
         inserirVertice(str.toStdString());
     }
+    void removeVertex(QString str){
+        if(removerVertice(obterIndice(str.toStdString()))){
+            qDebug()<<"Removido com sucesso";
+        }
+    }
 public:
     vector<string> nomes;
 
