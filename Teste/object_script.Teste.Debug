@@ -1,0 +1,12 @@
+INPUT(
+./debug\main.o
+./debug\graphicsview.o
+./debug\graphicsscene.o
+./debug\vertex.o
+./debug\mainwindow.o
+./debug\controller.o
+./debug\moc_grafo.o
+./debug\moc_graphicsview.o
+./debug\moc_mainwindow.o
+./debug\moc_controller.o
+);

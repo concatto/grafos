@@ -7,6 +7,9 @@
 #include "mgrafo.h"
 #include "lgrafo.h"
 #include "terminal_ui.h"
+//#include "userInterface/graphicsview.h"
+#include <QApplication>
+#include "controller.h"
 
 using namespace std;
 
@@ -141,7 +144,7 @@ void menuPrincipal(Grafo& grafo) {
     } while (!finalizado);
 }
 
-int main() {
+int main(int argc, char *argv[]) {
     /*
     LGrafo grafo;
     grafo.inserirVertice("A");
@@ -175,7 +178,7 @@ int main() {
     grafo.dijkstra(0);
 
     return 0;
-    */
+
     cout << "Boas vindas a interface de grafos.\n";
     cout << "Selecione o tipo de estrutura desejada.\n";
     int estrutura = exibirMenu({"Matriz de Adjacencias", "Lista de Adjacencias"});
@@ -186,8 +189,11 @@ int main() {
     } else if (estrutura == 1) {
         LGrafo g;
         menuPrincipal(g);
-    }
+    }*/
 
-    return 0;
+    QApplication a(argc, argv);
+    Controller controller;
+
+    return a.exec();
 }
 

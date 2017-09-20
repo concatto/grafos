@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 #include <queue>
+#include <QObject>
+#include <QDebug>
 
 using namespace std;
 
@@ -29,7 +31,13 @@ struct Path{
     }
 };
 
-struct Grafo {
+struct Grafo : public QObject{
+    Q_OBJECT
+public slots:
+    void addVertex(QString str){
+        inserirVertice(str.toStdString());
+    }
+public:
     vector<string> nomes;
 
     virtual bool inserirVertice(string nome) = 0;
@@ -74,9 +82,9 @@ struct Grafo {
         for(int i = 0; i < lista.size(); i++){
             if(i == backup)
                 lista[i].anterior = backup;
-            cout<<"\n"<<"Vertice: "<<nomes[i]<<" - Anterior: "<<nomes[lista[i].anterior]<<" - Distancia: "<<lista[i].distancia;
+         //   cout<<"\n"<<"Vertice: "<<nomes[i]<<" - Anterior: "<<nomes[lista[i].anterior]<<" - Distancia: "<<lista[i].distancia;
         }
-        cout<<"\n";
+        //cout<<"\n";
     }
 
     //Recupera o nome do vértice desejado. Se não existir, retorna a string vazia.

@@ -9,6 +9,10 @@ bool operator > (pair<int, int> n1, pair<int,int> n2){
 }*/
 
 struct MGrafo : public Grafo {
+//public slots:
+//    void addVertex(QString str){
+//        qDebug()<<str;
+//    }
     vector<vector<int>> adjacencias;
 
     bool inserirVertice(string nome) override {
@@ -16,6 +20,7 @@ struct MGrafo : public Grafo {
             //Nome já existe
             return false;
         }
+
         this->nomes.push_back(nome);
         int tam = this->adjacencias.size();
         vector<int> vetor;
@@ -48,18 +53,18 @@ struct MGrafo : public Grafo {
 
     void imprimir() override {
         for (int i = 0; i < this->adjacencias.size(); i++) {
-            cout << "|";
+//            cout << "|";
 
             for (int j = 0; j < this->adjacencias[i].size(); j++) {
-                cout << this->adjacencias[i][j] << "|";
+//                cout << this->adjacencias[i][j] << "|";
             }
 
-            cout << "\n";
+//            cout << "\n";
         }
 
-        cout << "\n";
+        //cout << "\n";
         for (int i = 0; i < this->nomes.size(); i++) {
-            cout << i << ": " << this->nomes[i] << "\n";
+//            cout << i << ": " << this->nomes[i] << "\n";
         }
     }
 
@@ -148,9 +153,9 @@ struct MGrafo : public Grafo {
         for(int i = 0; i < lista.size(); i++){
             if(i == backup)
                 lista[i].anterior = backup;
-            cout<<"\n"<<"Vertice: "<<nomes[i]<<" - Anterior: "<<nomes[lista[i].anterior]<<" - Distancia: "<<lista[i].distancia;
+//            cout<<"\n"<<"Vertice: "<<nomes[i]<<" - Anterior: "<<nomes[lista[i].anterior]<<" - Distancia: "<<lista[i].distancia;
         }
-        cout<<"\n";
+//        cout<<"\n";
 
     }
 
