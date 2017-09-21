@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QInputDialog>
 #include <QDir>
+#include <QCoreApplication>
 #include <QMessageBox>
 
 GraphicsView::GraphicsView() : scene()
@@ -13,7 +14,8 @@ GraphicsView::GraphicsView() : scene()
     this->menuList.addAction("Imprimir");
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     //menuList.addAction("");
-//    setFixedSize(800, 600);
+    setFixedSize(770, 570);
+    setFrameShape(QGraphicsView::NoFrame);
 }
 
 
@@ -34,12 +36,14 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
                                           QMessageBox::Yes|QMessageBox::No);
             if(reply == QMessageBox::Yes){
                 qDebug()<<"yes";
+                emit removeVertex(item->getName());
+                scene.removeItem(item);
             }else{
                 qDebug()<<"no";
             }
-
-            emit removeVertex(item->getName());
-            scene.removeItem(item);
+        }else if(action->text() == QString("Inserir aresta")){
+            Vertex *item = (Vertex*)itemAt(event->pos());
+            scene.setLine(item);
         }
     }else{
         QAction *action = NULL;

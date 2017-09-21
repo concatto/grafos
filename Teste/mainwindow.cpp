@@ -11,8 +11,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(&view, SIGNAL(addVertex(QString)), this, SIGNAL(addVertex(QString)));
     QObject::connect(&view, SIGNAL(removeVertex(QString)), this, SIGNAL(removeVertex(QString)));
     ui->centralwidget->layout()->addWidget(&view);
-    ui->centralwidget->setFixedWidth(800);
-    ui->centralwidget->setFixedHeight(600);
 }
 
 MainWindow::~MainWindow()

@@ -3,15 +3,19 @@
 #include <QGraphicsEllipseItem>
 #include <QMenu>
 #include <QString>
+#include <QMouseEvent>
+#include <QObject>
 
-class Vertex : public QGraphicsEllipseItem
+class Vertex : public QObject, public QGraphicsEllipseItem
 {
+    Q_OBJECT
 public:
     Vertex(float radius, QString name);
     QMenu *getMenu();
     QString getName();
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
-protected:
+public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
@@ -19,6 +23,10 @@ protected:
 private:
     QMenu *menuList;
     QString name;
+
+signals:
+    void drawEdge(Vertex *vertex);
+
 };
 
 #endif // VERTEX_H

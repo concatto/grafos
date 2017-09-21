@@ -13,7 +13,8 @@ SOURCES += main.cpp \
     userInterface/graphicsscene.cpp \
     userInterface/vertex.cpp \
     mainwindow.cpp \
-    controller.cpp
+    controller.cpp \
+    userInterface/graphicsline.cpp
 
 CONFIG += c++11
 QMAKE_CXXFLAGS += -Wno-sign-compare #Ignora "comparison between signed and unsigned"
@@ -31,7 +32,8 @@ HEADERS += \
     userInterface/graphicsscene.h \
     userInterface/vertex.h \
     mainwindow.h \
-    controller.h
+    controller.h \
+    userInterface/graphicsline.h
 
 FORMS += \
     mainwindow.ui

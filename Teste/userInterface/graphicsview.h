@@ -17,9 +17,11 @@ protected:
 private:
     QMenu menuList;
     GraphicsScene scene;
+
 signals:
     void addVertex(QString str);
     void removeVertex(QString str);
+
 };
 
 #endif // GRAPHICSVIEW_H
