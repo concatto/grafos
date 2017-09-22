@@ -37,16 +37,10 @@ void GraphicsScene::drawEdge(Vertex *vertex)
     if(controle_aresta){
         addItem(curr_line);
         vertex->addConnection(curr_line, false);
-        curr_vertex->setP2(vertex->pos());
-//        qDebug()<<curr_line->line();
+//        curr_vertex->setP2(vertex->pos());
         curr_line = NULL;
         controle_aresta = false;
-//        curr_vertex->setL
-//        line.setP2(vertex->pos());
-//        addLine(GraphicsLine(line));
-//        GraphicsLine *gline = new GraphicsLine(line);
-//        addItem(gline);
-//        controle_aresta = false;
+        emit addConnection(curr_vertex->getName(), vertex->getName());
     }
 }
 

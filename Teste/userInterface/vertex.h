@@ -16,7 +16,6 @@ public:
     QString getName();
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     void addConnection(GraphicsLine *line, bool p1);
-    void setP2(QPointF p2);
 
 public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;

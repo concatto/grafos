@@ -19,6 +19,8 @@ public:
 signals:
     void addVertex(QString str);
     void removeVertex(QString str);
+    void addConnection(QString name1, QString name2, int weight = 1);
+
 private:
     GraphicsView view;
     Ui::MainWindow *ui;

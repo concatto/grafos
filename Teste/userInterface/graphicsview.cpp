@@ -16,6 +16,7 @@ GraphicsView::GraphicsView() : scene()
     //menuList.addAction("");
     setFixedSize(770, 570);
     setFrameShape(QGraphicsView::NoFrame);
+    QObject::connect(&scene, SIGNAL(addConnection(QString,QString,int)), this, SIGNAL(addConnection(QString,QString,int)));
 }
 
 
@@ -60,5 +61,5 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
             scene.addVertex(text);
             emit addVertex(text);
         }
-     }
+    }
 }

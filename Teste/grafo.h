@@ -42,6 +42,10 @@ public slots:
             qDebug()<<"Removido com sucesso";
         }
     }
+
+    void addConnection(QString name1, QString name2, int weight = 1){
+        qDebug()<<"Pensar";
+    }
 public:
     vector<string> nomes;
 

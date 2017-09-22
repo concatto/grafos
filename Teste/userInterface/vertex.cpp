@@ -111,17 +111,6 @@ void Vertex::addConnection(GraphicsLine *line, bool p1)
 
 }
 
-void Vertex::setP2(QPointF p2)
-{
-
-    int xOffset = rect().x() + rect().width()/2;
-    int yOffset = rect().y() + rect().height()/2;
-
-    QPointF newCenterPos = QPointF(this->pos().x() + xOffset, this->pos().y() + yOffset);
-
-    this->line->line().setP2(p2);
-}
-
 
 QVariant Vertex::itemChange(GraphicsItemChange change, const QVariant &value)
 {

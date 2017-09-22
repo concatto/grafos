@@ -15,6 +15,7 @@ public:
     GraphicsScene();
     void addVertex(QString name);
     void setLine(Vertex *item);
+
 private:
     QVector <Vertex*> vertices;
     bool controle_aresta;
@@ -24,6 +25,9 @@ private:
 
 public slots:
     void drawEdge(Vertex *vertex);
+
+signals:
+    void addConnection(QString name1, QString name2, int weight = 1);
 
 //    // QGraphicsScene interface
 //protected:
