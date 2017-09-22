@@ -6,6 +6,7 @@
 class GraphicsLine : public QGraphicsLineItem
 {
 public:
+    GraphicsLine();
     GraphicsLine(QLineF line);
 };
 

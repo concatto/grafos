@@ -8,6 +8,8 @@
 GraphicsScene::GraphicsScene()
 {
     setSceneRect(0, 0, 740, 340);
+    curr_vertex = NULL;
+    controle_aresta = false;
 //    setBackgroundBrush(QBrush(Qt::red));
 
 }
@@ -23,18 +25,28 @@ void GraphicsScene::addVertex(QString name)
 
 void GraphicsScene::setLine( Vertex *item)
 {
+//    line.setP1(item->pos());
+    curr_vertex = item;
     controle_aresta = true;
-    line.setP1(item->pos());
+    curr_line = new GraphicsLine();
+    item->addConnection(curr_line, true);
 }
 
 void GraphicsScene::drawEdge(Vertex *vertex)
 {
     if(controle_aresta){
-        line.setP2(vertex->pos());
-//        addLine(GraphicsLine(line));
-        GraphicsLine *gline = new GraphicsLine(line);
-        addItem(gline);
+        addItem(curr_line);
+        vertex->addConnection(curr_line, false);
+        curr_vertex->setP2(vertex->pos());
+//        qDebug()<<curr_line->line();
+        curr_line = NULL;
         controle_aresta = false;
+//        curr_vertex->setL
+//        line.setP2(vertex->pos());
+//        addLine(GraphicsLine(line));
+//        GraphicsLine *gline = new GraphicsLine(line);
+//        addItem(gline);
+//        controle_aresta = false;
     }
 }
 

@@ -18,7 +18,10 @@ public:
 private:
     QVector <Vertex*> vertices;
     bool controle_aresta;
-    QLineF line;
+    Vertex *curr_vertex;
+    GraphicsLine *curr_line;
+    //    QLineF line;
+
 public slots:
     void drawEdge(Vertex *vertex);
 
