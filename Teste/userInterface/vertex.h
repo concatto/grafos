@@ -6,6 +6,16 @@
 #include <QMouseEvent>
 #include <QObject>
 #include "graphicsline.h"
+#include <QVector>
+
+struct Line {
+    Line(GraphicsLine *line, bool isP1){
+        this->line = line;
+        this->isP1 = isP1;
+    }
+    GraphicsLine *line;
+    bool isP1;
+};
 
 class Vertex : public QObject, public QGraphicsEllipseItem
 {
@@ -16,6 +26,7 @@ public:
     QString getName();
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     void addConnection(GraphicsLine *line, bool p1);
+    int type() const override;
 
 public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
@@ -25,8 +36,9 @@ public:
 private:
     QMenu *menuList;
     QString name;
-    bool isP1;
-    GraphicsLine *line;
+//    bool isP1;
+//    GraphicsLine *line;
+    QVector <Line*> lines;
 
     void moveLineToCenter(QPointF newPos);
 
@@ -37,6 +49,8 @@ signals:
     // QGraphicsItem interface
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
+
+
 };
 
 #endif // VERTEX_H

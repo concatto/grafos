@@ -22,29 +22,36 @@ GraphicsView::GraphicsView() : scene()
 
 void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
 {
-    if(Vertex *item = (Vertex*)itemAt(event->pos())){
-        QMenu *tmp;
-        tmp = item->getMenu();
-        QAction *action = NULL;
-        action = tmp->exec(QCursor::pos());
 
-        if(action == NULL)
-            return;
 
-        if(action->text() == QString("Remover vértice")){
-            QMessageBox::StandardButton reply;
-            reply = QMessageBox::question(this, "Remover vértice", "Você tem certeza que deseja remover este vértice?",
-                                          QMessageBox::Yes|QMessageBox::No);
-            if(reply == QMessageBox::Yes){
-                qDebug()<<"yes";
-                emit removeVertex(item->getName());
-                scene.removeItem(item);
-            }else{
-                qDebug()<<"no";
-            }
-        }else if(action->text() == QString("Inserir aresta")){
+    if(QGraphicsItem *item = itemAt(event->pos())){
+        if(1 == item->type()){
             Vertex *item = (Vertex*)itemAt(event->pos());
-            scene.setLine(item);
+            QMenu *tmp;
+            tmp = item->getMenu();
+            QAction *action = NULL;
+            action = tmp->exec(QCursor::pos());
+
+            if(action == NULL)
+                return;
+
+            if(action->text() == QString("Remover vértice")){
+                QMessageBox::StandardButton reply;
+                reply = QMessageBox::question(this, "Remover vértice", "Você tem certeza que deseja remover este vértice?",
+                                              QMessageBox::Yes|QMessageBox::No);
+                if(reply == QMessageBox::Yes){
+                    qDebug()<<"yes";
+                    emit removeVertex(item->getName());
+                    scene.removeItem(item);
+                }else{
+                    qDebug()<<"no";
+                }
+            }else if(action->text() == QString("Inserir aresta")){
+                Vertex *item = (Vertex*)itemAt(event->pos());
+                scene.setLine(item);
+            }
+        }else if(2 == item->type()){
+            qDebug()<<"fuckin gambiarra funcionou";
         }
     }else{
         QAction *action = NULL;

@@ -9,3 +9,9 @@ GraphicsLine::GraphicsLine(QLineF line) : QGraphicsLineItem(line)
 {
 
 }
+
+
+int GraphicsLine::type() const
+{
+    return 2;
+}

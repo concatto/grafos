@@ -18,7 +18,7 @@ QRectF operator +(QRectF v1, qreal v2){
 Vertex::Vertex(float radius, QString name) : QGraphicsEllipseItem(0, 0, radius, radius)
 {
     this->name = name;
-    this->line = NULL;
+//    this->line = NULL;
     setBrush(QBrush(Qt::red));
     menuList = new QMenu();
     menuList->addAction("Remover vértice");
@@ -50,19 +50,22 @@ void Vertex::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void Vertex::moveLineToCenter(QPointF newPos)
 {
-    // Converts the elipse position (top-left)
-    // to its center position
     int xOffset = rect().x() + rect().width()/2;
     int yOffset = rect().y() + rect().height()/2;
 
-
     QPointF newCenterPos = QPointF(newPos.x() + xOffset, newPos.y() + yOffset);
 
-    // Move the required point of the line to the center of the elipse
-    QPointF p1 = isP1 ? newCenterPos : line->line().p1();
-    QPointF p2 = isP1 ? line->line().p2() : newCenterPos;
+    for(Line *nav: lines){
+        // Move the required point of the line to the center of the elipse
+        QPointF p1 = nav->isP1 ? newCenterPos : nav->line->line().p1();
+        QPointF p2 = nav->isP1 ? nav->line->line().p2() : newCenterPos;
 
-    line->setLine(QLineF(p1, p2));
+        nav->line->setLine(QLineF(p1, p2));
+
+//        line->setLine(QLineF(p1, p2));
+    }
+
+
 }
 
 
@@ -87,9 +90,10 @@ void Vertex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
 
 void Vertex::addConnection(GraphicsLine *line, bool p1)
 {
-
-    this->line = line;
-    this->isP1 = p1;
+    Line *nline = new Line(line, p1);
+    lines.append(nline);
+//    this->line = line;
+//    this->isP1 = p1;
 
     if(p1){
         int xOffset = rect().x() + rect().width()/2;
@@ -97,7 +101,8 @@ void Vertex::addConnection(GraphicsLine *line, bool p1)
 
         QPointF newCenterPos = QPointF(this->scenePos().x() + xOffset, this->scenePos().y() + yOffset);
 
-        line->setLine(QLineF(newCenterPos, QPointF(0, 0)));
+        lines.back()->line->setLine(QLineF(newCenterPos, QPointF(0, 0)));
+//        lines.back()
 
     }else {
         int xOffset = rect().x() + rect().width()/2;
@@ -106,7 +111,7 @@ void Vertex::addConnection(GraphicsLine *line, bool p1)
 
         QPointF newCenterPos = QPointF(this->scenePos().x() + xOffset, this->scenePos().y() + yOffset);
 
-        line->setLine(QLineF(line->line().p1(), newCenterPos));
+        lines.back()->line->setLine(QLineF(line->line().p1(), newCenterPos));
     }
 
 }
@@ -114,7 +119,7 @@ void Vertex::addConnection(GraphicsLine *line, bool p1)
 
 QVariant Vertex::itemChange(GraphicsItemChange change, const QVariant &value)
 {
-    if(line != NULL){
+    if(lines.size() > 0){
         if (change == ItemPositionChange && scene()) {
             QPointF newPos = value.toPointF();
 
@@ -125,3 +130,9 @@ QVariant Vertex::itemChange(GraphicsItemChange change, const QVariant &value)
     return QGraphicsItem::itemChange(change, value);
 }
 
+
+
+int Vertex::type() const
+{
+    return 1;
+}
