@@ -325,8 +325,10 @@ release/moc_graphicsview.cpp: C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsVi
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/qgraphicsitem.h \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QString \
 		C:/Qt/5.9/mingw53_32/include/QtGui/QMouseEvent \
-		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsLineItem \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QObject \
+		userInterface/graphicsline.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsLineItem \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsItem \
 		userInterface/graphicsview.h \
 		release/moc_predefs.h \
 		C:/Qt/5.9/mingw53_32/bin/moc.exe
@@ -445,7 +447,10 @@ release/moc_graphicsscene.cpp: C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsS
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/qactiongroup.h \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QString \
 		C:/Qt/5.9/mingw53_32/include/QtGui/QMouseEvent \
+		C:/Qt/5.9/mingw53_32/include/QtCore/QObject \
+		userInterface/graphicsline.h \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsLineItem \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsItem \
 		userInterface/graphicsscene.h \
 		release/moc_predefs.h \
 		C:/Qt/5.9/mingw53_32/bin/moc.exe
@@ -559,6 +564,11 @@ release/moc_vertex.cpp: C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsEllipseI
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/qactiongroup.h \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QString \
 		C:/Qt/5.9/mingw53_32/include/QtGui/QMouseEvent \
+		C:/Qt/5.9/mingw53_32/include/QtCore/QObject \
+		userInterface/graphicsline.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsLineItem \
+		userInterface/vertex.h \
+		C:/Qt/5.9/mingw53_32/include/QtCore/QVector \
 		userInterface/vertex.h \
 		release/moc_predefs.h \
 		C:/Qt/5.9/mingw53_32/bin/moc.exe
@@ -689,8 +699,10 @@ release/moc_mainwindow.cpp: C:/Qt/5.9/mingw53_32/include/QtWidgets/QMainWindow \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/qgraphicsitem.h \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QString \
 		C:/Qt/5.9/mingw53_32/include/QtGui/QMouseEvent \
-		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsLineItem \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QObject \
+		userInterface/graphicsline.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsLineItem \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsItem \
 		mainwindow.h \
 		release/moc_predefs.h \
 		C:/Qt/5.9/mingw53_32/bin/moc.exe
@@ -822,8 +834,10 @@ release/moc_controller.cpp: mainwindow.h \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/qgraphicsitem.h \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QString \
 		C:/Qt/5.9/mingw53_32/include/QtGui/QMouseEvent \
-		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsLineItem \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QObject \
+		userInterface/graphicsline.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsLineItem \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsItem \
 		grafo.h \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QDebug \
 		mgrafo.h \
@@ -995,7 +1009,9 @@ release/main.o: main.cpp grafo.h \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/qgraphicsitem.h \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QString \
 		C:/Qt/5.9/mingw53_32/include/QtGui/QMouseEvent \
-		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsLineItem
+		userInterface/graphicsline.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsLineItem \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsItem
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main.o main.cpp
 
 release/graphicsview.o: userInterface/graphicsview.cpp userInterface/graphicsview.h \
@@ -1120,8 +1136,10 @@ release/graphicsview.o: userInterface/graphicsview.cpp userInterface/graphicsvie
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/qgraphicsitem.h \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QString \
 		C:/Qt/5.9/mingw53_32/include/QtGui/QMouseEvent \
-		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsLineItem \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QObject \
+		userInterface/graphicsline.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsLineItem \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsItem \
 		C:/Qt/5.9/mingw53_32/include/QtGui/QContextMenuEvent \
 		C:/Qt/5.9/mingw53_32/include/QtGui/QCursor \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QDebug \
@@ -1255,7 +1273,10 @@ release/graphicsscene.o: userInterface/graphicsscene.cpp userInterface/graphicss
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/qactiongroup.h \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QString \
 		C:/Qt/5.9/mingw53_32/include/QtGui/QMouseEvent \
+		C:/Qt/5.9/mingw53_32/include/QtCore/QObject \
+		userInterface/graphicsline.h \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsLineItem \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsItem \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QDebug \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsSceneMouseEvent \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/qgraphicssceneevent.h \
@@ -1378,6 +1399,10 @@ release/vertex.o: userInterface/vertex.cpp userInterface/vertex.h \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/qactiongroup.h \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QString \
 		C:/Qt/5.9/mingw53_32/include/QtGui/QMouseEvent \
+		C:/Qt/5.9/mingw53_32/include/QtCore/QObject \
+		userInterface/graphicsline.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsLineItem \
+		C:/Qt/5.9/mingw53_32/include/QtCore/QVector \
 		C:/Qt/5.9/mingw53_32/include/QtGui/QBrush \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QDebug \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsSceneMoveEvent \
@@ -1386,8 +1411,7 @@ release/vertex.o: userInterface/vertex.cpp userInterface/vertex.h \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsScene \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/qgraphicsscene.h \
 		C:/Qt/5.9/mingw53_32/include/QtGui/qpen.h \
-		C:/Qt/5.9/mingw53_32/include/QtCore/QVector \
-		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsLineItem \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsItem \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsView \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/qgraphicsview.h \
 		C:/Qt/5.9/mingw53_32/include/QtGui/qpainter.h \
@@ -1524,8 +1548,10 @@ release/mainwindow.o: mainwindow.cpp mainwindow.h \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/qgraphicsitem.h \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QString \
 		C:/Qt/5.9/mingw53_32/include/QtGui/QMouseEvent \
-		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsLineItem \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QObject \
+		userInterface/graphicsline.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsLineItem \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsItem \
 		ui_mainwindow.h \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/QLayout \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/qlayout.h \
@@ -1661,8 +1687,10 @@ release/controller.o: controller.cpp controller.h \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/qgraphicsitem.h \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QString \
 		C:/Qt/5.9/mingw53_32/include/QtGui/QMouseEvent \
-		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsLineItem \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QObject \
+		userInterface/graphicsline.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsLineItem \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsItem \
 		grafo.h \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QDebug \
 		mgrafo.h
@@ -1753,7 +1781,39 @@ release/graphicsline.o: userInterface/graphicsline.cpp userInterface/graphicslin
 		C:/Qt/5.9/mingw53_32/include/QtGui/qrgba64.h \
 		C:/Qt/5.9/mingw53_32/include/QtGui/qimage.h \
 		C:/Qt/5.9/mingw53_32/include/QtGui/qpixelformat.h \
-		C:/Qt/5.9/mingw53_32/include/QtGui/qtransform.h
+		C:/Qt/5.9/mingw53_32/include/QtGui/qtransform.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QMenu \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qmenu.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qwidget.h \
+		C:/Qt/5.9/mingw53_32/include/QtGui/qpalette.h \
+		C:/Qt/5.9/mingw53_32/include/QtGui/qbrush.h \
+		C:/Qt/5.9/mingw53_32/include/QtGui/qfont.h \
+		C:/Qt/5.9/mingw53_32/include/QtGui/qfontmetrics.h \
+		C:/Qt/5.9/mingw53_32/include/QtGui/qfontinfo.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qsizepolicy.h \
+		C:/Qt/5.9/mingw53_32/include/QtGui/qcursor.h \
+		C:/Qt/5.9/mingw53_32/include/QtGui/qkeysequence.h \
+		C:/Qt/5.9/mingw53_32/include/QtGui/qevent.h \
+		C:/Qt/5.9/mingw53_32/include/QtCore/qurl.h \
+		C:/Qt/5.9/mingw53_32/include/QtCore/qurlquery.h \
+		C:/Qt/5.9/mingw53_32/include/QtCore/qfile.h \
+		C:/Qt/5.9/mingw53_32/include/QtCore/qfiledevice.h \
+		C:/Qt/5.9/mingw53_32/include/QtGui/qvector2d.h \
+		C:/Qt/5.9/mingw53_32/include/QtGui/qtouchdevice.h \
+		C:/Qt/5.9/mingw53_32/include/QtGui/qicon.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qaction.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qactiongroup.h \
+		userInterface/vertex.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsEllipseItem \
+		C:/Qt/5.9/mingw53_32/include/QtCore/QString \
+		C:/Qt/5.9/mingw53_32/include/QtGui/QMouseEvent \
+		C:/Qt/5.9/mingw53_32/include/QtCore/QObject \
+		C:/Qt/5.9/mingw53_32/include/QtCore/QVector \
+		C:/Qt/5.9/mingw53_32/include/QtGui/QPainter \
+		C:/Qt/5.9/mingw53_32/include/QtGui/qpainter.h \
+		C:/Qt/5.9/mingw53_32/include/QtGui/qtextoption.h \
+		C:/Qt/5.9/mingw53_32/include/QtGui/qpen.h \
+		C:/Qt/5.9/mingw53_32/include/QtGui/QPen
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\graphicsline.o userInterface\graphicsline.cpp
 
 release/moc_grafo.o: release/moc_grafo.cpp 

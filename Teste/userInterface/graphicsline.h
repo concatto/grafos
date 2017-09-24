@@ -1,17 +1,29 @@
 #ifndef GRAPHICSLINE_H
 #define GRAPHICSLINE_H
+#include "vertex.h"
 #include <QGraphicsLineItem>
+#include <QMenu>
 
+class Vertex;
 
 class GraphicsLine : public QGraphicsLineItem
 {
 public:
     GraphicsLine();
-    GraphicsLine(QLineF line);
-
-    // QGraphicsItem interface
-public:
     int type() const override;
+    QMenu *getMenu();
+
+    void setV1(Vertex *v1);
+    void setV2(Vertex *v2);
+    Vertex* getV1();
+    Vertex* getV2();
+
+private:
+    QMenu *menuList;
+    Vertex *v1;
+    Vertex *v2;
+
+
 };
 
 #endif // GRAPHICSLINE_H

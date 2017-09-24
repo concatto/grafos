@@ -8,6 +8,8 @@
 #include "graphicsline.h"
 #include <QVector>
 
+class GraphicsLine;
+
 struct Line {
     Line(GraphicsLine *line, bool isP1){
         this->line = line;
@@ -27,8 +29,8 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     void addConnection(GraphicsLine *line, bool p1);
     int type() const override;
+    void removeConnection(QPointF p2, GraphicsLine *line);
 
-public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;

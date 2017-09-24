@@ -108,7 +108,6 @@ void Vertex::addConnection(GraphicsLine *line, bool p1)
         int xOffset = rect().x() + rect().width()/2;
         int yOffset = rect().y() + rect().height()/2;
 
-
         QPointF newCenterPos = QPointF(this->scenePos().x() + xOffset, this->scenePos().y() + yOffset);
 
         lines.back()->line->setLine(QLineF(line->line().p1(), newCenterPos));
@@ -135,4 +134,13 @@ QVariant Vertex::itemChange(GraphicsItemChange change, const QVariant &value)
 int Vertex::type() const
 {
     return 1;
+}
+
+void Vertex::removeConnection(QPointF p2, GraphicsLine *line)
+{
+    for(Line *l : lines){
+        if(l->line == line){
+            lines.removeOne(l);
+        }
+    }
 }

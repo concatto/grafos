@@ -51,7 +51,25 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
                 scene.setLine(item);
             }
         }else if(2 == item->type()){
-            qDebug()<<"fuckin gambiarra funcionou";
+            GraphicsLine *item = (GraphicsLine *)itemAt(event->pos());
+            QMenu *tmp;
+            tmp = item->getMenu();
+            QAction *action = NULL;
+            action = tmp->exec(QCursor::pos());
+
+            if(action == NULL)
+                return;
+
+            if(action->text() == QString("Remover conexão")){
+
+                Vertex *vertex1 = item->getV1();
+                Vertex *vertex2 = item->getV2();
+
+                vertex1->removeConnection(item->line().p1(), item);
+                vertex2->removeConnection(item->line().p2(), item);
+
+                scene.removeItem(item);
+            }
         }
     }else{
         QAction *action = NULL;

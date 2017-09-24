@@ -10,8 +10,6 @@ GraphicsScene::GraphicsScene()
     setSceneRect(0, 0, 740, 340);
     curr_vertex = NULL;
     controle_aresta = false;
-//    setBackgroundBrush(QBrush(Qt::red));
-
 }
 
 void GraphicsScene::addVertex(QString name)
@@ -29,6 +27,7 @@ void GraphicsScene::setLine( Vertex *item)
     curr_vertex = item;
     controle_aresta = true;
     curr_line = new GraphicsLine();
+    curr_line->setV1(curr_vertex);
     item->addConnection(curr_line, true);
 }
 
@@ -37,6 +36,7 @@ void GraphicsScene::drawEdge(Vertex *vertex)
     if(controle_aresta){
         addItem(curr_line);
         vertex->addConnection(curr_line, false);
+        curr_line->setV2(vertex);
 //        curr_vertex->setP2(vertex->pos());
         curr_line = NULL;
         controle_aresta = false;
