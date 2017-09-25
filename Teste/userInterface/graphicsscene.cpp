@@ -34,10 +34,14 @@ void GraphicsScene::setLine( Vertex *item)
 void GraphicsScene::drawEdge(Vertex *vertex)
 {
     if(controle_aresta){
-        addItem(curr_line);
-        vertex->addConnection(curr_line, false);
         curr_line->setV2(vertex);
-//        curr_vertex->setP2(vertex->pos());
+        if(!vertex->addConnection(curr_line, false)){
+            curr_line = NULL;
+            controle_aresta = false;
+            return;
+        }
+        addItem(curr_line);
+        curr_line->setV2(vertex);
         curr_line = NULL;
         controle_aresta = false;
         emit addConnection(curr_vertex->getName(), vertex->getName());

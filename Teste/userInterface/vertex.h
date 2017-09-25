@@ -27,7 +27,7 @@ public:
     QMenu *getMenu();
     QString getName();
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-    void addConnection(GraphicsLine *line, bool p1);
+    bool addConnection(GraphicsLine *line, bool p1);
     int type() const override;
     void removeConnection(GraphicsLine *line);
     void removeConnections();
@@ -42,6 +42,7 @@ private:
 //    bool isP1;
 //    GraphicsLine *line;
     QVector <Line*> lines;
+    bool compareLines(GraphicsLine *l1, GraphicsLine *l2);
 
     void moveLineToCenter(QPointF newPos);
 

@@ -35,8 +35,6 @@ void Vertex::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void Vertex::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-
-    qDebug()<<scene()->views().first()->mapFromScene(mapToScene(QPointF(this->x(), this->y())));
     if(event->buttons() & Qt::LeftButton/* && sceneBoundingRect().y() > -115*/){
         QPointF delta = event->scenePos() - event->lastScenePos();
         moveBy(delta.x(), delta.y());
@@ -46,6 +44,12 @@ void Vertex::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 void Vertex::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     (void)event;
+}
+
+bool Vertex::compareLines(GraphicsLine *l1, GraphicsLine *l2)
+{
+    return ((l1->getV1()->getName() == l2->getV1()->getName() && l1->getV2() == l2->getV2())
+            || l1->getV1()->getName() == l2->getV2()->getName() && l1->getV2()->getName() == l2->getV1()->getName());
 }
 
 void Vertex::moveLineToCenter(QPointF newPos)
@@ -68,7 +72,6 @@ void Vertex::moveLineToCenter(QPointF newPos)
 
 }
 
-
 QMenu* Vertex::getMenu()
 {
     return menuList;
@@ -88,12 +91,22 @@ void Vertex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
     //    painter->drawL
 }
 
-void Vertex::addConnection(GraphicsLine *line, bool p1)
+bool Vertex::addConnection(GraphicsLine *line, bool p1)
 {
     Line *nline = new Line(line, p1);
+
+    if(line->getV2() != NULL){
+        for(Line *l: lines){
+            if(compareLines(l->line, line)){
+//                delete line;
+//                delete nline;
+                return false;
+            }
+        }
+    }
+
     lines.append(nline);
-//    this->line = line;
-//    this->isP1 = p1;
+
 
     if(p1){
         int xOffset = rect().x() + rect().width()/2;
@@ -112,6 +125,8 @@ void Vertex::addConnection(GraphicsLine *line, bool p1)
 
         lines.back()->line->setLine(QLineF(line->line().p1(), newCenterPos));
     }
+
+    return true;
 
 }
 
@@ -140,7 +155,6 @@ void Vertex::removeConnection(GraphicsLine *line)
 {
     for(Line *l : lines){
         if(l->line == line){
-            qDebug()<<this->getName();
             lines.removeOne(l);
         }
     }

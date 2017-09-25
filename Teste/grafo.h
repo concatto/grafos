@@ -50,13 +50,11 @@ public slots:
     }
     void removeVertex(QString str){
         if(removerVertice(obterIndice(str.toStdString()))){
-            qDebug()<<"Removido com sucesso";
         }
     }
 
     void addConnection(QString name1, QString name2, int weight = 1){
-        qDebug()<<"Pensar";
-//        inserirAresta(obterIndice(name1), obterIndice(name2), weight);
+        inserirAresta(obterIndice(name1.toStdString()), obterIndice(name2.toStdString()), weight);
     }
 
     void removeConnection(QString name1, QString name2){

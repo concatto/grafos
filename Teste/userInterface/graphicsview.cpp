@@ -40,14 +40,11 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
                 reply = QMessageBox::question(this, "Remover vértice", "Você tem certeza que deseja remover este vértice?",
                                               QMessageBox::Yes|QMessageBox::No);
                 if(reply == QMessageBox::Yes){
-                    qDebug()<<"yes";
-
                     item->removeConnections();
 
                     emit removeVertex(item->getName());
                     scene.removeItem(item);
                 }else{
-                    qDebug()<<"no";
                 }
             }else if(action->text() == QString("Inserir aresta")){
                 Vertex *item = (Vertex*)itemAt(event->pos());

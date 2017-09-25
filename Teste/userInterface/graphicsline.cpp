@@ -5,6 +5,8 @@
 
 GraphicsLine::GraphicsLine() : QGraphicsLineItem()
 {
+    this->v1 = NULL;
+    this->v2 = NULL;
     menuList = new QMenu();
     menuList->addAction("Remover conexão");
     setPen(QPen(QBrush(Qt::black), 4));
@@ -32,7 +34,6 @@ void GraphicsLine::setV2(Vertex *v2)
 
 Vertex *GraphicsLine::getV1()
 {
-    qDebug()<<"To aqui e:"<<v1->getName();
     return v1;
 }
 
