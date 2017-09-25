@@ -8,6 +8,17 @@
 
 using namespace std;
 
+struct WashPowell {
+    int id;
+    int grau;
+    int cor;
+
+};
+
+inline bool operator < (WashPowell w1, WashPowell w2){
+    return w1.grau > w2.grau;
+}
+
 struct Arco {
     int peso;
     int vdestino;
@@ -59,6 +70,8 @@ public:
     virtual int consultarPeso(int origem, int destino) = 0;
     virtual bool removerVertice(int vertice) = 0;
     virtual int obterGrau(int vertice) = 0;
+    virtual void washPowell(int vertice = 0) = 0;
+    virtual vector<int> obterVerticesNaoAdjacentes(int origem) = 0;
 
     //Acho que agora foi, rapazeada, esperando o aval do mestre Fernando.
     void dijkstra(int origem){

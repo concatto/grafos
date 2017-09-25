@@ -1,12 +1,10 @@
 #ifndef MGRAFO_H
 #define MGRAFO_H
 #include "grafo.h"
+#include <iostream>
 
 using namespace std;
-/*
-bool operator > (pair<int, int> n1, pair<int,int> n2){
-    return (n1.second > n2.second);
-}*/
+
 
 struct MGrafo : public Grafo {
 //public slots:
@@ -53,18 +51,18 @@ struct MGrafo : public Grafo {
 
     void imprimir() override {
         for (int i = 0; i < this->adjacencias.size(); i++) {
-//            cout << "|";
+            cout << "|";
 
             for (int j = 0; j < this->adjacencias[i].size(); j++) {
-//                cout << this->adjacencias[i][j] << "|";
+                cout << this->adjacencias[i][j] << "|";
             }
 
-//            cout << "\n";
+            cout << "\n";
         }
 
-        //cout << "\n";
+        cout << "\n";
         for (int i = 0; i < this->nomes.size(); i++) {
-//            cout << i << ": " << this->nomes[i] << "\n";
+            cout << i << ": " << this->nomes[i] << "\n";
         }
     }
 
@@ -156,6 +154,71 @@ struct MGrafo : public Grafo {
 //            cout<<"\n"<<"Vertice: "<<nomes[i]<<" - Anterior: "<<nomes[lista[i].anterior]<<" - Distancia: "<<lista[i].distancia;
         }
 //        cout<<"\n";
+
+    }
+
+    bool washAux(vector <WashPowell> listaWp, int cor, int origem){
+        for(int adj : obterVerticesAdjacentes(origem)){
+            for(WashPowell l: listaWp){
+                if(l.id == adj && l.cor == cor){
+                    return false;
+                }
+            }
+        }
+
+        return true;
+
+    }
+
+    vector<int> obterVerticesNaoAdjacentes(int origem){
+        vector <int> lista;
+        for(int i = 0; i < adjacencias.size(); i++){
+            if(adjacencias[origem][i] == 0 && i != origem){
+                lista.push_back(i);
+            }
+        }
+        return lista;
+    }
+
+    void washPowell(int vertice = 0){
+        (void)vertice;
+
+        vector <WashPowell> listaWp(nomes.size());
+        int corAtual = 0;
+        int counter = 0;
+
+        for(int i = 0; i < listaWp.size(); i++){
+            listaWp[i].id = i;
+            listaWp[i].grau = obterGrau(i);
+            listaWp[i].cor = -1;
+        }
+
+        sort(listaWp.begin(), listaWp.end());
+
+        for(WashPowell &i : listaWp){
+            if(counter == nomes.size())
+                break;
+            while(!washAux(listaWp, corAtual, i.id)){
+                corAtual++;//listWp[i].cor = cor;
+            }
+
+            i.cor = corAtual;
+            counter++;
+
+            for(int l: obterVerticesNaoAdjacentes(i.id)){
+                for(WashPowell &w: listaWp){
+                    if(w.id == l && w.cor == -1 && washAux(listaWp, corAtual, l)){
+                        w.cor = corAtual;
+                        counter++;
+                    }
+                }
+            }
+
+        }
+
+        for(WashPowell l: listaWp){
+            qDebug()<<"Vértice: "<<QString::fromStdString(obterNome(l.id))<<" - "<<l.cor;
+        }
 
     }
 

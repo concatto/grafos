@@ -566,9 +566,9 @@ debug/moc_vertex.cpp: C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsEllipseIte
 		C:/Qt/5.9/mingw53_32/include/QtGui/QMouseEvent \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QObject \
 		userInterface/graphicsline.h \
-		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsLineItem \
 		userInterface/vertex.h \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QVector \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsLineItem \
 		userInterface/vertex.h \
 		debug/moc_predefs.h \
 		C:/Qt/5.9/mingw53_32/bin/moc.exe
@@ -1697,7 +1697,8 @@ debug/controller.o: controller.cpp controller.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\controller.o controller.cpp
 
 debug/graphicsline.o: userInterface/graphicsline.cpp userInterface/graphicsline.h \
-		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsLineItem \
+		userInterface/vertex.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsEllipseItem \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/qgraphicsitem.h \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/qtwidgetsglobal.h \
 		C:/Qt/5.9/mingw53_32/include/QtGui/qtguiglobal.h \
@@ -1803,17 +1804,17 @@ debug/graphicsline.o: userInterface/graphicsline.cpp userInterface/graphicsline.
 		C:/Qt/5.9/mingw53_32/include/QtGui/qicon.h \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/qaction.h \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/qactiongroup.h \
-		userInterface/vertex.h \
-		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsEllipseItem \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QString \
 		C:/Qt/5.9/mingw53_32/include/QtGui/QMouseEvent \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QObject \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QVector \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsLineItem \
 		C:/Qt/5.9/mingw53_32/include/QtGui/QPainter \
 		C:/Qt/5.9/mingw53_32/include/QtGui/qpainter.h \
 		C:/Qt/5.9/mingw53_32/include/QtGui/qtextoption.h \
 		C:/Qt/5.9/mingw53_32/include/QtGui/qpen.h \
-		C:/Qt/5.9/mingw53_32/include/QtGui/QPen
+		C:/Qt/5.9/mingw53_32/include/QtGui/QPen \
+		C:/Qt/5.9/mingw53_32/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\graphicsline.o userInterface\graphicsline.cpp
 
 debug/moc_grafo.o: debug/moc_grafo.cpp 
