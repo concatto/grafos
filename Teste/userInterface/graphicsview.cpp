@@ -41,6 +41,9 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
                                               QMessageBox::Yes|QMessageBox::No);
                 if(reply == QMessageBox::Yes){
                     qDebug()<<"yes";
+
+                    item->removeConnections();
+
                     emit removeVertex(item->getName());
                     scene.removeItem(item);
                 }else{
@@ -65,10 +68,11 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
                 Vertex *vertex1 = item->getV1();
                 Vertex *vertex2 = item->getV2();
 
-                vertex1->removeConnection(item->line().p1(), item);
-                vertex2->removeConnection(item->line().p2(), item);
+                vertex1->removeConnection(item);
+                vertex2->removeConnection(item);
 
                 scene.removeItem(item);
+                emit removeConnection(vertex1->getName(), vertex2->getName());
             }
         }
     }else{

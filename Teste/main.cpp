@@ -147,25 +147,25 @@ void menuPrincipal(Grafo& grafo) {
 int main(int argc, char *argv[]) {
 
     MGrafo grafo;
-    grafo.inserirVertice("A");
-    grafo.inserirVertice("B");
-    grafo.inserirVertice("C");
-    grafo.inserirVertice("D");
-    grafo.inserirVertice("E");
+//    grafo.inserirVertice("A");
+//    grafo.inserirVertice("B");
+//    grafo.inserirVertice("C");
+//    grafo.inserirVertice("D");
+//    grafo.inserirVertice("E");
 //    grafo.inserirVertice("F");
 
-    grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("B"));
+//    grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("B"));
 
-    grafo.inserirAresta(grafo.obterIndice("B"), grafo.obterIndice("C"));
+//    grafo.inserirAresta(grafo.obterIndice("B"), grafo.obterIndice("C"));
 
-    grafo.inserirAresta(grafo.obterIndice("E"), grafo.obterIndice("B"));
+//    grafo.inserirAresta(grafo.obterIndice("E"), grafo.obterIndice("B"));
 
-    grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("B"));
+//    grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("B"));
 
-    grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("A"));
+//    grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("A"));
 
-    grafo.inserirAresta(grafo.obterIndice("C"), grafo.obterIndice("E"));
-    grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("E"));
+//    grafo.inserirAresta(grafo.obterIndice("C"), grafo.obterIndice("E"));
+//    grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("E"));
 
 //    grafo.inserirAresta(grafo.obterIndice("C"), grafo.obterIndice("D"));
 //    grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("B"));
@@ -179,25 +179,25 @@ int main(int argc, char *argv[]) {
     grafo.inserirAresta(grafo.obterIndice("H"), grafo.obterIndice("I"), 10);
     grafo.inserirAresta(grafo.obterIndice("G"), grafo.obterIndice("I"), 5);*/
 
-    grafo.imprimir();
-    grafo.washPowell();
-    return 0;
+//    grafo.imprimir();
+//    grafo.washPowell();
+//    return 0;
 
-    cout << "Boas vindas a interface de grafos.\n";
-    cout << "Selecione o tipo de estrutura desejada.\n";
-    int estrutura = exibirMenu({"Matriz de Adjacencias", "Lista de Adjacencias"});
+//    cout << "Boas vindas a interface de grafos.\n";
+//    cout << "Selecione o tipo de estrutura desejada.\n";
+//    int estrutura = exibirMenu({"Matriz de Adjacencias", "Lista de Adjacencias"});
 
-    if (estrutura == 0) {
-        MGrafo g;
-        menuPrincipal(g);
-    } else if (estrutura == 1) {
-        LGrafo g;
-        menuPrincipal(g);
-    }
+//    if (estrutura == 0) {
+//        MGrafo g;
+//        menuPrincipal(g);
+//    } else if (estrutura == 1) {
+//        LGrafo g;
+//        menuPrincipal(g);
+//    }
 
-//    QApplication a(argc, argv);
-//    Controller controller;
+    QApplication a(argc, argv);
+    Controller controller;
 
-//    return a.exec();
+    return a.exec();
 }
 

@@ -136,11 +136,26 @@ int Vertex::type() const
     return 1;
 }
 
-void Vertex::removeConnection(QPointF p2, GraphicsLine *line)
+void Vertex::removeConnection(GraphicsLine *line)
 {
     for(Line *l : lines){
         if(l->line == line){
+            qDebug()<<this->getName();
             lines.removeOne(l);
         }
+    }
+}
+
+void Vertex::removeConnections()
+{
+    for(Line *l : lines){
+        if(l->isP1){
+            l->line->getV2()->removeConnection(l->line);
+        }else {
+            l->line->getV1()->removeConnection(l->line);
+        }
+        lines.removeOne(l);
+        delete l->line;
+        delete l;
     }
 }

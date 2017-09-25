@@ -29,7 +29,8 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     void addConnection(GraphicsLine *line, bool p1);
     int type() const override;
-    void removeConnection(QPointF p2, GraphicsLine *line);
+    void removeConnection(GraphicsLine *line);
+    void removeConnections();
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;

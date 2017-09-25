@@ -56,6 +56,11 @@ public slots:
 
     void addConnection(QString name1, QString name2, int weight = 1){
         qDebug()<<"Pensar";
+//        inserirAresta(obterIndice(name1), obterIndice(name2), weight);
+    }
+
+    void removeConnection(QString name1, QString name2){
+        removerAresta(obterIndice(name1.toStdString()), obterIndice(name2.toStdString()));
     }
 public:
     vector<string> nomes;
