@@ -31,6 +31,7 @@ public:
     int type() const override;
     void removeConnection(GraphicsLine *line);
     void removeConnections();
+    void print(); //Temp, only for debugging
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;

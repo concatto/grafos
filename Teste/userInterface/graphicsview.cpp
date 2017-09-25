@@ -44,6 +44,7 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
 
                     emit removeVertex(item->getName());
                     scene.removeItem(item);
+                    delete item;
                 }else{
                 }
             }else if(action->text() == QString("Inserir aresta")){
@@ -70,6 +71,7 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
 
                 scene.removeItem(item);
                 emit removeConnection(vertex1->getName(), vertex2->getName());
+                delete item;
             }
         }
     }else{
@@ -86,6 +88,8 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
                                                  "", &ok);
             scene.addVertex(text, mapToScene(event->pos()));
             emit addVertex(text);
+        }else if(action->text() == QString("Imprimir")){
+            scene.print();
         }
     }
 }

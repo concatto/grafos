@@ -31,20 +31,26 @@ void GraphicsScene::setLine( Vertex *item)
     item->addConnection(curr_line, true);
 }
 
+void GraphicsScene::print()
+{
+    vertices.front()->print();
+}
+
 void GraphicsScene::drawEdge(Vertex *vertex)
 {
     if(controle_aresta){
         curr_line->setV2(vertex);
         if(!vertex->addConnection(curr_line, false)){
             curr_line = NULL;
+            curr_vertex = NULL;
             controle_aresta = false;
             return;
         }
         addItem(curr_line);
-        curr_line->setV2(vertex);
         curr_line = NULL;
         controle_aresta = false;
         emit addConnection(curr_vertex->getName(), vertex->getName());
+        curr_vertex = NULL;
     }
 }
 

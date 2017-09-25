@@ -15,6 +15,7 @@ public:
     GraphicsScene();
     void addVertex(QString name, QPointF pos);
     void setLine(Vertex *item);
+    void print(); //temp, only for debugging
 
 private:
     QVector <Vertex*> vertices;

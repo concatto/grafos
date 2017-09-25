@@ -18,7 +18,6 @@ QRectF operator +(QRectF v1, qreal v2){
 Vertex::Vertex(float radius, QString name) : QGraphicsEllipseItem(0, 0, radius, radius)
 {
     this->name = name;
-//    this->line = NULL;
     setBrush(QBrush(Qt::red));
     menuList = new QMenu();
     menuList->addAction("Remover vértice");
@@ -163,13 +162,20 @@ void Vertex::removeConnection(GraphicsLine *line)
 void Vertex::removeConnections()
 {
     for(Line *l : lines){
+        qDebug()<<l->line->getV2()->getName();
         if(l->isP1){
             l->line->getV2()->removeConnection(l->line);
         }else {
             l->line->getV1()->removeConnection(l->line);
         }
-        lines.removeOne(l);
         delete l->line;
         delete l;
+    }
+}
+
+void Vertex::print()
+{
+    for(Line *l: lines){
+        qDebug()<<l->line->getV2()->getName();
     }
 }
