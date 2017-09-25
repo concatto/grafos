@@ -12,10 +12,10 @@ GraphicsScene::GraphicsScene()
     controle_aresta = false;
 }
 
-void GraphicsScene::addVertex(QString name)
+void GraphicsScene::addVertex(QString name, QPointF pos)
 {
     Vertex *vertex = new Vertex(50, name);
-    vertex->setPos(0, 0);
+    vertex->setPos(pos);
     vertices.append(vertex);
     addItem(vertices.back());
     QObject::connect(vertex, SIGNAL(drawEdge(Vertex*)), this, SLOT(drawEdge(Vertex*)));

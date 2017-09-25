@@ -13,7 +13,7 @@ class GraphicsScene : public QGraphicsScene
     Q_OBJECT
 public:
     GraphicsScene();
-    void addVertex(QString name);
+    void addVertex(QString name, QPointF pos);
     void setLine(Vertex *item);
 
 private:

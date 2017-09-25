@@ -87,7 +87,7 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
             QString text = QInputDialog::getText(this, tr("QInputDialog::getText()"),
                                                  tr("Nome do Vértice:"), QLineEdit::Normal,
                                                  "", &ok);
-            scene.addVertex(text);
+            scene.addVertex(text, mapToScene(event->pos()));
             emit addVertex(text);
         }
     }
