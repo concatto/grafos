@@ -146,7 +146,7 @@ void menuPrincipal(Grafo& grafo) {
 
 int main(int argc, char *argv[]) {
 
-    LGrafo grafo;
+    MGrafo grafo;
     grafo.inserirVertice("A");
     grafo.inserirVertice("B");
     grafo.inserirVertice("C");
@@ -160,7 +160,7 @@ int main(int argc, char *argv[]) {
 
     grafo.inserirAresta(grafo.obterIndice("E"), grafo.obterIndice("B"));
 
-    grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("B"));
+//    grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("B"));
 
     grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("A"));
 
@@ -171,7 +171,7 @@ int main(int argc, char *argv[]) {
 
 //    grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("B"));
 
-    grafo.washPowell();
+    grafo.dsatur();
     return 0;
 
     /*

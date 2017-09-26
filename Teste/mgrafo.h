@@ -263,6 +263,8 @@ struct MGrafo : public Grafo {
 
     }*/
 
+
+
 };
 
 #endif // MGRAFO_H
