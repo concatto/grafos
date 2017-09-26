@@ -18,6 +18,10 @@ private:
     QMenu menuList;
     GraphicsScene scene;
 
+public slots:
+    void duplicatedEdge();
+    void duplicatedVertex();
+
 signals:
     void addVertex(QString str);
     void removeVertex(QString str);

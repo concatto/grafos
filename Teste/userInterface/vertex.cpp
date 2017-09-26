@@ -47,11 +47,11 @@ void Vertex::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 bool Vertex::compareLines(GraphicsLine *l1, GraphicsLine *l2)
 {
-//    return ((l1->getV1()->getName() == l2->getV1()->getName() && l1->getV2()->getName() == l2->getV2()->getName())
-//            || l1->getV1()->getName() == l2->getV2()->getName() && l1->getV2()->getName() == l2->getV1()->getName());
+    return ((l1->getV1()->getName() == l2->getV1()->getName() && l1->getV2()->getName() == l2->getV2()->getName())
+            || (l1->getV1()->getName() == l2->getV2()->getName() && l1->getV2()->getName() == l2->getV1()->getName()));
 
-    return ((l1->getV1() == l2->getV1() && l1->getV2() == l2->getV2())
-            || l1->getV1() == l2->getV2() && l1->getV2() == l2->getV1());
+//    return ((l1->getV1() == l2->getV1() && l1->getV2() == l2->getV2())
+//            || l1->getV1() == l2->getV2() && l1->getV2() == l2->getV1());
 
 }
 

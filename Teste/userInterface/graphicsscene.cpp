@@ -12,13 +12,20 @@ GraphicsScene::GraphicsScene()
     controle_aresta = false;
 }
 
-void GraphicsScene::addVertex(QString name, QPointF pos)
+bool GraphicsScene::addVertex(QString name, QPointF pos)
 {
+    for(Vertex *v: vertices){
+        if(v->getName() == name){
+            emit duplicatedVertex();
+            return false;
+        }
+    }
     Vertex *vertex = new Vertex(50, name);
     vertex->setPos(pos);
     vertices.append(vertex);
     addItem(vertices.back());
     QObject::connect(vertex, SIGNAL(drawEdge(Vertex*)), this, SLOT(drawEdge(Vertex*)));
+    return true;
 }
 
 void GraphicsScene::setLine( Vertex *item)
@@ -45,6 +52,7 @@ void GraphicsScene::drawEdge(Vertex *vertex)
             curr_line = NULL;
             curr_vertex = NULL;
             controle_aresta = false;
+            emit duplicatedEdge();
             return;
         }
         addItem(curr_line);

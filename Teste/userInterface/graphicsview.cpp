@@ -17,6 +17,8 @@ GraphicsView::GraphicsView() : scene()
     setFixedSize(770, 570);
     setFrameShape(QGraphicsView::NoFrame);
     QObject::connect(&scene, SIGNAL(addConnection(QString,QString,int)), this, SIGNAL(addConnection(QString,QString,int)));
+    QObject::connect(&scene, SIGNAL(duplicatedEdge()), this, SLOT(duplicatedEdge()));
+    QObject::connect(&scene, SIGNAL(duplicatedVertex()), this, SLOT(duplicatedVertex()));
 }
 
 
@@ -80,14 +82,37 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
             return;
 
         if(action->text() == QString("Inserir vértice")){
-            bool ok;
-            QString text = QInputDialog::getText(this, tr("QInputDialog::getText()"),
-                                                 tr("Nome do Vértice:"), QLineEdit::Normal,
-                                                 "", &ok);
-            scene.addVertex(text, mapToScene(event->pos()));
-            emit addVertex(text);
+            bool ok = false;
+            QString text;
+            while(text.isEmpty()){
+                text = QInputDialog::getText(this, tr("QInputDialog::getText()"),
+                                                     tr("Nome do Vértice:"), QLineEdit::Normal,
+                                                     "", &ok);
+                if(!ok)
+                    return;
+            }
+            if(scene.addVertex(text, mapToScene(event->pos())))
+                emit addVertex(text);
         }else if(action->text() == QString("Imprimir")){
             scene.print();
         }
     }
+}
+
+void GraphicsView::duplicatedEdge()
+{
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Aresta duplicada");
+    msgBox.setText("Não é permitido inserir arestas duplicadas");
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    msgBox.exec();
+}
+
+void GraphicsView::duplicatedVertex()
+{
+    QMessageBox msgBox;
+    msgBox.setWindowTitle("Vértice duplicado");
+    msgBox.setText("Não é permitido inserir vértices duplicados");
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    msgBox.exec();
 }

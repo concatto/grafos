@@ -13,7 +13,7 @@ class GraphicsScene : public QGraphicsScene
     Q_OBJECT
 public:
     GraphicsScene();
-    void addVertex(QString name, QPointF pos);
+    bool addVertex(QString name, QPointF pos);
     void setLine(Vertex *item);
     void print(); //temp, only for debugging
 
@@ -29,6 +29,8 @@ public slots:
 
 signals:
     void addConnection(QString name1, QString name2, int weight = 1);
+    void duplicatedEdge();
+    void duplicatedVertex();
 
 //    // QGraphicsScene interface
 //protected:
