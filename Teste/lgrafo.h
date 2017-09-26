@@ -138,9 +138,9 @@ struct LGrafo : public Grafo {
         (void)vertice;
     }
 
-    vector<int> obterVerticesNaoAdjacentes(int origem){
-        (void)origem;
-    }
+//    vector<int> obterVerticesNaoAdjacentes(int origem){
+//        (void)origem;
+//    }
 
 };
 

@@ -74,7 +74,7 @@ public:
     virtual bool removerVertice(int vertice) = 0;
     virtual int obterGrau(int vertice) = 0;
     virtual void washPowell(int vertice = 0) = 0;
-    virtual vector<int> obterVerticesNaoAdjacentes(int origem) = 0;
+//    virtual vector<int> obterVerticesNaoAdjacentes(int origem) = 0;
 
     //Acho que agora foi, rapazeada, esperando o aval do mestre Fernando.
     void dijkstra(int origem){

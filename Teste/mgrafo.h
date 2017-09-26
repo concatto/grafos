@@ -158,27 +158,34 @@ struct MGrafo : public Grafo {
     }
 
     bool washAux(vector <WashPowell> listaWp, int cor, int origem){
-        for(int adj : obterVerticesAdjacentes(origem)){
-            for(WashPowell l: listaWp){
-                if(l.id == adj && l.cor == cor){
-                    return false;
-                }
+
+        for(WashPowell l: listaWp){
+            if(l.id != origem && consultarPeso(origem, l.id) > 0 && l.cor == cor){
+                return false;
             }
         }
+
+//        for(int adj : obterVerticesAdjacentes(origem)){
+//            for(WashPowell l: listaWp){
+//                if(l.id == adj && l.cor == cor){
+//                    return false;
+//                }
+//            }
+//        }
 
         return true;
 
     }
 
-    vector<int> obterVerticesNaoAdjacentes(int origem){
-        vector <int> lista;
-        for(int i = 0; i < adjacencias.size(); i++){
-            if(adjacencias[origem][i] == 0 && i != origem){
-                lista.push_back(i);
-            }
-        }
-        return lista;
-    }
+//    vector<int> obterVerticesNaoAdjacentes(int origem){
+//        vector <int> lista;
+//        for(int i = 0; i < adjacencias.size(); i++){
+//            if(adjacencias[origem][i] == 0 && i != origem){
+//                lista.push_back(i);
+//            }
+//        }
+//        return lista;
+//    }
 
     void washPowell(int vertice = 0){
         (void)vertice;
@@ -199,21 +206,27 @@ struct MGrafo : public Grafo {
             if(counter == nomes.size())
                 break;
             while(!washAux(listaWp, corAtual, i.id)){
-                corAtual++;//listWp[i].cor = cor;
+                corAtual++;
             }
 
             i.cor = corAtual;
             counter++;
 
-            for(int l: obterVerticesNaoAdjacentes(i.id)){
-                for(WashPowell &w: listaWp){
-                    if(w.id == l && w.cor == -1 && washAux(listaWp, corAtual, l)){
-                        w.cor = corAtual;
-                        counter++;
-                    }
+            for(WashPowell &w : listaWp){
+                if(w.id != i.id && w.cor == -1 && consultarPeso(i.id, w.id) == 0 && washAux(listaWp, corAtual, w.id)){
+                    w.cor = corAtual;
+                    counter++;
                 }
             }
 
+//            for(int l: obterVerticesNaoAdjacentes(i.id)){
+//                for(WashPowell &w: listaWp){
+//                    if(w.id == l && w.cor == -1 && washAux(listaWp, corAtual, l)){
+//                        w.cor = corAtual;
+//                        counter++;
+//                    }
+//                }
+//            }
         }
 
         for(WashPowell l: listaWp){
