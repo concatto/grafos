@@ -73,7 +73,55 @@ public:
     virtual int consultarPeso(int origem, int destino) = 0;
     virtual bool removerVertice(int vertice) = 0;
     virtual int obterGrau(int vertice) = 0;
-    virtual void washPowell(int vertice = 0) = 0;
+
+    bool washAux(vector <WashPowell> listaWp, int cor, int origem){
+
+        for(WashPowell l: listaWp){
+            if(l.id != origem && consultarPeso(origem, l.id) > 0 && l.cor == cor){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    vector <WashPowell> washPowell(){
+        vector <WashPowell> listaWp(nomes.size());
+        int corAtual = 0;
+        int counter = 0;
+
+        for(int i = 0; i < listaWp.size(); i++){
+            listaWp[i].id = i;
+            listaWp[i].grau = obterGrau(i);
+            listaWp[i].cor = -1;
+        }
+
+        sort(listaWp.begin(), listaWp.end());
+
+        for(WashPowell &i : listaWp){
+            if(counter == nomes.size())
+                break;
+            while(!washAux(listaWp, corAtual, i.id)){
+                corAtual++;
+            }
+
+            i.cor = corAtual;
+            counter++;
+
+            for(WashPowell &w : listaWp){
+                if(w.id != i.id && w.cor == -1 && consultarPeso(i.id, w.id) == 0 && washAux(listaWp, corAtual, w.id)){
+                    w.cor = corAtual;
+                    counter++;
+                }
+            }
+        }
+
+        for(WashPowell l: listaWp){
+            qDebug()<<"Vértice: "<<QString::fromStdString(obterNome(l.id))<<" - "<<l.cor;
+        }
+
+        return listaWp;
+
+    }
 //    virtual vector<int> obterVerticesNaoAdjacentes(int origem) = 0;
 
     //Acho que agora foi, rapazeada, esperando o aval do mestre Fernando.

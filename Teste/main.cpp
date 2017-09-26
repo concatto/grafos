@@ -146,7 +146,7 @@ void menuPrincipal(Grafo& grafo) {
 
 int main(int argc, char *argv[]) {
 
-    MGrafo grafo;
+    LGrafo grafo;
     grafo.inserirVertice("A");
     grafo.inserirVertice("B");
     grafo.inserirVertice("C");

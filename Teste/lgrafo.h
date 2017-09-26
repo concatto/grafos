@@ -134,9 +134,9 @@ struct LGrafo : public Grafo {
         return adjacencias[vertice].size();
     }
 
-    void washPowell(int vertice = 0){
-        (void)vertice;
-    }
+//    void washPowell(int vertice = 0){
+//        (void)vertice;
+//    }
 
 //    vector<int> obterVerticesNaoAdjacentes(int origem){
 //        (void)origem;
