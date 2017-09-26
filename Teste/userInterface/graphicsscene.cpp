@@ -41,6 +41,7 @@ void GraphicsScene::drawEdge(Vertex *vertex)
     if(controle_aresta){
         curr_line->setV2(vertex);
         if(!vertex->addConnection(curr_line, false)){
+            delete curr_line;
             curr_line = NULL;
             curr_vertex = NULL;
             controle_aresta = false;

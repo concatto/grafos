@@ -47,8 +47,12 @@ void Vertex::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 bool Vertex::compareLines(GraphicsLine *l1, GraphicsLine *l2)
 {
-    return ((l1->getV1()->getName() == l2->getV1()->getName() && l1->getV2() == l2->getV2())
-            || l1->getV1()->getName() == l2->getV2()->getName() && l1->getV2()->getName() == l2->getV1()->getName());
+//    return ((l1->getV1()->getName() == l2->getV1()->getName() && l1->getV2()->getName() == l2->getV2()->getName())
+//            || l1->getV1()->getName() == l2->getV2()->getName() && l1->getV2()->getName() == l2->getV1()->getName());
+
+    return ((l1->getV1() == l2->getV1() && l1->getV2() == l2->getV2())
+            || l1->getV1() == l2->getV2() && l1->getV2() == l2->getV1());
+
 }
 
 void Vertex::moveLineToCenter(QPointF newPos)
@@ -98,7 +102,9 @@ bool Vertex::addConnection(GraphicsLine *line, bool p1)
         for(Line *l: lines){
             if(compareLines(l->line, line)){
 //                delete line;
-//                delete nline;
+                line->getV1()->removeConnection(line);
+                line->getV2()->removeConnection(line);
+                delete nline;
                 return false;
             }
         }

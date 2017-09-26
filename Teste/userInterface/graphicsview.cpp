@@ -22,8 +22,6 @@ GraphicsView::GraphicsView() : scene()
 
 void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
 {
-
-
     if(QGraphicsItem *item = itemAt(event->pos())){
         if(1 == item->type()){
             Vertex *item = (Vertex*)itemAt(event->pos());
