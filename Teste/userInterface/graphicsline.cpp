@@ -2,6 +2,8 @@
 #include <QPainter>
 #include <QPen>
 #include <QDebug>
+#include <math.h>
+#define M_PI 3.14159265358979323846
 
 GraphicsLine::GraphicsLine() : QGraphicsLineItem()
 {
@@ -40,4 +42,25 @@ Vertex *GraphicsLine::getV1()
 Vertex *GraphicsLine::getV2()
 {
     return v2;
+}
+
+
+void GraphicsLine::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    QGraphicsLineItem::paint(painter, option, widget);
+
+    qreal arrowSize = 20;
+
+    double angle = ::acos(line().dx() / line().length());
+    if (line().dy() >= 0)
+        angle = (M_PI * 2) - angle;
+
+    QPointF arrowP1 = line().p2() - QPointF(sin(angle + M_PI / 3) * arrowSize,
+                                    cos(angle + M_PI / 3) * arrowSize);
+    QPointF arrowP2 = line().p2() - QPointF(sin(angle + M_PI - M_PI / 3) * arrowSize,
+                                    cos(angle + M_PI - M_PI / 3) * arrowSize);
+
+    painter->drawLine(QLineF(arrowP1.x(), arrowP1.y(), line().x2(), line().y2()));
+    painter->drawLine(QLineF(arrowP2.x(), arrowP2.y(), line().x2(), line().y2()));
+
 }

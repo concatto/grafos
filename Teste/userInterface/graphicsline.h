@@ -18,11 +18,12 @@ public:
     Vertex* getV1();
     Vertex* getV2();
 
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+
 private:
     QMenu *menuList;
     Vertex *v1;
     Vertex *v2;
-
 
 };
 

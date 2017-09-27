@@ -146,33 +146,33 @@ void menuPrincipal(Grafo& grafo) {
 
 int main(int argc, char *argv[]) {
 
-    MGrafo grafo;
-    grafo.inserirVertice("A");
-    grafo.inserirVertice("B");
-    grafo.inserirVertice("C");
-    grafo.inserirVertice("D");
-    grafo.inserirVertice("E");
-//    grafo.inserirVertice("F");
+//    MGrafo grafo;
+//    grafo.inserirVertice("A");
+//    grafo.inserirVertice("B");
+//    grafo.inserirVertice("C");
+//    grafo.inserirVertice("D");
+//    grafo.inserirVertice("E");
+////    grafo.inserirVertice("F");
 
-    grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("B"));
+//    grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("B"));
 
-    grafo.inserirAresta(grafo.obterIndice("B"), grafo.obterIndice("C"));
+//    grafo.inserirAresta(grafo.obterIndice("B"), grafo.obterIndice("C"));
 
-    grafo.inserirAresta(grafo.obterIndice("E"), grafo.obterIndice("B"));
+//    grafo.inserirAresta(grafo.obterIndice("E"), grafo.obterIndice("B"));
 
-//    grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("B"));
+////    grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("B"));
 
-    grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("A"));
+//    grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("A"));
 
-    grafo.inserirAresta(grafo.obterIndice("C"), grafo.obterIndice("E"));
-    grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("E"));
+//    grafo.inserirAresta(grafo.obterIndice("C"), grafo.obterIndice("E"));
+//    grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("E"));
 
 //    grafo.inserirAresta(grafo.obterIndice("C"), grafo.obterIndice("D"));
 
 //    grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("B"));
 
-    grafo.dsatur();
-    return 0;
+//    grafo.dsatur();
+//    return 0;
 
     /*
     grafo.inserirVertice("G");
@@ -199,9 +199,9 @@ int main(int argc, char *argv[]) {
 //        menuPrincipal(g);
 //    }
 
-//    QApplication a(argc, argv);
-//    Controller controller;
+    QApplication a(argc, argv);
+    Controller controller;
 
-//    return a.exec();
+    return a.exec();
 }
 
