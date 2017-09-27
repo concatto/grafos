@@ -200,14 +200,15 @@ public:
             while(!washAux(listaWp, corAtual, i.id)){
                 corAtual++;
             }
+            if(i.cor == -1){
+                i.cor = corAtual;
+                counter++;
 
-            i.cor = corAtual;
-            counter++;
-
-            for(WashPowell &w : listaWp){
-                if(w.id != i.id && w.cor == -1 && consultarPeso(i.id, w.id) == 0 && washAux(listaWp, corAtual, w.id)){
-                    w.cor = corAtual;
-                    counter++;
+                for(WashPowell &w : listaWp){
+                    if(w.id != i.id && w.cor == -1 && consultarPeso(i.id, w.id) == 0 && washAux(listaWp, corAtual, w.id)){
+                        w.cor = corAtual;
+                        counter++;
+                    }
                 }
             }
         }
