@@ -5,6 +5,7 @@
 #include "graphicsscene.h"
 #include <QGraphicsView>
 #include <QTextOption>
+#include <cmath>
 
 bool operator >(QPointF p1, QPointF p2){
     return (p1.x() > p2.x() && p1.y() > p2.y() && p2.x() > 30 && p2.y() > 30);
@@ -37,6 +38,15 @@ void Vertex::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     if(event->buttons() & Qt::LeftButton/* && sceneBoundingRect().y() > -115*/){
         QPointF delta = event->scenePos() - event->lastScenePos();
         moveBy(delta.x(), delta.y());
+
+        for(Line *line : lines){
+//            line->line->setLine(delta.x(), delta.y());
+            if(line->isP1)
+                line->line->setLine(QLineF(line->line->line().p1() + delta, line->line->line().p2()));
+            else
+                line->line->setLine(QLineF(line->line->line().p1(), line->line->line().p2() + delta));
+        }
+
     }
 }
 
@@ -57,19 +67,30 @@ bool Vertex::compareLines(GraphicsLine *l1, GraphicsLine *l2)
 
 void Vertex::moveLineToCenter(QPointF newPos)
 {
+
+//    QPointF p1 = getV1()->rect().center();
+//    QPointF p2 = getV2()->rect().center();
+
     int xOffset = rect().x() + rect().width()/2;
     int yOffset = rect().y() + rect().height()/2;
 
     QPointF newCenterPos = QPointF(newPos.x() + xOffset, newPos.y() + yOffset);
 
     for(Line *nav: lines){
+
         // Move the required point of the line to the center of the elipse
         QPointF p1 = nav->isP1 ? newCenterPos : nav->line->line().p1();
         QPointF p2 = nav->isP1 ? nav->line->line().p2() : newCenterPos;
 
-        nav->line->setLine(QLineF(p1, p2));
+        QPointF delta = p2 - p1;
 
-//        line->setLine(QLineF(p1, p2));
+        qreal angle1 = atan2(delta.y(), delta.x());
+        qreal radius = rect().width()/2;
+
+        qreal xOffset = radius * cos(angle1);
+        qreal yOffset = radius * sin(angle1);
+
+        nav->line->setLine(QLineF(p1, p2 - QPointF(xOffset, yOffset)));
     }
 
 
@@ -120,15 +141,28 @@ bool Vertex::addConnection(GraphicsLine *line, bool p1)
         QPointF newCenterPos = QPointF(this->scenePos().x() + xOffset, this->scenePos().y() + yOffset);
 
         lines.back()->line->setLine(QLineF(newCenterPos, QPointF(0, 0)));
-//        lines.back()
 
     }else {
+        QPointF p1 = line->line().p1();
+        QPointF p2 = rect().center();
+
+
+        QPointF delta = p2 - p1;
+
+        qreal angle1 = atan2(delta.y(), delta.x());
+        qreal radius = rect().width()/2;
+
+        qreal dxOffset = radius * cos(angle1);
+        qreal dyOffset = radius * sin(angle1);
+
+
+
         int xOffset = rect().x() + rect().width()/2;
         int yOffset = rect().y() + rect().height()/2;
 
         QPointF newCenterPos = QPointF(this->scenePos().x() + xOffset, this->scenePos().y() + yOffset);
 
-        lines.back()->line->setLine(QLineF(line->line().p1(), newCenterPos));
+        lines.back()->line->setLine(QLineF(line->line().p1(), newCenterPos - QPointF(dxOffset, dyOffset)));
     }
 
     return true;
@@ -142,7 +176,7 @@ QVariant Vertex::itemChange(GraphicsItemChange change, const QVariant &value)
         if (change == ItemPositionChange && scene()) {
             QPointF newPos = value.toPointF();
 
-            moveLineToCenter(newPos);
+//            moveLineToCenter(newPos);
         }
     }
 

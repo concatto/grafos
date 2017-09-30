@@ -146,33 +146,33 @@ void menuPrincipal(Grafo& grafo) {
 
 int main(int argc, char *argv[]) {
 
-    MGrafo grafo;
-    grafo.inserirVertice("A");
-    grafo.inserirVertice("B");
-    grafo.inserirVertice("C");
-    grafo.inserirVertice("D");
-    grafo.inserirVertice("E");
-//    grafo.inserirVertice("F");
+//    MGrafo grafo;
+//    grafo.inserirVertice("A");
+//    grafo.inserirVertice("B");
+//    grafo.inserirVertice("C");
+//    grafo.inserirVertice("D");
+//    grafo.inserirVertice("E");
+////    grafo.inserirVertice("F");
 
-    grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("B"));
+//    grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("B"));
 
-    grafo.inserirAresta(grafo.obterIndice("B"), grafo.obterIndice("C"));
+//    grafo.inserirAresta(grafo.obterIndice("B"), grafo.obterIndice("C"));
 
-    grafo.inserirAresta(grafo.obterIndice("E"), grafo.obterIndice("B"));
+//    grafo.inserirAresta(grafo.obterIndice("E"), grafo.obterIndice("B"));
 
-//    grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("B"));
+////    grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("B"));
 
-    grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("A"));
+//    grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("A"));
 
-    grafo.inserirAresta(grafo.obterIndice("C"), grafo.obterIndice("E"));
-    grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("E"));
+//    grafo.inserirAresta(grafo.obterIndice("C"), grafo.obterIndice("E"));
+//    grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("E"));
 
-//    grafo.inserirAresta(grafo.obterIndice("C"), grafo.obterIndice("D"));
+////    grafo.inserirAresta(grafo.obterIndice("C"), grafo.obterIndice("D"));
 
-//    grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("B"));
+////    grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("B"));
 
-    grafo.washPowell();
-    return 0;
+//    grafo.washPowell();
+//    return 0;
 
     /*
     grafo.inserirVertice("G");
@@ -199,9 +199,40 @@ int main(int argc, char *argv[]) {
 //        menuPrincipal(g);
 //    }
 
-//    QApplication a(argc, argv);
-//    Controller controller;
+//    MGrafo grafo;
+//    grafo.inserirVertice("A");
+//        grafo.inserirVertice("B");
+//        grafo.inserirVertice("C");
+//        grafo.inserirVertice("D");
+//        grafo.inserirVertice("E");
+//        grafo.inserirVertice("F");
+//        grafo.inserirVertice("G");
+//        grafo.inserirVertice("H");
+//        grafo.inserirVertice("I");
+//        grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("D"), 6);
 
-//    return a.exec();
+//        grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("E"), 8);
+
+//        grafo.inserirAresta(grafo.obterIndice("E"), grafo.obterIndice("B"), 1);
+
+//        grafo.inserirAresta(grafo.obterIndice("C"), grafo.obterIndice("E"), 4);
+
+//        grafo.inserirAresta(grafo.obterIndice("B"), grafo.obterIndice("D"), 5);
+
+//        grafo.inserirAresta(grafo.obterIndice("B"), grafo.obterIndice("C"), 2);
+
+//        grafo.inserirAresta(grafo.obterIndice("C"), grafo.obterIndice("F"), 10);
+//        grafo.inserirAresta(grafo.obterIndice("F"), grafo.obterIndice("G"), 30);
+//        grafo.inserirAresta(grafo.obterIndice("F"), grafo.obterIndice("H"), 10);
+//        grafo.inserirAresta(grafo.obterIndice("H"), grafo.obterIndice("I"), 10);
+//        grafo.inserirAresta(grafo.obterIndice("G"), grafo.obterIndice("I"), 5);
+
+////        grafo.imprimir();
+//        grafo.dijkstra(0, 5);
+
+    QApplication a(argc, argv);
+    Controller controller;
+
+    return a.exec();
 }
 

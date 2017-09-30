@@ -5,6 +5,7 @@
 #include <queue>
 #include <QObject>
 #include <QDebug>
+#include <iostream>
 
 using namespace std;
 
@@ -227,7 +228,7 @@ public:
 //    virtual vector<int> obterVerticesNaoAdjacentes(int origem) = 0;
 
     //Acho que agora foi, rapazeada, esperando o aval do mestre Fernando.
-    void dijkstra(int origem){
+    vector <Path> dijkstra(int origem, int destino = -1){
         vector <Path> lista(nomes.size());
         priority_queue <pair<int, int>> pq;
 
@@ -241,6 +242,16 @@ public:
 
         while(!pq.empty()){
             origem = pq.top().second;
+            if(origem == destino){
+                for(int i = 0; i < lista.size(); i++){
+                    if(i == backup)
+                        lista[i].anterior = backup;
+                    cout<<"\n"<<"Vertice: "<<nomes[i]<<" - Anterior: "<<nomes[lista[i].anterior]<<" - Distancia: "<<lista[i].distancia;
+                }
+
+                cout<<"\n";
+                return lista;
+            }
             pq.pop();
             lista[origem].aberto = false;
             for(int adj : obterVerticesAdjacentes(origem)){
@@ -257,9 +268,11 @@ public:
         for(int i = 0; i < lista.size(); i++){
             if(i == backup)
                 lista[i].anterior = backup;
-         //   cout<<"\n"<<"Vertice: "<<nomes[i]<<" - Anterior: "<<nomes[lista[i].anterior]<<" - Distancia: "<<lista[i].distancia;
+            cout<<"\n"<<"Vertice: "<<nomes[i]<<" - Anterior: "<<nomes[lista[i].anterior]<<" - Distancia: "<<lista[i].distancia;
         }
-        //cout<<"\n";
+
+        cout<<"\n";
+        return lista;
     }
 
     //Recupera o nome do vértice desejado. Se não existir, retorna a string vazia.

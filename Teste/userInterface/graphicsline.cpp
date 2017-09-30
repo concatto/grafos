@@ -49,6 +49,8 @@ void GraphicsLine::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
 {
     QGraphicsLineItem::paint(painter, option, widget);
 
+//    setLine(QLineF(p1, p2 - QPointF(xoffset, yoffset)));
+
     qreal arrowSize = 20;
 
     double angle = ::acos(line().dx() / line().length());
