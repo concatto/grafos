@@ -23,6 +23,7 @@ Vertex::Vertex(float radius, QString name) : QGraphicsEllipseItem(0, 0, radius, 
     menuList = new QMenu();
     menuList->addAction("Remover vértice");
     menuList->addAction("Inserir aresta");
+    menuList->addAction("Dijkstra a partir deste vértice");
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges);
 //    setFlag(QGraphicsItem::ItemIsMovable);
 }

@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Grafo_t {
-    QByteArrayData data[15];
-    char stringdata0[150];
+    QByteArrayData data[18];
+    char stringdata0[179];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -46,14 +46,18 @@ QT_MOC_LITERAL(10, 87, 5), // "name2"
 QT_MOC_LITERAL(11, 93, 6), // "weight"
 QT_MOC_LITERAL(12, 100, 16), // "removeConnection"
 QT_MOC_LITERAL(13, 117, 18), // "performWelshPowell"
-QT_MOC_LITERAL(14, 136, 13) // "performDsatur"
+QT_MOC_LITERAL(14, 136, 13), // "performDsatur"
+QT_MOC_LITERAL(15, 150, 15), // "performDijkstra"
+QT_MOC_LITERAL(16, 166, 4), // "name"
+QT_MOC_LITERAL(17, 171, 7) // "destino"
 
     },
     "Grafo\0paintVertices\0\0QVector<int>\0"
     "lista\0addVertex\0str\0removeVertex\0"
     "addConnection\0name1\0name2\0weight\0"
     "removeConnection\0performWelshPowell\0"
-    "performDsatur"
+    "performDsatur\0performDijkstra\0name\0"
+    "destino"
 };
 #undef QT_MOC_LITERAL
 
@@ -63,7 +67,7 @@ static const uint qt_meta_data_Grafo[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -71,16 +75,18 @@ static const uint qt_meta_data_Grafo[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   54,    2, 0x06 /* Public */,
+       1,    1,   64,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    1,   57,    2, 0x0a /* Public */,
-       7,    1,   60,    2, 0x0a /* Public */,
-       8,    3,   63,    2, 0x0a /* Public */,
-       8,    2,   70,    2, 0x2a /* Public | MethodCloned */,
-      12,    2,   75,    2, 0x0a /* Public */,
-      13,    0,   80,    2, 0x0a /* Public */,
-      14,    0,   81,    2, 0x0a /* Public */,
+       5,    1,   67,    2, 0x0a /* Public */,
+       7,    1,   70,    2, 0x0a /* Public */,
+       8,    3,   73,    2, 0x0a /* Public */,
+       8,    2,   80,    2, 0x2a /* Public | MethodCloned */,
+      12,    2,   85,    2, 0x0a /* Public */,
+      13,    0,   90,    2, 0x0a /* Public */,
+      14,    0,   91,    2, 0x0a /* Public */,
+      15,    2,   92,    2, 0x0a /* Public */,
+      15,    1,   97,    2, 0x2a /* Public | MethodCloned */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -93,6 +99,8 @@ static const uint qt_meta_data_Grafo[] = {
     QMetaType::Void, QMetaType::QString, QMetaType::QString,    9,   10,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::QString, QMetaType::Int,   16,   17,
+    QMetaType::Void, QMetaType::QString,   16,
 
        0        // eod
 };
@@ -111,6 +119,8 @@ void Grafo::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
         case 5: _t->removeConnection((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
         case 6: _t->performWelshPowell(); break;
         case 7: _t->performDsatur(); break;
+        case 8: _t->performDijkstra((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 9: _t->performDijkstra((*reinterpret_cast< QString(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -162,13 +172,13 @@ int Grafo::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 10;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 8)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 10;
     }
     return _id;
 }

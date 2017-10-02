@@ -30,6 +30,7 @@ signals:
     void removeConnection(QString name1, QString name2);
     void performWelshPowell();
     void performDsatur();
+    void performDijkstra(QString name, int destino = -1);
 
 };
 

@@ -12,5 +12,6 @@ Controller::Controller() : window()
     QObject::connect(&window, SIGNAL(performDsatur()), graph, SLOT(performDsatur()));
     QObject::connect(graph, SIGNAL(paintVertices(QVector<int>)), &window, SLOT(paintVertices(QVector<int>)));
     QObject::connect(graph, SIGNAL(paintVertices(QVector<int>)), &window, SLOT(paintVertices(QVector<int>)));
+    QObject::connect(&window, SIGNAL(performDijkstra(QString,int)), graph, SLOT(performDijkstra(QString, int)));
     window.show();
 }

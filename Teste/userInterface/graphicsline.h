@@ -9,7 +9,7 @@ class Vertex;
 class GraphicsLine : public QGraphicsLineItem
 {
 public:
-    GraphicsLine();
+    GraphicsLine(int peso);
     int type() const override;
     QMenu *getMenu();
 
@@ -17,6 +17,7 @@ public:
     void setV2(Vertex *v2);
     Vertex* getV1();
     Vertex* getV2();
+    int getWeight();
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
@@ -24,6 +25,7 @@ private:
     QMenu *menuList;
     Vertex *v1;
     Vertex *v2;
+    int weight;
 
 };
 

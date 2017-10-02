@@ -7,6 +7,9 @@
 #include <QObject>
 #include <QGraphicsItem>
 #include "graphicsline.h"
+#ifdef Q_OS_WIN
+#include <windows.h>
+#endif
 
 class GraphicsScene : public QGraphicsScene 
 {
@@ -15,7 +18,7 @@ public:
     GraphicsScene();
     bool addVertex(QString name, QPointF pos);
     void removeVertex(Vertex *vertex);
-    void setLine(Vertex *item);
+    void setLine(Vertex *item, int weight);
     void print(); //temp, only for debugging
     void paintVertices(QVector <int> cores);
 
@@ -24,6 +27,7 @@ private:
     bool controle_aresta;
     Vertex *curr_vertex;
     GraphicsLine *curr_line;
+    void sleep(int msec);
     //    QLineF line;
 
 public slots:

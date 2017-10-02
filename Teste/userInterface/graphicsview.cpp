@@ -53,8 +53,20 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
                 }else{
                 }
             }else if(action->text() == QString("Inserir aresta")){
-                Vertex *item = (Vertex*)itemAt(event->pos());
-                scene.setLine(item);
+                bool ok = false;
+                QString text;
+                while(text.isEmpty()){
+                    text = QInputDialog::getText(this, tr("QInputDialog::getText()"),
+                                                         tr("Peso da aresta:"), QLineEdit::Normal,
+                                                         "", &ok);
+                    if(!ok)
+                        return;
+                }
+//                Vertex *item = (Vertex*)itemAt(event->pos());
+                scene.setLine(item, text.toInt());
+            }else if(action->text() == QString("Dijkstra a partir deste vértice")){
+//                Vertex *item = (Vertex*)itemAt(event->pos());
+                emit performDijkstra(item->getName());
             }
         }else if(2 == item->type()){
             GraphicsLine *item = (GraphicsLine *)itemAt(event->pos());

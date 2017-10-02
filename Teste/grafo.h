@@ -113,6 +113,11 @@ public slots:
         emit paintVertices(cores);
     }
 
+    void performDijkstra(QString name, int destino = -1){
+        dijkstra(obterIndice(name.toStdString()), destino);
+    }
+
+
 signals:
     void paintVertices(QVector <int> lista);
 public:
@@ -198,9 +203,9 @@ public:
 
         }
 
-        for(Dsatur l: listaDsatur){
+//        for(Dsatur l: listaDsatur){
 //            qDebug()<<"Vértice: "<<QString::fromStdString(obterNome(l.id))<<" - "<<l.cor;
-        }
+//        }
 
         return listaDsatur;
 
@@ -252,9 +257,9 @@ public:
 
         }
 
-        for(WashPowell l: listaWp){
+//        for(WashPowell l: listaWp){
 //            qDebug()<<"Vértice: "<<QString::fromStdString(obterNome(l.id))<<" - "<<l.cor;
-        }
+//        }
 
         return listaWp;
 

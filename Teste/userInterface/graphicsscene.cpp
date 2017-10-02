@@ -36,12 +36,12 @@ void GraphicsScene::removeVertex(Vertex *vertex)
     delete vertex;
 }
 
-void GraphicsScene::setLine( Vertex *item)
+void GraphicsScene::setLine(Vertex *item, int weight)
 {
 //    line.setP1(item->pos());
     curr_vertex = item;
     controle_aresta = true;
-    curr_line = new GraphicsLine();
+    curr_line = new GraphicsLine(weight);
     curr_line->setV1(curr_vertex);
     item->addConnection(curr_line, true);
 }
@@ -79,9 +79,23 @@ void GraphicsScene::drawEdge(Vertex *vertex)
             return;
         }
         addItem(curr_line);
-        curr_line = NULL;
         controle_aresta = false;
-        emit addConnection(curr_vertex->getName(), vertex->getName());
+        emit addConnection(curr_vertex->getName(), vertex->getName(), curr_line->getWeight());
+        curr_line = NULL;
         curr_vertex = NULL;
     }
+}
+
+void GraphicsScene::sleep(int msec)
+{
+    if(msec <= 0){
+        return;
+    }
+
+    #ifdef Q_OS_WIN
+        Sleep(uint(msec));
+    #else
+        struct timespec ts = { msec / 1000, (msec % 1000) * 1000 * 1000 };
+        nanosleep(&ts, NULL);
+    #endif
 }
