@@ -46,9 +46,17 @@ void GraphicsScene::print()
 
 void GraphicsScene::paintVertices(QVector<int> cores)
 {
+    QStringList list = QColor::colorNames();
+
+//    for(int i = 0; i < cores.size(); i++){
+//        qDebug()<<list[i]<<" - "<<cores[i];
+//    }
+
+    qDebug()<<"----------";
+
     for(int i = 0; i < vertices.size(); i++){
-       QStringList list = QColor::colorNames();
-       vertices[i]->setBrush(QBrush(QColor(list[cores[i]])));
+       qDebug()<<vertices[i]->getName();
+       vertices[i]->setBrush(QBrush(QColor(list.at(cores[i]))));
     }
 }
 

@@ -38,14 +38,7 @@ void Vertex::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     if(event->buttons() & Qt::LeftButton/* && sceneBoundingRect().y() > -115*/){
         QPointF delta = event->scenePos() - event->lastScenePos();
         moveBy(delta.x(), delta.y());
-
-//        for(Line *line : lines){
-//            if(line->isP1)
-//                line->line->setLine(QLineF(line->line->line().p1() + delta, line->line->line().p2()));
-//            else
-//                line->line->setLine(QLineF(line->line->line().p1(), line->line->line().p2() + delta));
-//        }
-
+        moveLineToCenter(pos());
     }
 }
 
@@ -89,7 +82,11 @@ void Vertex::moveLineToCenter(QPointF newPos)
         qreal xOffset = radius * cos(angle1);
         qreal yOffset = radius * sin(angle1);
 
-        nav->line->setLine(QLineF(p1, p2/* - QPointF(xOffset, yOffset)*/));
+        // TODO Fix when nav->isP1 is true
+        if(nav->isP1)
+            nav->line->setLine(QLineF(p1, p2));
+        else
+            nav->line->setLine(QLineF(p1, p2 - QPointF(xOffset, yOffset)));
     }
 
 
@@ -171,13 +168,13 @@ bool Vertex::addConnection(GraphicsLine *line, bool p1)
 
 QVariant Vertex::itemChange(GraphicsItemChange change, const QVariant &value)
 {
-    if(lines.size() > 0){
-        if (change == ItemPositionChange && scene()) {
-            QPointF newPos = value.toPointF();
+//    if(lines.size() > 0){
+//        if (change == ItemPositionChange && scene()) {
+//            QPointF newPos = value.toPointF();
 
-            moveLineToCenter(newPos);
-        }
-    }
+//            moveLineToCenter(newPos);
+//        }
+//    }
 
     return QGraphicsItem::itemChange(change, value);
 }
@@ -201,7 +198,6 @@ void Vertex::removeConnection(GraphicsLine *line)
 void Vertex::removeConnections()
 {
     for(Line *l : lines){
-        qDebug()<<l->line->getV2()->getName();
         if(l->isP1){
             l->line->getV2()->removeConnection(l->line);
         }else {
