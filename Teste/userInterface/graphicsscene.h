@@ -14,6 +14,7 @@ class GraphicsScene : public QGraphicsScene
 public:
     GraphicsScene();
     bool addVertex(QString name, QPointF pos);
+    void removeVertex(Vertex *vertex);
     void setLine(Vertex *item);
     void print(); //temp, only for debugging
     void paintVertices(QVector <int> cores);
@@ -32,10 +33,6 @@ signals:
     void addConnection(QString name1, QString name2, int weight = 1);
     void duplicatedEdge();
     void duplicatedVertex();
-
-//    // QGraphicsScene interface
-//protected:
-//    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
 };
 
 #endif // GRAPHICSSCENE_H

@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_GraphicsView_t {
-    QByteArrayData data[13];
-    char stringdata0[135];
+    QByteArrayData data[14];
+    char stringdata0[156];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -41,15 +41,17 @@ QT_MOC_LITERAL(6, 55, 5), // "name1"
 QT_MOC_LITERAL(7, 61, 5), // "name2"
 QT_MOC_LITERAL(8, 67, 6), // "weight"
 QT_MOC_LITERAL(9, 74, 16), // "removeConnection"
-QT_MOC_LITERAL(10, 91, 11), // "welshPowell"
-QT_MOC_LITERAL(11, 103, 14), // "duplicatedEdge"
-QT_MOC_LITERAL(12, 118, 16) // "duplicatedVertex"
+QT_MOC_LITERAL(10, 91, 18), // "performWelshPowell"
+QT_MOC_LITERAL(11, 110, 13), // "performDsatur"
+QT_MOC_LITERAL(12, 124, 14), // "duplicatedEdge"
+QT_MOC_LITERAL(13, 139, 16) // "duplicatedVertex"
 
     },
     "GraphicsView\0addVertex\0\0str\0removeVertex\0"
     "addConnection\0name1\0name2\0weight\0"
-    "removeConnection\0welshPowell\0"
-    "duplicatedEdge\0duplicatedVertex"
+    "removeConnection\0performWelshPowell\0"
+    "performDsatur\0duplicatedEdge\0"
+    "duplicatedVertex"
 };
 #undef QT_MOC_LITERAL
 
@@ -59,29 +61,31 @@ static const uint qt_meta_data_GraphicsView[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       5,       // signalCount
+       6,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   49,    2, 0x06 /* Public */,
-       4,    1,   52,    2, 0x06 /* Public */,
-       5,    3,   55,    2, 0x06 /* Public */,
-       9,    2,   62,    2, 0x06 /* Public */,
-      10,    0,   67,    2, 0x06 /* Public */,
+       1,    1,   54,    2, 0x06 /* Public */,
+       4,    1,   57,    2, 0x06 /* Public */,
+       5,    3,   60,    2, 0x06 /* Public */,
+       9,    2,   67,    2, 0x06 /* Public */,
+      10,    0,   72,    2, 0x06 /* Public */,
+      11,    0,   73,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      11,    0,   68,    2, 0x0a /* Public */,
-      12,    0,   69,    2, 0x0a /* Public */,
+      12,    0,   74,    2, 0x0a /* Public */,
+      13,    0,   75,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
     QMetaType::Void, QMetaType::QString,    3,
     QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::Int,    6,    7,    8,
     QMetaType::Void, QMetaType::QString, QMetaType::QString,    6,    7,
+    QMetaType::Void,
     QMetaType::Void,
 
  // slots: parameters
@@ -101,9 +105,10 @@ void GraphicsView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 1: _t->removeVertex((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 2: _t->addConnection((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
         case 3: _t->removeConnection((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 4: _t->welshPowell(); break;
-        case 5: _t->duplicatedEdge(); break;
-        case 6: _t->duplicatedVertex(); break;
+        case 4: _t->performWelshPowell(); break;
+        case 5: _t->performDsatur(); break;
+        case 6: _t->duplicatedEdge(); break;
+        case 7: _t->duplicatedVertex(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -139,8 +144,15 @@ void GraphicsView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         }
         {
             typedef void (GraphicsView::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GraphicsView::welshPowell)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GraphicsView::performWelshPowell)) {
                 *result = 4;
+                return;
+            }
+        }
+        {
+            typedef void (GraphicsView::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GraphicsView::performDsatur)) {
+                *result = 5;
                 return;
             }
         }
@@ -172,13 +184,13 @@ int GraphicsView::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 8;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 8)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 7;
+        _id -= 8;
     }
     return _id;
 }
@@ -212,9 +224,15 @@ void GraphicsView::removeConnection(QString _t1, QString _t2)
 }
 
 // SIGNAL 4
-void GraphicsView::welshPowell()
+void GraphicsView::performWelshPowell()
 {
     QMetaObject::activate(this, &staticMetaObject, 4, nullptr);
+}
+
+// SIGNAL 5
+void GraphicsView::performDsatur()
+{
+    QMetaObject::activate(this, &staticMetaObject, 5, nullptr);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

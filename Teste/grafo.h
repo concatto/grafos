@@ -44,6 +44,10 @@ inline bool compareWelshSort(WashPowell w1, WashPowell w2){
     return w1.id < w2.id;
 }
 
+inline bool compareDsatur(Dsatur d1, Dsatur d2){
+    return d1.id < d2.id;
+}
+
 struct Arco {
     int peso;
     int vdestino;
@@ -86,7 +90,7 @@ public slots:
         removerAresta(obterIndice(name1.toStdString()), obterIndice(name2.toStdString()));
     }
 
-    void welshPowell(){
+    void performWelshPowell(){
         vector <WashPowell> lista = washPowell();
         QVector <int> cores;
         sort(lista.begin(), lista.end(), compareWelshSort);
@@ -95,11 +99,22 @@ public slots:
             cores.push_back(w.cor);
         }
 
-        emit drawWelshPowell(cores);
+        emit paintVertices(cores);
+    }
+
+    void performDsatur(){
+        vector <Dsatur> lista = dsatur();
+        QVector <int> cores;
+        sort(lista.begin(), lista.end(), compareDsatur);
+        for(Dsatur d: lista){
+            cores.push_back(d.cor);
+        }
+
+        emit paintVertices(cores);
     }
 
 signals:
-    void drawWelshPowell(QVector <int> lista);
+    void paintVertices(QVector <int> lista);
 public:
     vector<string> nomes;
 

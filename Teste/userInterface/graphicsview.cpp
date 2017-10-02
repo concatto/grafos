@@ -12,6 +12,7 @@ GraphicsView::GraphicsView() : scene()
     this->setScene(&scene);
     this->menuList.addAction("Inserir vértice");
     this->menuList.addAction("Welsh and Powell");
+    this->menuList.addAction("Dsatur");
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     //menuList.addAction("");
     setFixedSize(770, 570);
@@ -48,8 +49,7 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
                     item->removeConnections();
 
                     emit removeVertex(item->getName());
-                    scene.removeItem(item);
-                    delete item;
+                    scene.removeVertex(item);
                 }else{
                 }
             }else if(action->text() == QString("Inserir aresta")){
@@ -96,10 +96,14 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
                 if(!ok)
                     return;
             }
-            if(scene.addVertex(text, mapToScene(event->pos())))
+            if(scene.addVertex(text, mapToScene(event->pos()))){
                 emit addVertex(text);
+            }
+
         }else if(action->text() == QString("Welsh and Powell")){
-            emit welshPowell();
+            emit performWelshPowell();
+        }else if(action->text() == QString("Dsatur")){
+            emit performDsatur();
         }
     }
 }

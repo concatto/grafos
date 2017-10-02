@@ -28,7 +28,8 @@ signals:
     void removeVertex(QString str);
     void addConnection(QString name1, QString name2, int weight);
     void removeConnection(QString name1, QString name2);
-    void welshPowell();
+    void performWelshPowell();
+    void performDsatur();
 
 };
 

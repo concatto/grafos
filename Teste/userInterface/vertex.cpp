@@ -117,7 +117,6 @@ bool Vertex::addConnection(GraphicsLine *line, bool p1)
     if(line->getV2() != NULL){
         for(Line *l: lines){
             if(compareLines(l->line, line)){
-//                delete line;
                 line->getV1()->removeConnection(line);
                 line->getV2()->removeConnection(line);
                 delete nline;

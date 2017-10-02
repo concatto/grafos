@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[14];
-    char stringdata0[136];
+    QByteArrayData data[15];
+    char stringdata0[155];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -42,16 +42,18 @@ QT_MOC_LITERAL(6, 53, 5), // "name1"
 QT_MOC_LITERAL(7, 59, 5), // "name2"
 QT_MOC_LITERAL(8, 65, 6), // "weight"
 QT_MOC_LITERAL(9, 72, 16), // "removeConnection"
-QT_MOC_LITERAL(10, 89, 11), // "welshPowell"
-QT_MOC_LITERAL(11, 101, 15), // "drawWelshPowell"
-QT_MOC_LITERAL(12, 117, 12), // "QVector<int>"
-QT_MOC_LITERAL(13, 130, 5) // "cores"
+QT_MOC_LITERAL(10, 89, 18), // "performWelshPowell"
+QT_MOC_LITERAL(11, 108, 13), // "performDsatur"
+QT_MOC_LITERAL(12, 122, 13), // "paintVertices"
+QT_MOC_LITERAL(13, 136, 12), // "QVector<int>"
+QT_MOC_LITERAL(14, 149, 5) // "cores"
 
     },
     "MainWindow\0addVertex\0\0str\0removeVertex\0"
     "addConnection\0name1\0name2\0weight\0"
-    "removeConnection\0welshPowell\0"
-    "drawWelshPowell\0QVector<int>\0cores"
+    "removeConnection\0performWelshPowell\0"
+    "performDsatur\0paintVertices\0QVector<int>\0"
+    "cores"
 };
 #undef QT_MOC_LITERAL
 
@@ -61,23 +63,24 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       6,       // signalCount
+       7,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   49,    2, 0x06 /* Public */,
-       4,    1,   52,    2, 0x06 /* Public */,
-       5,    3,   55,    2, 0x06 /* Public */,
-       5,    2,   62,    2, 0x26 /* Public | MethodCloned */,
-       9,    2,   67,    2, 0x06 /* Public */,
-      10,    0,   72,    2, 0x06 /* Public */,
+       1,    1,   54,    2, 0x06 /* Public */,
+       4,    1,   57,    2, 0x06 /* Public */,
+       5,    3,   60,    2, 0x06 /* Public */,
+       5,    2,   67,    2, 0x26 /* Public | MethodCloned */,
+       9,    2,   72,    2, 0x06 /* Public */,
+      10,    0,   77,    2, 0x06 /* Public */,
+      11,    0,   78,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      11,    1,   73,    2, 0x0a /* Public */,
+      12,    1,   79,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -86,9 +89,10 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void, QMetaType::QString, QMetaType::QString,    6,    7,
     QMetaType::Void, QMetaType::QString, QMetaType::QString,    6,    7,
     QMetaType::Void,
+    QMetaType::Void,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 12,   13,
+    QMetaType::Void, 0x80000000 | 13,   14,
 
        0        // eod
 };
@@ -104,14 +108,15 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 2: _t->addConnection((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
         case 3: _t->addConnection((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
         case 4: _t->removeConnection((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 5: _t->welshPowell(); break;
-        case 6: _t->drawWelshPowell((*reinterpret_cast< QVector<int>(*)>(_a[1]))); break;
+        case 5: _t->performWelshPowell(); break;
+        case 6: _t->performDsatur(); break;
+        case 7: _t->paintVertices((*reinterpret_cast< QVector<int>(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         switch (_id) {
         default: *reinterpret_cast<int*>(_a[0]) = -1; break;
-        case 6:
+        case 7:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
@@ -152,8 +157,15 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         }
         {
             typedef void (MainWindow::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&MainWindow::welshPowell)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&MainWindow::performWelshPowell)) {
                 *result = 5;
+                return;
+            }
+        }
+        {
+            typedef void (MainWindow::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&MainWindow::performDsatur)) {
+                *result = 6;
                 return;
             }
         }
@@ -185,13 +197,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 8;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 8;
     }
     return _id;
 }
@@ -225,9 +237,15 @@ void MainWindow::removeConnection(QString _t1, QString _t2)
 }
 
 // SIGNAL 5
-void MainWindow::welshPowell()
+void MainWindow::performWelshPowell()
 {
     QMetaObject::activate(this, &staticMetaObject, 5, nullptr);
+}
+
+// SIGNAL 6
+void MainWindow::performDsatur()
+{
+    QMetaObject::activate(this, &staticMetaObject, 6, nullptr);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE
