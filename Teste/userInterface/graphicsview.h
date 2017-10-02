@@ -11,6 +11,7 @@ class GraphicsView : public QGraphicsView
     Q_OBJECT
 public:
     GraphicsView();
+    void paintVertices(QVector <int> cores);
     // QWidget interface
 protected:
     void contextMenuEvent(QContextMenuEvent *event) override;
@@ -27,6 +28,7 @@ signals:
     void removeVertex(QString str);
     void addConnection(QString name1, QString name2, int weight);
     void removeConnection(QString name1, QString name2);
+    void welshPowell();
 
 };
 

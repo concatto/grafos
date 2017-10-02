@@ -3,7 +3,8 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QTransform>
 #include <QGraphicsView>
-
+#include <QColor>
+#include <QStringList>
 
 GraphicsScene::GraphicsScene()
 {
@@ -41,6 +42,14 @@ void GraphicsScene::setLine( Vertex *item)
 void GraphicsScene::print()
 {
     vertices.front()->print();
+}
+
+void GraphicsScene::paintVertices(QVector<int> cores)
+{
+    for(int i = 0; i < vertices.size(); i++){
+       QStringList list = QColor::colorNames();
+       vertices[i]->setBrush(QBrush(QColor(list[cores[i]])));
+    }
 }
 
 void GraphicsScene::drawEdge(Vertex *vertex)

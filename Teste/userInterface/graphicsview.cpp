@@ -11,7 +11,7 @@ GraphicsView::GraphicsView() : scene()
 {
     this->setScene(&scene);
     this->menuList.addAction("Inserir vértice");
-    this->menuList.addAction("Imprimir");
+    this->menuList.addAction("Welsh and Powell");
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     //menuList.addAction("");
     setFixedSize(770, 570);
@@ -19,6 +19,11 @@ GraphicsView::GraphicsView() : scene()
     QObject::connect(&scene, SIGNAL(addConnection(QString,QString,int)), this, SIGNAL(addConnection(QString,QString,int)));
     QObject::connect(&scene, SIGNAL(duplicatedEdge()), this, SLOT(duplicatedEdge()));
     QObject::connect(&scene, SIGNAL(duplicatedVertex()), this, SLOT(duplicatedVertex()));
+}
+
+void GraphicsView::paintVertices(QVector<int> cores)
+{
+    scene.paintVertices(cores);
 }
 
 
@@ -93,8 +98,8 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
             }
             if(scene.addVertex(text, mapToScene(event->pos())))
                 emit addVertex(text);
-        }else if(action->text() == QString("Imprimir")){
-            scene.print();
+        }else if(action->text() == QString("Welsh and Powell")){
+            emit welshPowell();
         }
     }
 }

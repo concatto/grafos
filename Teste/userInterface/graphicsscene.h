@@ -8,7 +8,7 @@
 #include <QGraphicsItem>
 #include "graphicsline.h"
 
-class GraphicsScene : public QGraphicsScene
+class GraphicsScene : public QGraphicsScene 
 {
     Q_OBJECT
 public:
@@ -16,6 +16,7 @@ public:
     bool addVertex(QString name, QPointF pos);
     void setLine(Vertex *item);
     void print(); //temp, only for debugging
+    void paintVertices(QVector <int> cores);
 
 private:
     QVector <Vertex*> vertices;

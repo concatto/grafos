@@ -21,6 +21,10 @@ signals:
     void removeVertex(QString str);
     void addConnection(QString name1, QString name2, int weight = 1);
     void removeConnection(QString name1, QString name2);
+    void welshPowell();
+
+public slots:
+    void drawWelshPowell(QVector<int> cores);
 
 private:
     GraphicsView view;

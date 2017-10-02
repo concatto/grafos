@@ -9,6 +9,7 @@
 #include "../grafo.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
+#include <QtCore/QVector>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'grafo.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
@@ -21,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Grafo_t {
-    QByteArrayData data[10];
-    char stringdata0[84];
+    QByteArrayData data[14];
+    char stringdata0[131];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,20 +33,25 @@ struct qt_meta_stringdata_Grafo_t {
 static const qt_meta_stringdata_Grafo_t qt_meta_stringdata_Grafo = {
     {
 QT_MOC_LITERAL(0, 0, 5), // "Grafo"
-QT_MOC_LITERAL(1, 6, 9), // "addVertex"
-QT_MOC_LITERAL(2, 16, 0), // ""
-QT_MOC_LITERAL(3, 17, 3), // "str"
-QT_MOC_LITERAL(4, 21, 12), // "removeVertex"
-QT_MOC_LITERAL(5, 34, 13), // "addConnection"
-QT_MOC_LITERAL(6, 48, 5), // "name1"
-QT_MOC_LITERAL(7, 54, 5), // "name2"
-QT_MOC_LITERAL(8, 60, 6), // "weight"
-QT_MOC_LITERAL(9, 67, 16) // "removeConnection"
+QT_MOC_LITERAL(1, 6, 15), // "drawWelshPowell"
+QT_MOC_LITERAL(2, 22, 0), // ""
+QT_MOC_LITERAL(3, 23, 12), // "QVector<int>"
+QT_MOC_LITERAL(4, 36, 5), // "lista"
+QT_MOC_LITERAL(5, 42, 9), // "addVertex"
+QT_MOC_LITERAL(6, 52, 3), // "str"
+QT_MOC_LITERAL(7, 56, 12), // "removeVertex"
+QT_MOC_LITERAL(8, 69, 13), // "addConnection"
+QT_MOC_LITERAL(9, 83, 5), // "name1"
+QT_MOC_LITERAL(10, 89, 5), // "name2"
+QT_MOC_LITERAL(11, 95, 6), // "weight"
+QT_MOC_LITERAL(12, 102, 16), // "removeConnection"
+QT_MOC_LITERAL(13, 119, 11) // "welshPowell"
 
     },
-    "Grafo\0addVertex\0\0str\0removeVertex\0"
+    "Grafo\0drawWelshPowell\0\0QVector<int>\0"
+    "lista\0addVertex\0str\0removeVertex\0"
     "addConnection\0name1\0name2\0weight\0"
-    "removeConnection"
+    "removeConnection\0welshPowell"
 };
 #undef QT_MOC_LITERAL
 
@@ -55,26 +61,34 @@ static const uint qt_meta_data_Grafo[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       1,       // signalCount
+
+ // signals: name, argc, parameters, tag, flags
+       1,    1,   49,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   39,    2, 0x0a /* Public */,
-       4,    1,   42,    2, 0x0a /* Public */,
-       5,    3,   45,    2, 0x0a /* Public */,
-       5,    2,   52,    2, 0x2a /* Public | MethodCloned */,
-       9,    2,   57,    2, 0x0a /* Public */,
+       5,    1,   52,    2, 0x0a /* Public */,
+       7,    1,   55,    2, 0x0a /* Public */,
+       8,    3,   58,    2, 0x0a /* Public */,
+       8,    2,   65,    2, 0x2a /* Public | MethodCloned */,
+      12,    2,   70,    2, 0x0a /* Public */,
+      13,    0,   75,    2, 0x0a /* Public */,
+
+ // signals: parameters
+    QMetaType::Void, 0x80000000 | 3,    4,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::QString,    3,
-    QMetaType::Void, QMetaType::QString,    3,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::Int,    6,    7,    8,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString,    6,    7,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString,    6,    7,
+    QMetaType::Void, QMetaType::QString,    6,
+    QMetaType::Void, QMetaType::QString,    6,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::Int,    9,   10,   11,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString,    9,   10,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString,    9,   10,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -85,12 +99,35 @@ void Grafo::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
         Grafo *_t = static_cast<Grafo *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->addVertex((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 1: _t->removeVertex((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 2: _t->addConnection((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
-        case 3: _t->addConnection((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 4: _t->removeConnection((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 0: _t->drawWelshPowell((*reinterpret_cast< QVector<int>(*)>(_a[1]))); break;
+        case 1: _t->addVertex((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 2: _t->removeVertex((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 3: _t->addConnection((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 4: _t->addConnection((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 5: _t->removeConnection((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 6: _t->welshPowell(); break;
         default: ;
+        }
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        switch (_id) {
+        default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+        case 0:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QVector<int> >(); break;
+            }
+            break;
+        }
+    } else if (_c == QMetaObject::IndexOfMethod) {
+        int *result = reinterpret_cast<int *>(_a[0]);
+        void **func = reinterpret_cast<void **>(_a[1]);
+        {
+            typedef void (Grafo::*_t)(QVector<int> );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Grafo::drawWelshPowell)) {
+                *result = 0;
+                return;
+            }
         }
     }
 }
@@ -120,15 +157,22 @@ int Grafo::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 5)
-            *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 5;
+        if (_id < 7)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 7;
     }
     return _id;
+}
+
+// SIGNAL 0
+void Grafo::drawWelshPowell(QVector<int> _t1)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

@@ -40,6 +40,10 @@ inline bool operator < (WashPowell w1, WashPowell w2){
     return w1.grau > w2.grau;
 }
 
+inline bool compareWelshSort(WashPowell w1, WashPowell w2){
+    return w1.id < w2.id;
+}
+
 struct Arco {
     int peso;
     int vdestino;
@@ -81,6 +85,21 @@ public slots:
     void removeConnection(QString name1, QString name2){
         removerAresta(obterIndice(name1.toStdString()), obterIndice(name2.toStdString()));
     }
+
+    void welshPowell(){
+        vector <WashPowell> lista = washPowell();
+        QVector <int> cores;
+        sort(lista.begin(), lista.end(), compareWelshSort);
+        for(WashPowell w: washPowell()){
+            qDebug()<<"Vértice: "<<QString::fromStdString(obterNome(w.id))<<" - "<<w.cor;
+            cores.push_back(w.cor);
+        }
+
+        emit drawWelshPowell(cores);
+    }
+
+signals:
+    void drawWelshPowell(QVector <int> lista);
 public:
     vector<string> nomes;
 
@@ -165,7 +184,7 @@ public:
         }
 
         for(Dsatur l: listaDsatur){
-            qDebug()<<"Vértice: "<<QString::fromStdString(obterNome(l.id))<<" - "<<l.cor;
+//            qDebug()<<"Vértice: "<<QString::fromStdString(obterNome(l.id))<<" - "<<l.cor;
         }
 
         return listaDsatur;
@@ -219,7 +238,7 @@ public:
         }
 
         for(WashPowell l: listaWp){
-            qDebug()<<"Vértice: "<<QString::fromStdString(obterNome(l.id))<<" - "<<l.cor;
+//            qDebug()<<"Vértice: "<<QString::fromStdString(obterNome(l.id))<<" - "<<l.cor;
         }
 
         return listaWp;

@@ -39,13 +39,12 @@ void Vertex::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
         QPointF delta = event->scenePos() - event->lastScenePos();
         moveBy(delta.x(), delta.y());
 
-        for(Line *line : lines){
-//            line->line->setLine(delta.x(), delta.y());
-            if(line->isP1)
-                line->line->setLine(QLineF(line->line->line().p1() + delta, line->line->line().p2()));
-            else
-                line->line->setLine(QLineF(line->line->line().p1(), line->line->line().p2() + delta));
-        }
+//        for(Line *line : lines){
+//            if(line->isP1)
+//                line->line->setLine(QLineF(line->line->line().p1() + delta, line->line->line().p2()));
+//            else
+//                line->line->setLine(QLineF(line->line->line().p1(), line->line->line().p2() + delta));
+//        }
 
     }
 }
@@ -90,7 +89,7 @@ void Vertex::moveLineToCenter(QPointF newPos)
         qreal xOffset = radius * cos(angle1);
         qreal yOffset = radius * sin(angle1);
 
-        nav->line->setLine(QLineF(p1, p2 - QPointF(xOffset, yOffset)));
+        nav->line->setLine(QLineF(p1, p2/* - QPointF(xOffset, yOffset)*/));
     }
 
 
@@ -176,7 +175,7 @@ QVariant Vertex::itemChange(GraphicsItemChange change, const QVariant &value)
         if (change == ItemPositionChange && scene()) {
             QPointF newPos = value.toPointF();
 
-//            moveLineToCenter(newPos);
+            moveLineToCenter(newPos);
         }
     }
 
