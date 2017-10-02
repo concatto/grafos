@@ -91,7 +91,7 @@ public slots:
         QVector <int> cores;
         sort(lista.begin(), lista.end(), compareWelshSort);
         for(WashPowell w: lista){
-            qDebug()<<"Aqui - Vertice: "<<QString::fromStdString(obterNome(w.id));
+//            qDebug()<<"Aqui - Vertice: "<<QString::fromStdString(obterNome(w.id));
             cores.push_back(w.cor);
         }
 

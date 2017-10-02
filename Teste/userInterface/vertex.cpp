@@ -108,7 +108,6 @@ void Vertex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
     QGraphicsEllipseItem::paint(painter, option, widget);
     this->boundingRect().bottom();
     painter->drawText(this->rect() + this->rect().height(), Qt::AlignCenter, this->name);
-    //    painter->drawL
 }
 
 bool Vertex::addConnection(GraphicsLine *line, bool p1)
