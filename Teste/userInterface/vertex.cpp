@@ -39,14 +39,15 @@ void Vertex::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
         QPointF delta = event->scenePos() - event->lastScenePos();
         moveBy(delta.x(), delta.y());
 
-        for(Line *line : lines){
-//            line->line->setLine(delta.x(), delta.y());
-            if(line->isP1)
-                line->line->setLine(QLineF(line->line->line().p1() + delta, line->line->line().p2()));
-            else
-                line->line->setLine(QLineF(line->line->line().p1(), line->line->line().p2() + delta));
-        }
+//        for(Line *line : lines){
+////            line->line->setLine(delta.x(), delta.y());
+//            if(line->isP1)
+//                line->line->setLine(QLineF(line->line->line().p1() + delta, line->line->line().p2()));
+//            else
+//                line->line->setLine(QLineF(line->line->line().p1(), line->line->line().p2() + delta));
+//        }
 
+        moveLineToCenter(pos());
     }
 }
 
@@ -90,6 +91,7 @@ void Vertex::moveLineToCenter(QPointF newPos)
         qreal xOffset = radius * cos(angle1);
         qreal yOffset = radius * sin(angle1);
 
+        // TODO Fix when nav->isP1 is true
         nav->line->setLine(QLineF(p1, p2 - QPointF(xOffset, yOffset)));
     }
 
