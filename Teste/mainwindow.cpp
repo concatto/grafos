@@ -10,12 +10,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 //    QObject::connect(&view, SIGNAL(addVertexRequest(QString)), this, SLOT(addVertexRequest(QString)));
     QObject::connect(&view, SIGNAL(addVertex(QString)), this, SIGNAL(addVertex(QString)));
-    QObject::connect(&view, SIGNAL(removeVertex(QString)), this, SIGNAL(removeVertex(QString)));
-    QObject::connect(&view, SIGNAL(addConnection(QString,QString,int)), this, SIGNAL(addConnection(QString,QString,int)));
-    QObject::connect(&view, SIGNAL(removeConnection(QString,QString)), this, SIGNAL(removeConnection(QString,QString)));
+    QObject::connect(&view, SIGNAL(removeVertex(int)), this, SIGNAL(removeVertex(int)));
+    QObject::connect(&view, SIGNAL(addConnection(int,int,int)), this, SIGNAL(addConnection(int,int,int)));
+    QObject::connect(&view, SIGNAL(removeConnection(int, int)), this, SIGNAL(removeConnection(int, int)));
     QObject::connect(&view, SIGNAL(performWelshPowell()), this, SIGNAL(performWelshPowell()));
     QObject::connect(&view, SIGNAL(performDsatur()), this, SIGNAL(performDsatur()));
-    QObject::connect(&view, SIGNAL(performDijkstra(QString,QString)), this, SIGNAL(performDijkstra(QString,QString)));
+    QObject::connect(&view, SIGNAL(performDijkstra(int, int)), this, SIGNAL(performDijkstra(int, int)));
     ui->centralwidget->layout()->addWidget(&view);
 }
 

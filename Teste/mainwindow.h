@@ -18,12 +18,12 @@ public:
 
 signals:
     void addVertex(QString str);
-    void removeVertex(QString str);
-    void addConnection(QString name1, QString name2, int weight = 1);
-    void removeConnection(QString name1, QString name2);
+    void removeVertex(int id);
+    void addConnection(int id1, int id2, int weight = 1);
+    void removeConnection(int id1, int id2);
     void performWelshPowell();
     void performDsatur();
-    void performDijkstra(QString name1, QString name2 = NULL);
+    void performDijkstra(int origem, int destino = -1);
 
 public slots:
     void paintVertices(QVector<int> cores);

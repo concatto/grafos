@@ -23,8 +23,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[19];
-    char stringdata0[203];
+    QByteArrayData data[22];
+    char stringdata0[217];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -38,28 +38,31 @@ QT_MOC_LITERAL(1, 11, 9), // "addVertex"
 QT_MOC_LITERAL(2, 21, 0), // ""
 QT_MOC_LITERAL(3, 22, 3), // "str"
 QT_MOC_LITERAL(4, 26, 12), // "removeVertex"
-QT_MOC_LITERAL(5, 39, 13), // "addConnection"
-QT_MOC_LITERAL(6, 53, 5), // "name1"
-QT_MOC_LITERAL(7, 59, 5), // "name2"
-QT_MOC_LITERAL(8, 65, 6), // "weight"
-QT_MOC_LITERAL(9, 72, 16), // "removeConnection"
-QT_MOC_LITERAL(10, 89, 18), // "performWelshPowell"
-QT_MOC_LITERAL(11, 108, 13), // "performDsatur"
-QT_MOC_LITERAL(12, 122, 15), // "performDijkstra"
-QT_MOC_LITERAL(13, 138, 13), // "paintVertices"
-QT_MOC_LITERAL(14, 152, 12), // "QVector<int>"
-QT_MOC_LITERAL(15, 165, 5), // "cores"
-QT_MOC_LITERAL(16, 171, 13), // "paintDijkstra"
-QT_MOC_LITERAL(17, 185, 11), // "QStack<int>"
-QT_MOC_LITERAL(18, 197, 5) // "stack"
+QT_MOC_LITERAL(5, 39, 2), // "id"
+QT_MOC_LITERAL(6, 42, 13), // "addConnection"
+QT_MOC_LITERAL(7, 56, 3), // "id1"
+QT_MOC_LITERAL(8, 60, 3), // "id2"
+QT_MOC_LITERAL(9, 64, 6), // "weight"
+QT_MOC_LITERAL(10, 71, 16), // "removeConnection"
+QT_MOC_LITERAL(11, 88, 18), // "performWelshPowell"
+QT_MOC_LITERAL(12, 107, 13), // "performDsatur"
+QT_MOC_LITERAL(13, 121, 15), // "performDijkstra"
+QT_MOC_LITERAL(14, 137, 6), // "origem"
+QT_MOC_LITERAL(15, 144, 7), // "destino"
+QT_MOC_LITERAL(16, 152, 13), // "paintVertices"
+QT_MOC_LITERAL(17, 166, 12), // "QVector<int>"
+QT_MOC_LITERAL(18, 179, 5), // "cores"
+QT_MOC_LITERAL(19, 185, 13), // "paintDijkstra"
+QT_MOC_LITERAL(20, 199, 11), // "QStack<int>"
+QT_MOC_LITERAL(21, 211, 5) // "stack"
 
     },
     "MainWindow\0addVertex\0\0str\0removeVertex\0"
-    "addConnection\0name1\0name2\0weight\0"
+    "id\0addConnection\0id1\0id2\0weight\0"
     "removeConnection\0performWelshPowell\0"
-    "performDsatur\0performDijkstra\0"
-    "paintVertices\0QVector<int>\0cores\0"
-    "paintDijkstra\0QStack<int>\0stack"
+    "performDsatur\0performDijkstra\0origem\0"
+    "destino\0paintVertices\0QVector<int>\0"
+    "cores\0paintDijkstra\0QStack<int>\0stack"
 };
 #undef QT_MOC_LITERAL
 
@@ -79,32 +82,32 @@ static const uint qt_meta_data_MainWindow[] = {
  // signals: name, argc, parameters, tag, flags
        1,    1,   69,    2, 0x06 /* Public */,
        4,    1,   72,    2, 0x06 /* Public */,
-       5,    3,   75,    2, 0x06 /* Public */,
-       5,    2,   82,    2, 0x26 /* Public | MethodCloned */,
-       9,    2,   87,    2, 0x06 /* Public */,
-      10,    0,   92,    2, 0x06 /* Public */,
-      11,    0,   93,    2, 0x06 /* Public */,
-      12,    2,   94,    2, 0x06 /* Public */,
-      12,    1,   99,    2, 0x26 /* Public | MethodCloned */,
+       6,    3,   75,    2, 0x06 /* Public */,
+       6,    2,   82,    2, 0x26 /* Public | MethodCloned */,
+      10,    2,   87,    2, 0x06 /* Public */,
+      11,    0,   92,    2, 0x06 /* Public */,
+      12,    0,   93,    2, 0x06 /* Public */,
+      13,    2,   94,    2, 0x06 /* Public */,
+      13,    1,   99,    2, 0x26 /* Public | MethodCloned */,
 
  // slots: name, argc, parameters, tag, flags
-      13,    1,  102,    2, 0x0a /* Public */,
-      16,    1,  105,    2, 0x0a /* Public */,
+      16,    1,  102,    2, 0x0a /* Public */,
+      19,    1,  105,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
-    QMetaType::Void, QMetaType::QString,    3,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::Int,    6,    7,    8,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString,    6,    7,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString,    6,    7,
+    QMetaType::Void, QMetaType::Int,    5,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int,    7,    8,    9,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,    7,    8,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,    7,    8,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString,    6,    7,
-    QMetaType::Void, QMetaType::QString,    6,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,   14,   15,
+    QMetaType::Void, QMetaType::Int,   14,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 14,   15,
     QMetaType::Void, 0x80000000 | 17,   18,
+    QMetaType::Void, 0x80000000 | 20,   21,
 
        0        // eod
 };
@@ -116,14 +119,14 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->addVertex((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 1: _t->removeVertex((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 2: _t->addConnection((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
-        case 3: _t->addConnection((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 4: _t->removeConnection((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 1: _t->removeVertex((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 2: _t->addConnection((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 3: _t->addConnection((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 4: _t->removeConnection((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 5: _t->performWelshPowell(); break;
         case 6: _t->performDsatur(); break;
-        case 7: _t->performDijkstra((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 8: _t->performDijkstra((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 7: _t->performDijkstra((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 8: _t->performDijkstra((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 9: _t->paintVertices((*reinterpret_cast< QVector<int>(*)>(_a[1]))); break;
         case 10: _t->paintDijkstra((*reinterpret_cast< QStack<int>(*)>(_a[1]))); break;
         default: ;
@@ -157,21 +160,21 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
             }
         }
         {
-            typedef void (MainWindow::*_t)(QString );
+            typedef void (MainWindow::*_t)(int );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&MainWindow::removeVertex)) {
                 *result = 1;
                 return;
             }
         }
         {
-            typedef void (MainWindow::*_t)(QString , QString , int );
+            typedef void (MainWindow::*_t)(int , int , int );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&MainWindow::addConnection)) {
                 *result = 2;
                 return;
             }
         }
         {
-            typedef void (MainWindow::*_t)(QString , QString );
+            typedef void (MainWindow::*_t)(int , int );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&MainWindow::removeConnection)) {
                 *result = 4;
                 return;
@@ -192,7 +195,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
             }
         }
         {
-            typedef void (MainWindow::*_t)(QString , QString );
+            typedef void (MainWindow::*_t)(int , int );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&MainWindow::performDijkstra)) {
                 *result = 7;
                 return;
@@ -245,21 +248,21 @@ void MainWindow::addVertex(QString _t1)
 }
 
 // SIGNAL 1
-void MainWindow::removeVertex(QString _t1)
+void MainWindow::removeVertex(int _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 
 // SIGNAL 2
-void MainWindow::addConnection(QString _t1, QString _t2, int _t3)
+void MainWindow::addConnection(int _t1, int _t2, int _t3)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
     QMetaObject::activate(this, &staticMetaObject, 2, _a);
 }
 
 // SIGNAL 4
-void MainWindow::removeConnection(QString _t1, QString _t2)
+void MainWindow::removeConnection(int _t1, int _t2)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 4, _a);
@@ -278,7 +281,7 @@ void MainWindow::performDsatur()
 }
 
 // SIGNAL 7
-void MainWindow::performDijkstra(QString _t1, QString _t2)
+void MainWindow::performDijkstra(int _t1, int _t2)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 7, _a);

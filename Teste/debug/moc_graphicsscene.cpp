@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_GraphicsScene_t {
-    QByteArrayData data[12];
-    char stringdata0[124];
+    QByteArrayData data[14];
+    char stringdata0[135];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,20 +34,22 @@ static const qt_meta_stringdata_GraphicsScene_t qt_meta_stringdata_GraphicsScene
 QT_MOC_LITERAL(0, 0, 13), // "GraphicsScene"
 QT_MOC_LITERAL(1, 14, 13), // "addConnection"
 QT_MOC_LITERAL(2, 28, 0), // ""
-QT_MOC_LITERAL(3, 29, 5), // "name1"
-QT_MOC_LITERAL(4, 35, 5), // "name2"
-QT_MOC_LITERAL(5, 41, 6), // "weight"
-QT_MOC_LITERAL(6, 48, 14), // "duplicatedEdge"
-QT_MOC_LITERAL(7, 63, 16), // "duplicatedVertex"
-QT_MOC_LITERAL(8, 80, 15), // "performDijkstra"
-QT_MOC_LITERAL(9, 96, 12), // "mousePressed"
-QT_MOC_LITERAL(10, 109, 7), // "Vertex*"
-QT_MOC_LITERAL(11, 117, 6) // "vertex"
+QT_MOC_LITERAL(3, 29, 3), // "id1"
+QT_MOC_LITERAL(4, 33, 3), // "id2"
+QT_MOC_LITERAL(5, 37, 6), // "weight"
+QT_MOC_LITERAL(6, 44, 14), // "duplicatedEdge"
+QT_MOC_LITERAL(7, 59, 16), // "duplicatedVertex"
+QT_MOC_LITERAL(8, 76, 15), // "performDijkstra"
+QT_MOC_LITERAL(9, 92, 6), // "origem"
+QT_MOC_LITERAL(10, 99, 7), // "destino"
+QT_MOC_LITERAL(11, 107, 12), // "mousePressed"
+QT_MOC_LITERAL(12, 120, 7), // "Vertex*"
+QT_MOC_LITERAL(13, 128, 6) // "vertex"
 
     },
-    "GraphicsScene\0addConnection\0\0name1\0"
-    "name2\0weight\0duplicatedEdge\0"
-    "duplicatedVertex\0performDijkstra\0"
+    "GraphicsScene\0addConnection\0\0id1\0id2\0"
+    "weight\0duplicatedEdge\0duplicatedVertex\0"
+    "performDijkstra\0origem\0destino\0"
     "mousePressed\0Vertex*\0vertex"
 };
 #undef QT_MOC_LITERAL
@@ -74,18 +76,18 @@ static const uint qt_meta_data_GraphicsScene[] = {
        8,    1,   68,    2, 0x26 /* Public | MethodCloned */,
 
  // slots: name, argc, parameters, tag, flags
-       9,    1,   71,    2, 0x0a /* Public */,
+      11,    1,   71,    2, 0x0a /* Public */,
 
  // signals: parameters
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::Int,    3,    4,    5,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString,    3,    4,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int,    3,    4,    5,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,    3,    4,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString,    3,    4,
-    QMetaType::Void, QMetaType::QString,    3,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,    9,   10,
+    QMetaType::Void, QMetaType::Int,    9,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 10,   11,
+    QMetaType::Void, 0x80000000 | 12,   13,
 
        0        // eod
 };
@@ -96,12 +98,12 @@ void GraphicsScene::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         GraphicsScene *_t = static_cast<GraphicsScene *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->addConnection((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
-        case 1: _t->addConnection((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 0: _t->addConnection((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 1: _t->addConnection((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 2: _t->duplicatedEdge(); break;
         case 3: _t->duplicatedVertex(); break;
-        case 4: _t->performDijkstra((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 5: _t->performDijkstra((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 4: _t->performDijkstra((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 5: _t->performDijkstra((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 6: _t->mousePressed((*reinterpret_cast< Vertex*(*)>(_a[1]))); break;
         default: ;
         }
@@ -120,7 +122,7 @@ void GraphicsScene::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (GraphicsScene::*_t)(QString , QString , int );
+            typedef void (GraphicsScene::*_t)(int , int , int );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GraphicsScene::addConnection)) {
                 *result = 0;
                 return;
@@ -141,7 +143,7 @@ void GraphicsScene::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
             }
         }
         {
-            typedef void (GraphicsScene::*_t)(QString , QString );
+            typedef void (GraphicsScene::*_t)(int , int );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GraphicsScene::performDijkstra)) {
                 *result = 4;
                 return;
@@ -187,7 +189,7 @@ int GraphicsScene::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void GraphicsScene::addConnection(QString _t1, QString _t2, int _t3)
+void GraphicsScene::addConnection(int _t1, int _t2, int _t3)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
@@ -206,7 +208,7 @@ void GraphicsScene::duplicatedVertex()
 }
 
 // SIGNAL 4
-void GraphicsScene::performDijkstra(QString _t1, QString _t2)
+void GraphicsScene::performDijkstra(int _t1, int _t2)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 4, _a);

@@ -23,8 +23,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Grafo_t {
-    QByteArrayData data[19];
-    char stringdata0[198];
+    QByteArrayData data[21];
+    char stringdata0[209];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -44,22 +44,24 @@ QT_MOC_LITERAL(7, 66, 5), // "stack"
 QT_MOC_LITERAL(8, 72, 9), // "addVertex"
 QT_MOC_LITERAL(9, 82, 3), // "str"
 QT_MOC_LITERAL(10, 86, 12), // "removeVertex"
-QT_MOC_LITERAL(11, 99, 13), // "addConnection"
-QT_MOC_LITERAL(12, 113, 5), // "name1"
-QT_MOC_LITERAL(13, 119, 5), // "name2"
-QT_MOC_LITERAL(14, 125, 6), // "weight"
-QT_MOC_LITERAL(15, 132, 16), // "removeConnection"
-QT_MOC_LITERAL(16, 149, 18), // "performWelshPowell"
-QT_MOC_LITERAL(17, 168, 13), // "performDsatur"
-QT_MOC_LITERAL(18, 182, 15) // "performDijkstra"
+QT_MOC_LITERAL(11, 99, 3), // "id1"
+QT_MOC_LITERAL(12, 103, 13), // "addConnection"
+QT_MOC_LITERAL(13, 117, 3), // "id2"
+QT_MOC_LITERAL(14, 121, 6), // "weight"
+QT_MOC_LITERAL(15, 128, 16), // "removeConnection"
+QT_MOC_LITERAL(16, 145, 18), // "performWelshPowell"
+QT_MOC_LITERAL(17, 164, 13), // "performDsatur"
+QT_MOC_LITERAL(18, 178, 15), // "performDijkstra"
+QT_MOC_LITERAL(19, 194, 6), // "origem"
+QT_MOC_LITERAL(20, 201, 7) // "destino"
 
     },
     "Grafo\0paintVertices\0\0QVector<int>\0"
     "lista\0paintDijkstra\0QStack<int>\0stack\0"
-    "addVertex\0str\0removeVertex\0addConnection\0"
-    "name1\0name2\0weight\0removeConnection\0"
+    "addVertex\0str\0removeVertex\0id1\0"
+    "addConnection\0id2\0weight\0removeConnection\0"
     "performWelshPowell\0performDsatur\0"
-    "performDijkstra"
+    "performDijkstra\0origem\0destino"
 };
 #undef QT_MOC_LITERAL
 
@@ -83,8 +85,8 @@ static const uint qt_meta_data_Grafo[] = {
  // slots: name, argc, parameters, tag, flags
        8,    1,   75,    2, 0x0a /* Public */,
       10,    1,   78,    2, 0x0a /* Public */,
-      11,    3,   81,    2, 0x0a /* Public */,
-      11,    2,   88,    2, 0x2a /* Public | MethodCloned */,
+      12,    3,   81,    2, 0x0a /* Public */,
+      12,    2,   88,    2, 0x2a /* Public | MethodCloned */,
       15,    2,   93,    2, 0x0a /* Public */,
       16,    0,   98,    2, 0x0a /* Public */,
       17,    0,   99,    2, 0x0a /* Public */,
@@ -97,14 +99,14 @@ static const uint qt_meta_data_Grafo[] = {
 
  // slots: parameters
     QMetaType::Void, QMetaType::QString,    9,
-    QMetaType::Void, QMetaType::QString,    9,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::Int,   12,   13,   14,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString,   12,   13,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString,   12,   13,
+    QMetaType::Void, QMetaType::Int,   11,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int,   11,   13,   14,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,   11,   13,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,   11,   13,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString,   12,   13,
-    QMetaType::Void, QMetaType::QString,   12,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,   19,   20,
+    QMetaType::Void, QMetaType::Int,   19,
 
        0        // eod
 };
@@ -118,14 +120,14 @@ void Grafo::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
         case 0: _t->paintVertices((*reinterpret_cast< QVector<int>(*)>(_a[1]))); break;
         case 1: _t->paintDijkstra((*reinterpret_cast< QStack<int>(*)>(_a[1]))); break;
         case 2: _t->addVertex((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 3: _t->removeVertex((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 4: _t->addConnection((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
-        case 5: _t->addConnection((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 6: _t->removeConnection((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 3: _t->removeVertex((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 4: _t->addConnection((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 5: _t->addConnection((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 6: _t->removeConnection((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 7: _t->performWelshPowell(); break;
         case 8: _t->performDsatur(); break;
-        case 9: _t->performDijkstra((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 10: _t->performDijkstra((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 9: _t->performDijkstra((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 10: _t->performDijkstra((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {

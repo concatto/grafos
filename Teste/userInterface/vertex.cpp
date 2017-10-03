@@ -18,6 +18,8 @@ QRectF operator +(QRectF v1, qreal v2){
 
 Vertex::Vertex(float radius, QString name) : QGraphicsEllipseItem(0, 0, radius, radius)
 {
+    id = indexCounter;
+    indexCounter++;
     this->name = name;
     setBrush(QBrush(Qt::red));
     menuList = new QMenu();
@@ -33,6 +35,8 @@ void Vertex::mousePressEvent(QGraphicsSceneMouseEvent *event)
     (void)event;
     emit mousePressed(this);
 }
+
+int Vertex::indexCounter = 0;
 
 void Vertex::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
@@ -50,8 +54,8 @@ void Vertex::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 bool Vertex::compareLines(GraphicsLine *l1, GraphicsLine *l2)
 {
-    return ((l1->getV1()->getName() == l2->getV1()->getName() && l1->getV2()->getName() == l2->getV2()->getName())
-            || (l1->getV1()->getName() == l2->getV2()->getName() && l1->getV2()->getName() == l2->getV1()->getName()));
+    return ((l1->getV1()->getId() == l2->getV1()->getId() && l1->getV2()->getId() == l2->getV2()->getId())
+            || (l1->getV1()->getId() == l2->getV2()->getId() && l1->getV2()->getId() == l2->getV1()->getId()));
 
 //    return ((l1->getV1() == l2->getV1() && l1->getV2() == l2->getV2())
 //            || l1->getV1() == l2->getV2() && l1->getV2() == l2->getV1());
@@ -91,6 +95,11 @@ void Vertex::moveLineToCenter(QPointF newPos)
     }
 
 
+}
+
+void Vertex::setId(int value)
+{
+    id = value;
 }
 
 QMenu* Vertex::getMenu()
@@ -212,4 +221,20 @@ void Vertex::print()
     for(Line *l: lines){
         qDebug()<<l->line->getV2()->getName();
     }
+}
+
+void Vertex::paintEdges()
+{
+    for(Line *line: lines){
+        if(line->isP1){
+//            if(line->){
+
+//            }
+        }
+    }
+}
+
+int Vertex::getId()
+{
+    return this->id;
 }

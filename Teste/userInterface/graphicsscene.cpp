@@ -36,6 +36,7 @@ bool GraphicsScene::addVertex(QString name, QPointF pos)
 void GraphicsScene::removeVertex(Vertex *vertex)
 {
     vertices.removeOne(vertex);
+    vertex->setId(vertex->getId() - 1);
     removeItem(vertex);
     delete vertex;
 }
@@ -52,21 +53,31 @@ void GraphicsScene::setLine(Vertex *item)
 
 void GraphicsScene::print()
 {
-    vertices.front()->print();
+    for(Vertex *v: vertices){
+        qDebug()<<v->getId();
+    }
 }
 
-void GraphicsScene::paintVertices(QVector<int> cores)
+void GraphicsScene::paintVertices(QVector<int> cores, QBrush *brush)
 {
-    QStringList list = QColor::colorNames();
 
-    for(int i = 0; i < cores.size(); i++){
-        qDebug()<<vertices[i]->getName()<<list[i]<<" - "<<cores[i];
+    if(brush != NULL){ // Reset colors
+        for(Vertex *v: vertices){
+            v->setBrush(*brush);
+        }
+        return;
     }
 
-    qDebug()<<"----------";
+    QStringList list = QColor::colorNames();
+
+//    for(int i = 0; i < list.size(); i++){
+//        qDebug()<<list[i]<<i;
+//    }
+
+//    qDebug()<<"----------";
 
     for(int i = 0; i < vertices.size(); i++){
-       vertices[i]->setBrush(QBrush(QColor(list.at(cores[i] + 10))));
+       vertices[i]->setBrush(QBrush(QColor(list.at(cores[i] + 20))));
     }
 }
 
@@ -74,7 +85,9 @@ void GraphicsScene::paintDijkstra(QStack<int> stack)
 {
     while(!stack.isEmpty()){
         qDebug()<<stack.top();
-        vertices[stack.top()]->setBrush(QBrush(Qt::black));
+
+        vertices[stack.top()]->setBrush(QBrush(Qt::green));
+//        vertices[stack.top()]->paintEdge(QBrush(Qt::green));
         stack.pop();
     }
 
@@ -110,11 +123,11 @@ void GraphicsScene::mousePressed(Vertex *vertex)
         curr_line->setWeight(text.toInt());
         addItem(curr_line);
         controle_aresta = false;
-        emit addConnection(curr_vertex->getName(), vertex->getName(), curr_line->getWeight());
+        emit addConnection(curr_vertex->getId(), vertex->getId(), curr_line->getWeight());
         curr_line = NULL;
         curr_vertex = NULL;
     }else if(controle_dijkstra){
-        emit performDijkstra(curr_vertex->getName(), vertex->getName());
+        emit performDijkstra(curr_vertex->getId(), vertex->getId());
         curr_vertex = NULL;
         controle_dijkstra = false;
     }

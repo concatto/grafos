@@ -87,17 +87,17 @@ public slots:
     void addVertex(QString str){
         inserirVertice(str.toStdString());
     }
-    void removeVertex(QString str){
-        if(removerVertice(obterIndice(str.toStdString()))){
+    void removeVertex(int id1){
+        if(removerVertice(id1)){
         }
     }
 
-    void addConnection(QString name1, QString name2, int weight = 1){
-        inserirAresta(obterIndice(name1.toStdString()), obterIndice(name2.toStdString()), weight);
+    void addConnection(int id1, int id2, int weight = 1){
+        inserirAresta(id1, id2, weight);
     }
 
-    void removeConnection(QString name1, QString name2){
-        removerAresta(obterIndice(name1.toStdString()), obterIndice(name2.toStdString()));
+    void removeConnection(int id1, int id2){
+        removerAresta(id1, id2);
     }
 
     void performWelshPowell(){
@@ -123,11 +123,11 @@ public slots:
         emit paintVertices(cores);
     }
 
-    void performDijkstra(QString name1, QString name2 = NULL){
+    void performDijkstra(int origem, int destino = -1){
         QStack <int> stack;
 
-        int origem = obterIndice(name1.toStdString());
-        int destino = obterIndice(name2.toStdString());
+//        int origem = obterIndice(name1.toStdString());
+//        int destino = obterIndice(name2.toStdString());
 
         vector <Path> lista = dijkstra(origem, destino);
 

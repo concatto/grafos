@@ -14,14 +14,16 @@ GraphicsView::GraphicsView() : scene()
     this->menuList.addAction("Inserir vértice");
     this->menuList.addAction("Welsh and Powell");
     this->menuList.addAction("Dsatur");
+    this->menuList.addAction("Resetar cores");
+    this->menuList.addAction("Imprimir");
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     //menuList.addAction("");
     setFixedSize(770, 570);
     setFrameShape(QGraphicsView::NoFrame);
-    QObject::connect(&scene, SIGNAL(addConnection(QString,QString,int)), this, SIGNAL(addConnection(QString,QString,int)));
+    QObject::connect(&scene, SIGNAL(addConnection(int, int,int)), this, SIGNAL(addConnection(int, int,int)));
     QObject::connect(&scene, SIGNAL(duplicatedEdge()), this, SLOT(duplicatedEdge()));
     QObject::connect(&scene, SIGNAL(duplicatedVertex()), this, SLOT(duplicatedVertex()));
-    QObject::connect(&scene, SIGNAL(performDijkstra(QString,QString)), this, SIGNAL(performDijkstra(QString,QString)));
+    QObject::connect(&scene, SIGNAL(performDijkstra(int, int)), this, SIGNAL(performDijkstra(int, int)));
 }
 
 void GraphicsView::paintVertices(QVector<int> cores)
@@ -55,8 +57,9 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
                 if(reply == QMessageBox::Yes){
                     item->removeConnections();
 
-                    emit removeVertex(item->getName());
+                    emit removeVertex(item->getId());
                     scene.removeVertex(item);
+                    delete item;
                 }else{
                 }
             }else if(action->text() == QString("Inserir aresta")){
@@ -86,7 +89,7 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
                 vertex2->removeConnection(item);
 
                 scene.removeItem(item);
-                emit removeConnection(vertex1->getName(), vertex2->getName());
+                emit removeConnection(vertex1->getId(), vertex2->getId());
                 delete item;
             }
         }
@@ -115,6 +118,11 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
             emit performWelshPowell();
         }else if(action->text() == QString("Dsatur")){
             emit performDsatur();
+        }else if(action->text() == QString("Resetar cores")){
+            QBrush brush(Qt::red);
+            scene.paintVertices(QVector <int>(), &brush);
+        }else if(action->text() == QString("Imprimir")){
+            scene.print();
         }
     }
 }

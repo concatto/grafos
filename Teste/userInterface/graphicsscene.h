@@ -20,7 +20,7 @@ public:
     void removeVertex(Vertex *vertex);
     void setLine(Vertex *item);
     void print(); //temp, only for debugging
-    void paintVertices(QVector <int> cores);
+    void paintVertices(QVector <int> cores, QBrush *brush = NULL);
     void paintDijkstra(QStack <int> stack);
     void setDijkstra(Vertex *item);
 
@@ -37,10 +37,10 @@ public slots:
     void mousePressed(Vertex *vertex);
 
 signals:
-    void addConnection(QString name1, QString name2, int weight = 1);
+    void addConnection(int id1, int id2, int weight = 1);
     void duplicatedEdge();
     void duplicatedVertex();
-    void performDijkstra(QString name1, QString name2 = NULL);
+    void performDijkstra(int origem, int destino = -1);
 };
 
 #endif // GRAPHICSSCENE_H

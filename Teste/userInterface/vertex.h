@@ -10,6 +10,8 @@
 
 class GraphicsLine;
 
+
+
 struct Line {
     Line(GraphicsLine *line, bool isP1){
         this->line = line;
@@ -32,10 +34,14 @@ public:
     void removeConnection(GraphicsLine *line);
     void removeConnections();
     void print(); //Temp, only for debugging
+    void paintEdges();
+    int getId();
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
+
+    void setId(int value);
 
 private:
     QMenu *menuList;
@@ -44,8 +50,9 @@ private:
 //    GraphicsLine *line;
     QVector <Line*> lines;
     bool compareLines(GraphicsLine *l1, GraphicsLine *l2);
-
     void moveLineToCenter(QPointF newPos);
+    int id;
+    static int indexCounter;
 
 signals:
     void mousePressed(Vertex *vertex);
