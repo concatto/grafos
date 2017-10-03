@@ -95,6 +95,8 @@ void GraphicsScene::paintDijkstra(QStack<int> stack)
             break;
         vertices[vertice]->paintEdge(stack.top());
 
+        views().front()->viewport()->repaint();
+        sleep(500);
     }
 
 }
