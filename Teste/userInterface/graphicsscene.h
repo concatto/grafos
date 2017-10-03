@@ -41,6 +41,9 @@ signals:
     void duplicatedEdge();
     void duplicatedVertex();
     void performDijkstra(int origem, int destino = -1);
+
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
 };
 
 #endif // GRAPHICSSCENE_H

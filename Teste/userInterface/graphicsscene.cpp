@@ -152,3 +152,20 @@ void GraphicsScene::sleep(int msec)
         nanosleep(&ts, NULL);
     #endif
 }
+
+
+void GraphicsScene::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key() & Qt::Key_Escape){
+        if(controle_aresta){
+            curr_vertex->removeConnection(curr_line);
+            delete curr_line;
+            curr_line = NULL;
+            curr_vertex = NULL;
+            controle_aresta = false;
+        }else if(controle_dijkstra){
+            controle_dijkstra = false;
+        }
+    }
+
+}

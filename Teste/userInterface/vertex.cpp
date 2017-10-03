@@ -150,7 +150,6 @@ bool Vertex::addConnection(GraphicsLine *line, bool p1)
         QPointF p1 = line->line().p1();
         QPointF p2 = rect().center();
 
-
         QPointF delta = p2 - p1;
 
         qreal angle1 = atan2(delta.y(), delta.x());

@@ -16,6 +16,7 @@ public:
     // QWidget interface
 protected:
     void contextMenuEvent(QContextMenuEvent *event) override;
+
 private:
     QMenu menuList;
     GraphicsScene scene;
