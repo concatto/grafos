@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_GraphicsView_t {
-    QByteArrayData data[17];
-    char stringdata0[185];
+    QByteArrayData data[15];
+    char stringdata0[172];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -44,17 +44,15 @@ QT_MOC_LITERAL(9, 74, 16), // "removeConnection"
 QT_MOC_LITERAL(10, 91, 18), // "performWelshPowell"
 QT_MOC_LITERAL(11, 110, 13), // "performDsatur"
 QT_MOC_LITERAL(12, 124, 15), // "performDijkstra"
-QT_MOC_LITERAL(13, 140, 4), // "name"
-QT_MOC_LITERAL(14, 145, 7), // "destino"
-QT_MOC_LITERAL(15, 153, 14), // "duplicatedEdge"
-QT_MOC_LITERAL(16, 168, 16) // "duplicatedVertex"
+QT_MOC_LITERAL(13, 140, 14), // "duplicatedEdge"
+QT_MOC_LITERAL(14, 155, 16) // "duplicatedVertex"
 
     },
     "GraphicsView\0addVertex\0\0str\0removeVertex\0"
     "addConnection\0name1\0name2\0weight\0"
     "removeConnection\0performWelshPowell\0"
-    "performDsatur\0performDijkstra\0name\0"
-    "destino\0duplicatedEdge\0duplicatedVertex"
+    "performDsatur\0performDijkstra\0"
+    "duplicatedEdge\0duplicatedVertex"
 };
 #undef QT_MOC_LITERAL
 
@@ -82,8 +80,8 @@ static const uint qt_meta_data_GraphicsView[] = {
       12,    1,   89,    2, 0x26 /* Public | MethodCloned */,
 
  // slots: name, argc, parameters, tag, flags
-      15,    0,   92,    2, 0x0a /* Public */,
-      16,    0,   93,    2, 0x0a /* Public */,
+      13,    0,   92,    2, 0x0a /* Public */,
+      14,    0,   93,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -92,8 +90,8 @@ static const uint qt_meta_data_GraphicsView[] = {
     QMetaType::Void, QMetaType::QString, QMetaType::QString,    6,    7,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString, QMetaType::Int,   13,   14,
-    QMetaType::Void, QMetaType::QString,   13,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString,    6,    7,
+    QMetaType::Void, QMetaType::QString,    6,
 
  // slots: parameters
     QMetaType::Void,
@@ -114,7 +112,7 @@ void GraphicsView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 3: _t->removeConnection((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
         case 4: _t->performWelshPowell(); break;
         case 5: _t->performDsatur(); break;
-        case 6: _t->performDijkstra((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 6: _t->performDijkstra((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
         case 7: _t->performDijkstra((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 8: _t->duplicatedEdge(); break;
         case 9: _t->duplicatedVertex(); break;
@@ -166,7 +164,7 @@ void GraphicsView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
             }
         }
         {
-            typedef void (GraphicsView::*_t)(QString , int );
+            typedef void (GraphicsView::*_t)(QString , QString );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GraphicsView::performDijkstra)) {
                 *result = 6;
                 return;
@@ -252,7 +250,7 @@ void GraphicsView::performDsatur()
 }
 
 // SIGNAL 6
-void GraphicsView::performDijkstra(QString _t1, int _t2)
+void GraphicsView::performDijkstra(QString _t1, QString _t2)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 6, _a);

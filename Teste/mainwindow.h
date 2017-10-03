@@ -23,11 +23,11 @@ signals:
     void removeConnection(QString name1, QString name2);
     void performWelshPowell();
     void performDsatur();
-    void performDijkstra(QString name, int destino = -1);
+    void performDijkstra(QString name1, QString name2 = NULL);
 
 public slots:
     void paintVertices(QVector<int> cores);
-//    void drawDsatur(QVector<int> cores);
+    void paintDijkstra(QStack <int> stack);
 
 private:
     GraphicsView view;

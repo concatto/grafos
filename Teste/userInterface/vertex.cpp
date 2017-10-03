@@ -31,7 +31,7 @@ Vertex::Vertex(float radius, QString name) : QGraphicsEllipseItem(0, 0, radius, 
 void Vertex::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     (void)event;
-    emit drawEdge(this);
+    emit mousePressed(this);
 }
 
 void Vertex::mouseMoveEvent(QGraphicsSceneMouseEvent *event)

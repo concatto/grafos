@@ -199,8 +199,8 @@ int main(int argc, char *argv[]) {
 //        menuPrincipal(g);
 //    }
 
-//    MGrafo grafo;
-//    grafo.inserirVertice("A");
+//        MGrafo grafo;
+//        grafo.inserirVertice("A");
 //        grafo.inserirVertice("B");
 //        grafo.inserirVertice("C");
 //        grafo.inserirVertice("D");
@@ -209,13 +209,13 @@ int main(int argc, char *argv[]) {
 //        grafo.inserirVertice("G");
 //        grafo.inserirVertice("H");
 //        grafo.inserirVertice("I");
-//        grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("D"), 6);
+//        grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("B"), 5);
 
-//        grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("E"), 8);
+//        grafo.inserirAresta(grafo.obterIndice("B"), grafo.obterIndice("C"), 5);
 
-//        grafo.inserirAresta(grafo.obterIndice("E"), grafo.obterIndice("B"), 1);
+//        grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("D"), 15);
 
-//        grafo.inserirAresta(grafo.obterIndice("C"), grafo.obterIndice("E"), 4);
+//        grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("C"), 15);
 
 //        grafo.inserirAresta(grafo.obterIndice("B"), grafo.obterIndice("D"), 5);
 
@@ -228,7 +228,7 @@ int main(int argc, char *argv[]) {
 //        grafo.inserirAresta(grafo.obterIndice("G"), grafo.obterIndice("I"), 5);
 
 ////        grafo.imprimir();
-//        grafo.dijkstra(0, 5);
+//        grafo.dijkstra(0, 2);
 
     QApplication a(argc, argv);
     Controller controller;

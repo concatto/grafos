@@ -5,11 +5,10 @@
 #include <math.h>
 #define M_PI 3.14159265358979323846
 
-GraphicsLine::GraphicsLine(int weight) : QGraphicsLineItem()
+GraphicsLine::GraphicsLine() : QGraphicsLineItem()
 {
     this->v1 = NULL;
     this->v2 = NULL;
-    this->weight = weight;
     menuList = new QMenu();
     menuList->addAction("Remover conexão");
     setPen(QPen(QBrush(Qt::black), 4));
@@ -50,11 +49,17 @@ int GraphicsLine::getWeight()
     return weight;
 }
 
+void GraphicsLine::setWeight(int weight)
+{
+    this->weight = weight;
+}
+
 
 void GraphicsLine::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     QGraphicsLineItem::paint(painter, option, widget);
 
+//    painter->drawText(QPointF(this->line().p2().x() - this->line().p1().x(), ), );
 
 //    qreal arrowSize = 20;
 

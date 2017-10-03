@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Vertex_t {
     QByteArrayData data[5];
-    char stringdata0[32];
+    char stringdata0[36];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,13 +32,13 @@ struct qt_meta_stringdata_Vertex_t {
 static const qt_meta_stringdata_Vertex_t qt_meta_stringdata_Vertex = {
     {
 QT_MOC_LITERAL(0, 0, 6), // "Vertex"
-QT_MOC_LITERAL(1, 7, 8), // "drawEdge"
-QT_MOC_LITERAL(2, 16, 0), // ""
-QT_MOC_LITERAL(3, 17, 7), // "Vertex*"
-QT_MOC_LITERAL(4, 25, 6) // "vertex"
+QT_MOC_LITERAL(1, 7, 12), // "mousePressed"
+QT_MOC_LITERAL(2, 20, 0), // ""
+QT_MOC_LITERAL(3, 21, 7), // "Vertex*"
+QT_MOC_LITERAL(4, 29, 6) // "vertex"
 
     },
-    "Vertex\0drawEdge\0\0Vertex*\0vertex"
+    "Vertex\0mousePressed\0\0Vertex*\0vertex"
 };
 #undef QT_MOC_LITERAL
 
@@ -70,7 +70,7 @@ void Vertex::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         Vertex *_t = static_cast<Vertex *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->drawEdge((*reinterpret_cast< Vertex*(*)>(_a[1]))); break;
+        case 0: _t->mousePressed((*reinterpret_cast< Vertex*(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -89,7 +89,7 @@ void Vertex::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         void **func = reinterpret_cast<void **>(_a[1]);
         {
             typedef void (Vertex::*_t)(Vertex * );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Vertex::drawEdge)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Vertex::mousePressed)) {
                 *result = 0;
                 return;
             }
@@ -136,7 +136,7 @@ int Vertex::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void Vertex::drawEdge(Vertex * _t1)
+void Vertex::mousePressed(Vertex * _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

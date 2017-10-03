@@ -199,6 +199,8 @@ release/moc_grafo.cpp: C:/Qt/5.9/mingw53_32/include/QtCore/QObject \
 		C:/Qt/5.9/mingw53_32/include/QtCore/qcontiguouscache.h \
 		C:/Qt/5.9/mingw53_32/include/QtCore/qsharedpointer.h \
 		C:/Qt/5.9/mingw53_32/include/QtCore/qsharedpointer_impl.h \
+		C:/Qt/5.9/mingw53_32/include/QtCore/QStack \
+		C:/Qt/5.9/mingw53_32/include/QtCore/qstack.h \
 		grafo.h \
 		release/moc_predefs.h \
 		C:/Qt/5.9/mingw53_32/bin/moc.exe
@@ -840,6 +842,8 @@ release/moc_controller.cpp: mainwindow.h \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsItem \
 		grafo.h \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QDebug \
+		C:/Qt/5.9/mingw53_32/include/QtCore/QStack \
+		C:/Qt/5.9/mingw53_32/include/QtCore/qstack.h \
 		mgrafo.h \
 		controller.h \
 		release/moc_predefs.h \
@@ -932,6 +936,8 @@ release/main.o: main.cpp grafo.h \
 		C:/Qt/5.9/mingw53_32/include/QtCore/qcontiguouscache.h \
 		C:/Qt/5.9/mingw53_32/include/QtCore/qsharedpointer.h \
 		C:/Qt/5.9/mingw53_32/include/QtCore/qsharedpointer_impl.h \
+		C:/Qt/5.9/mingw53_32/include/QtCore/QStack \
+		C:/Qt/5.9/mingw53_32/include/QtCore/qstack.h \
 		mgrafo.h \
 		lgrafo.h \
 		terminal_ui.h \
@@ -1156,7 +1162,9 @@ release/graphicsview.o: userInterface/graphicsview.cpp userInterface/graphicsvie
 		C:/Qt/5.9/mingw53_32/include/QtCore/qcoreapplication.h \
 		C:/Qt/5.9/mingw53_32/include/QtCore/qeventloop.h \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/QMessageBox \
-		C:/Qt/5.9/mingw53_32/include/QtWidgets/qmessagebox.h
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qmessagebox.h \
+		C:/Qt/5.9/mingw53_32/include/QtCore/QStack \
+		C:/Qt/5.9/mingw53_32/include/QtCore/qstack.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\graphicsview.o userInterface\graphicsview.cpp
 
 release/graphicsscene.o: userInterface/graphicsscene.cpp userInterface/graphicsscene.h \
@@ -1287,7 +1295,18 @@ release/graphicsscene.o: userInterface/graphicsscene.cpp userInterface/graphicss
 		C:/Qt/5.9/mingw53_32/include/QtGui/qtextoption.h \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/qscrollarea.h \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
-		C:/Qt/5.9/mingw53_32/include/QtWidgets/qframe.h
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qframe.h \
+		C:/Qt/5.9/mingw53_32/include/QtGui/QColor \
+		C:/Qt/5.9/mingw53_32/include/QtCore/QStringList \
+		C:/Qt/5.9/mingw53_32/include/QtCore/QStack \
+		C:/Qt/5.9/mingw53_32/include/QtCore/qstack.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QInputDialog \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qinputdialog.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qlineedit.h \
+		C:/Qt/5.9/mingw53_32/include/QtGui/qtextcursor.h \
+		C:/Qt/5.9/mingw53_32/include/QtGui/qtextformat.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qdialog.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QLineEdit
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\graphicsscene.o userInterface\graphicsscene.cpp
 
 release/vertex.o: userInterface/vertex.cpp userInterface/vertex.h \
@@ -1553,11 +1572,45 @@ release/mainwindow.o: mainwindow.cpp mainwindow.h \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsLineItem \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsItem \
 		ui_mainwindow.h \
-		C:/Qt/5.9/mingw53_32/include/QtWidgets/QLayout \
+		C:/Qt/5.9/mingw53_32/include/QtCore/QVariant \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QAction \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QApplication \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qapplication.h \
+		C:/Qt/5.9/mingw53_32/include/QtCore/qcoreapplication.h \
+		C:/Qt/5.9/mingw53_32/include/QtCore/qeventloop.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qdesktopwidget.h \
+		C:/Qt/5.9/mingw53_32/include/QtGui/qguiapplication.h \
+		C:/Qt/5.9/mingw53_32/include/QtGui/qinputmethod.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QButtonGroup \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qbuttongroup.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QHBoxLayout \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qboxlayout.h \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/qlayout.h \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/qlayoutitem.h \
-		C:/Qt/5.9/mingw53_32/include/QtWidgets/qboxlayout.h \
-		C:/Qt/5.9/mingw53_32/include/QtWidgets/qgridlayout.h
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qgridlayout.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QHeaderView \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qheaderview.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qabstractitemview.h \
+		C:/Qt/5.9/mingw53_32/include/QtCore/qabstractitemmodel.h \
+		C:/Qt/5.9/mingw53_32/include/QtCore/qitemselectionmodel.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qstyleoption.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qabstractspinbox.h \
+		C:/Qt/5.9/mingw53_32/include/QtGui/qvalidator.h \
+		C:/Qt/5.9/mingw53_32/include/QtCore/qregularexpression.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qslider.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qabstractslider.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qstyle.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qtabbar.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qrubberband.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QMenuBar \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qmenubar.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QStatusBar \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/qstatusbar.h \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QWidget \
+		C:/Qt/5.9/mingw53_32/include/QtWidgets/QLayout \
+		C:/Qt/5.9/mingw53_32/include/QtCore/QStack \
+		C:/Qt/5.9/mingw53_32/include/QtCore/qstack.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mainwindow.o mainwindow.cpp
 
 release/controller.o: controller.cpp controller.h \
@@ -1693,6 +1746,8 @@ release/controller.o: controller.cpp controller.h \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/QGraphicsItem \
 		grafo.h \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QDebug \
+		C:/Qt/5.9/mingw53_32/include/QtCore/QStack \
+		C:/Qt/5.9/mingw53_32/include/QtCore/qstack.h \
 		mgrafo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\controller.o controller.cpp
 

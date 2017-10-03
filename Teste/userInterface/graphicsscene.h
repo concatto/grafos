@@ -18,9 +18,11 @@ public:
     GraphicsScene();
     bool addVertex(QString name, QPointF pos);
     void removeVertex(Vertex *vertex);
-    void setLine(Vertex *item, int weight);
+    void setLine(Vertex *item);
     void print(); //temp, only for debugging
     void paintVertices(QVector <int> cores);
+    void paintDijkstra(QStack <int> stack);
+    void setDijkstra(Vertex *item);
 
 private:
     QVector <Vertex*> vertices;
@@ -28,15 +30,17 @@ private:
     Vertex *curr_vertex;
     GraphicsLine *curr_line;
     void sleep(int msec);
+    bool controle_dijkstra;
     //    QLineF line;
 
 public slots:
-    void drawEdge(Vertex *vertex);
+    void mousePressed(Vertex *vertex);
 
 signals:
     void addConnection(QString name1, QString name2, int weight = 1);
     void duplicatedEdge();
     void duplicatedVertex();
+    void performDijkstra(QString name1, QString name2 = NULL);
 };
 
 #endif // GRAPHICSSCENE_H

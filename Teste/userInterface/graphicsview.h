@@ -12,6 +12,7 @@ class GraphicsView : public QGraphicsView
 public:
     GraphicsView();
     void paintVertices(QVector <int> cores);
+    void paintDijkstra(QStack <int> stack);
     // QWidget interface
 protected:
     void contextMenuEvent(QContextMenuEvent *event) override;
@@ -30,7 +31,7 @@ signals:
     void removeConnection(QString name1, QString name2);
     void performWelshPowell();
     void performDsatur();
-    void performDijkstra(QString name, int destino = -1);
+    void performDijkstra(QString name1, QString name2 = NULL);
 
 };
 

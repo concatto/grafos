@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QLayout>
+#include <QStack>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(&view, SIGNAL(removeConnection(QString,QString)), this, SIGNAL(removeConnection(QString,QString)));
     QObject::connect(&view, SIGNAL(performWelshPowell()), this, SIGNAL(performWelshPowell()));
     QObject::connect(&view, SIGNAL(performDsatur()), this, SIGNAL(performDsatur()));
-    QObject::connect(&view, SIGNAL(performDijkstra(QString,int)), this, SIGNAL(performDijkstra(QString,int)));
+    QObject::connect(&view, SIGNAL(performDijkstra(QString,QString)), this, SIGNAL(performDijkstra(QString,QString)));
     ui->centralwidget->layout()->addWidget(&view);
 }
 
@@ -26,4 +27,9 @@ MainWindow::~MainWindow()
 void MainWindow::paintVertices(QVector<int> cores)
 {
     view.paintVertices(cores);
+}
+
+void MainWindow::paintDijkstra(QStack<int> stack)
+{
+    view.paintDijkstra(stack);
 }

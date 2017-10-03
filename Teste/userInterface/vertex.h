@@ -48,7 +48,7 @@ private:
     void moveLineToCenter(QPointF newPos);
 
 signals:
-    void drawEdge(Vertex *vertex);
+    void mousePressed(Vertex *vertex);
 
 
     // QGraphicsItem interface

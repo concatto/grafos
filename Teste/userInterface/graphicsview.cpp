@@ -6,6 +6,7 @@
 #include <QDir>
 #include <QCoreApplication>
 #include <QMessageBox>
+#include <QStack>
 
 GraphicsView::GraphicsView() : scene()
 {
@@ -20,11 +21,17 @@ GraphicsView::GraphicsView() : scene()
     QObject::connect(&scene, SIGNAL(addConnection(QString,QString,int)), this, SIGNAL(addConnection(QString,QString,int)));
     QObject::connect(&scene, SIGNAL(duplicatedEdge()), this, SLOT(duplicatedEdge()));
     QObject::connect(&scene, SIGNAL(duplicatedVertex()), this, SLOT(duplicatedVertex()));
+    QObject::connect(&scene, SIGNAL(performDijkstra(QString,QString)), this, SIGNAL(performDijkstra(QString,QString)));
 }
 
 void GraphicsView::paintVertices(QVector<int> cores)
 {
     scene.paintVertices(cores);
+}
+
+void GraphicsView::paintDijkstra(QStack<int> stack)
+{
+    scene.paintDijkstra(stack);
 }
 
 
@@ -53,20 +60,12 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
                 }else{
                 }
             }else if(action->text() == QString("Inserir aresta")){
-                bool ok = false;
-                QString text;
-                while(text.isEmpty()){
-                    text = QInputDialog::getText(this, tr("QInputDialog::getText()"),
-                                                         tr("Peso da aresta:"), QLineEdit::Normal,
-                                                         "", &ok);
-                    if(!ok)
-                        return;
-                }
 //                Vertex *item = (Vertex*)itemAt(event->pos());
-                scene.setLine(item, text.toInt());
+                scene.setLine(item);
             }else if(action->text() == QString("Dijkstra a partir deste vértice")){
 //                Vertex *item = (Vertex*)itemAt(event->pos());
-                emit performDijkstra(item->getName());
+                scene.setDijkstra(item);
+//                emit performDijkstra(item->getName());
             }
         }else if(2 == item->type()){
             GraphicsLine *item = (GraphicsLine *)itemAt(event->pos());

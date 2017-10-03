@@ -39,11 +39,16 @@ struct Path{
     }
 };
 
-struct ComparePair {
-    bool operator()(pair <int, int> p1, pair <int, int> p2){
-        return p1.first > p2.first;
-    }
-};
+inline bool operator >(pair <int, int> p1, pair <int, int> p2){
+    qDebug()<<"To aqui";
+    return true;
+}
+
+
+inline bool operator <(pair <int, int> p1, pair <int, int> p2){
+    qDebug()<<"To aqui";
+    return true;
+}
 
 inline bool operator > (Dsatur d1, Dsatur d2){
     if(d1.sat > d2.sat)
@@ -126,22 +131,13 @@ public slots:
     void performDijkstra(QString name1, QString name2 = NULL){
         QStack <int> stack;
 
-        int origem = obterIndice(name1.toStdString());
         int destino = obterIndice(name2.toStdString());
 
-        vector <Path> lista = dijkstra(origem, destino);
+        vector <Path> lista = dijkstra(obterIndice(name1.toStdString()), destino);
 
 //        stack.push(destino);
 
-//        stackUp(lista, stack, destino);
-
-        int vertice = destino;
-
-        do{
-            stack.push(vertice);
-            vertice = lista[vertice].anterior;
-        }while(stack.top() != origem);
-
+        stackUp(lista, stack, destino);
         emit paintDijkstra(stack);
     }
 
@@ -301,7 +297,7 @@ public:
 
 
         vector <Path> lista(nomes.size());
-        priority_queue <pair<int, int>, std::vector<pair<int, int>>, ComparePair> pq;
+        priority_queue <pair<int, int>> pq;
 
         int backup = origem;
 
@@ -507,19 +503,19 @@ public:
         return sequencia;
     }
 
-//private:
-//    void stackUp(vector <Path> list, QStack <int> &stack, int vertice){
-//        qDebug()<<"Vertice: "<<vertice;
-//        if(list[vertice].anterior == vertice){
-//            stack.push(list[vertice].anterior);
-//            return;
-//        }else{
-//            stack.push(vertice);
-//            stackUp(list, stack, list[vertice].anterior);
-//        }
+private:
+    void stackUp(vector <Path> list, QStack <int> &stack, int vertice){
+        qDebug()<<"Vertice: "<<vertice;
+        if(list[vertice].anterior == vertice){
+            stack.push(list[vertice].anterior);
+            return;
+        }else{
+            stack.push(vertice);
+            stackUp(list, stack, list[vertice].anterior);
+        }
 
 
-//    }
+    }
 };
 
 #endif // GRAFO_H
