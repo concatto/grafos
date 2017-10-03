@@ -63,7 +63,9 @@ void GraphicsScene::paintVertices(QVector<int> cores, QBrush *brush)
 
     if(brush != NULL){ // Reset colors
         for(Vertex *v: vertices){
+            v->setPen(Qt::NoPen);
             v->setBrush(*brush);
+            v->paintEdge();
         }
         return;
     }
@@ -84,11 +86,16 @@ void GraphicsScene::paintVertices(QVector<int> cores, QBrush *brush)
 void GraphicsScene::paintDijkstra(QStack<int> stack)
 {
     while(!stack.isEmpty()){
-        qDebug()<<stack.top();
-
-        vertices[stack.top()]->setBrush(QBrush(Qt::green));
-//        vertices[stack.top()]->paintEdge(QBrush(Qt::green));
+        int vertice = stack.top();
         stack.pop();
+
+//        vertices[vertice]->setBrush(QBrush(Qt::green));
+        vertices[vertice]->setPen(QPen(QBrush(Qt::green), 4));
+
+        if(stack.isEmpty())
+            break;
+        vertices[vertice]->paintEdge(stack.top());
+
     }
 
 }

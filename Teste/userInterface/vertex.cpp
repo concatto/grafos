@@ -223,13 +223,24 @@ void Vertex::print()
     }
 }
 
-void Vertex::paintEdges()
+void Vertex::paintEdge(int vertice)
 {
+    if(vertice == -1){ // Reset colors
+        for(Line *line: lines){
+            line->line->setPen(QPen(QBrush(Qt::black), 4));
+        }
+        return;
+    }
+
     for(Line *line: lines){
         if(line->isP1){
-//            if(line->){
-
-//            }
+            if(line->line->getV2()->getId() == vertice){
+                line->line->setPen(QPen(QBrush(Qt::green), 4));
+            }
+        }else {
+            if(line->line->getV1()->getId() == vertice){
+                line->line->setPen(QPen(QBrush(Qt::green), 4));
+            }
         }
     }
 }

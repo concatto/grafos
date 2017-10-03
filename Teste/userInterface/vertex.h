@@ -34,7 +34,7 @@ public:
     void removeConnection(GraphicsLine *line);
     void removeConnections();
     void print(); //Temp, only for debugging
-    void paintEdges();
+    void paintEdge(int vertice = -1);
     int getId();
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;

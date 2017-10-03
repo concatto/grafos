@@ -28,6 +28,9 @@ GraphicsView::GraphicsView() : scene()
 
 void GraphicsView::paintVertices(QVector<int> cores)
 {
+//    scene.
+    QBrush brush(Qt::black);
+    scene.paintVertices(cores, &brush);
     scene.paintVertices(cores);
 }
 
@@ -59,7 +62,6 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
 
                     emit removeVertex(item->getId());
                     scene.removeVertex(item);
-                    delete item;
                 }else{
                 }
             }else if(action->text() == QString("Inserir aresta")){
