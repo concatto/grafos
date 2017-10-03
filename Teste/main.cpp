@@ -205,21 +205,21 @@ int main(int argc, char *argv[]) {
 //        grafo.inserirVertice("C");
 //        grafo.inserirVertice("D");
 //        grafo.inserirVertice("E");
-//        grafo.inserirVertice("F");
-//        grafo.inserirVertice("G");
-//        grafo.inserirVertice("H");
-//        grafo.inserirVertice("I");
-//        grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("B"), 5);
+////        grafo.inserirVertice("F");
+////        grafo.inserirVertice("G");
+////        grafo.inserirVertice("H");
+////        grafo.inserirVertice("I");
+//        grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("B"), 15);
 
-//        grafo.inserirAresta(grafo.obterIndice("B"), grafo.obterIndice("C"), 5);
+//        grafo.inserirAresta(grafo.obterIndice("B"), grafo.obterIndice("C"), 15);
 
-//        grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("D"), 15);
+//        grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("D"), 25);
 
-//        grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("C"), 15);
+//        grafo.inserirAresta(grafo.obterIndice("D"), grafo.obterIndice("E"), 1);
 
-//        grafo.inserirAresta(grafo.obterIndice("B"), grafo.obterIndice("D"), 5);
+//        grafo.inserirAresta(grafo.obterIndice("E"), grafo.obterIndice("C"), 1);
 
-//        grafo.inserirAresta(grafo.obterIndice("B"), grafo.obterIndice("C"), 2);
+//        grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("C"), 50);
 
 //        grafo.inserirAresta(grafo.obterIndice("C"), grafo.obterIndice("F"), 10);
 //        grafo.inserirAresta(grafo.obterIndice("F"), grafo.obterIndice("G"), 30);

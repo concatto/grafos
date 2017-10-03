@@ -328,14 +328,14 @@ public:
             pq.pop();
             lista[origem].aberto = false;
             for(int adj : obterVerticesAdjacentes(origem)){
+                if((lista[adj].distancia == -1) || (lista[adj].distancia > consultarPeso(origem, adj) + lista[origem].distancia)){
+                    lista[adj].distancia = consultarPeso(origem, adj) + lista[origem].distancia;
+                    lista[adj].anterior = origem;
+                }
                 if(lista[adj].aberto == true){
                     pq.push(make_pair(lista[adj].distancia, adj));
 //                    lista[adj].ordem = counter;
 //                    counter++;
-                }
-                if((lista[adj].distancia == -1) || (lista[adj].distancia > consultarPeso(origem, adj) + lista[origem].distancia)){
-                    lista[adj].distancia = consultarPeso(origem, adj) + lista[origem].distancia;
-                    lista[adj].anterior = origem;
                 }
             }
         }

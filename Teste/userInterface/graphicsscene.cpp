@@ -89,7 +89,6 @@ void GraphicsScene::paintDijkstra(QStack<int> stack)
         int vertice = stack.top();
         stack.pop();
 
-//        vertices[vertice]->setBrush(QBrush(Qt::green));
         vertices[vertice]->setPen(QPen(QBrush(Qt::green), 4));
 
         if(stack.isEmpty())

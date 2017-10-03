@@ -228,6 +228,7 @@ void Vertex::paintEdge(int vertice)
     if(vertice == -1){ // Reset colors
         for(Line *line: lines){
             line->line->setPen(QPen(QBrush(Qt::black), 4));
+//            line->line->update();
         }
         return;
     }
