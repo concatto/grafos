@@ -101,6 +101,9 @@ public slots:
     }
 
     void performWelshPowell(){
+        if(nomes.size() == 0)
+            return;
+
         vector <WashPowell> lista = washPowell();
         QVector <int> cores;
         sort(lista.begin(), lista.end(), compareWelshSort);
@@ -113,7 +116,10 @@ public slots:
     }
 
     void performDsatur(){
+        if(nomes.size() == 0)
+            return;
         vector <Dsatur> lista = dsatur();
+
         QVector <int> cores;
         sort(lista.begin(), lista.end(), compareDsatur);
         for(Dsatur d: lista){

@@ -33,10 +33,7 @@ Vertex::Vertex(float radius, QString name)
 
 void Vertex::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-//    if(event->type() & Qt::LeftButton){
-        emit mousePressed(this);
-//    }
-
+    Q_UNUSED(event);
 }
 
 int Vertex::indexCounter = 0;
@@ -52,7 +49,9 @@ void Vertex::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void Vertex::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    (void)event;
+    if(event->type() & Qt::LeftButton){
+        emit mousePressed(this);
+    }
 }
 
 bool Vertex::compareLines(GraphicsLine *l1, GraphicsLine *l2)
