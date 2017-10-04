@@ -23,6 +23,7 @@ public:
     void paintVertices(QVector <int> cores, QBrush *brush = NULL);
     void paintDijkstra(QStack <int> stack);
     void setDijkstra(Vertex *item);
+    void keyPressEvent(QKeyEvent *event) override;
 
 private:
     QVector <Vertex*> vertices;
@@ -41,9 +42,8 @@ signals:
     void duplicatedEdge();
     void duplicatedVertex();
     void performDijkstra(int origem, int destino = -1);
+    void resetCursor();
 
-protected:
-    void keyPressEvent(QKeyEvent *event) override;
 };
 
 #endif // GRAPHICSSCENE_H

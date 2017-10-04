@@ -10,8 +10,6 @@
 
 class GraphicsLine;
 
-
-
 struct Line {
     Line(GraphicsLine *line, bool isP1){
         this->line = line;

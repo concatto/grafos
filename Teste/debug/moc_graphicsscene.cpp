@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_GraphicsScene_t {
-    QByteArrayData data[14];
-    char stringdata0[135];
+    QByteArrayData data[15];
+    char stringdata0[147];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -42,15 +42,17 @@ QT_MOC_LITERAL(7, 59, 16), // "duplicatedVertex"
 QT_MOC_LITERAL(8, 76, 15), // "performDijkstra"
 QT_MOC_LITERAL(9, 92, 6), // "origem"
 QT_MOC_LITERAL(10, 99, 7), // "destino"
-QT_MOC_LITERAL(11, 107, 12), // "mousePressed"
-QT_MOC_LITERAL(12, 120, 7), // "Vertex*"
-QT_MOC_LITERAL(13, 128, 6) // "vertex"
+QT_MOC_LITERAL(11, 107, 11), // "resetCursor"
+QT_MOC_LITERAL(12, 119, 12), // "mousePressed"
+QT_MOC_LITERAL(13, 132, 7), // "Vertex*"
+QT_MOC_LITERAL(14, 140, 6) // "vertex"
 
     },
     "GraphicsScene\0addConnection\0\0id1\0id2\0"
     "weight\0duplicatedEdge\0duplicatedVertex\0"
     "performDijkstra\0origem\0destino\0"
-    "mousePressed\0Vertex*\0vertex"
+    "resetCursor\0mousePressed\0Vertex*\0"
+    "vertex"
 };
 #undef QT_MOC_LITERAL
 
@@ -60,23 +62,24 @@ static const uint qt_meta_data_GraphicsScene[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       6,       // signalCount
+       7,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    3,   49,    2, 0x06 /* Public */,
-       1,    2,   56,    2, 0x26 /* Public | MethodCloned */,
-       6,    0,   61,    2, 0x06 /* Public */,
-       7,    0,   62,    2, 0x06 /* Public */,
-       8,    2,   63,    2, 0x06 /* Public */,
-       8,    1,   68,    2, 0x26 /* Public | MethodCloned */,
+       1,    3,   54,    2, 0x06 /* Public */,
+       1,    2,   61,    2, 0x26 /* Public | MethodCloned */,
+       6,    0,   66,    2, 0x06 /* Public */,
+       7,    0,   67,    2, 0x06 /* Public */,
+       8,    2,   68,    2, 0x06 /* Public */,
+       8,    1,   73,    2, 0x26 /* Public | MethodCloned */,
+      11,    0,   76,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      11,    1,   71,    2, 0x0a /* Public */,
+      12,    1,   77,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int, QMetaType::Int, QMetaType::Int,    3,    4,    5,
@@ -85,9 +88,10 @@ static const uint qt_meta_data_GraphicsScene[] = {
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int, QMetaType::Int,    9,   10,
     QMetaType::Void, QMetaType::Int,    9,
+    QMetaType::Void,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 12,   13,
+    QMetaType::Void, 0x80000000 | 13,   14,
 
        0        // eod
 };
@@ -104,13 +108,14 @@ void GraphicsScene::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         case 3: _t->duplicatedVertex(); break;
         case 4: _t->performDijkstra((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 5: _t->performDijkstra((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 6: _t->mousePressed((*reinterpret_cast< Vertex*(*)>(_a[1]))); break;
+        case 6: _t->resetCursor(); break;
+        case 7: _t->mousePressed((*reinterpret_cast< Vertex*(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         switch (_id) {
         default: *reinterpret_cast<int*>(_a[0]) = -1; break;
-        case 6:
+        case 7:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
@@ -149,6 +154,13 @@ void GraphicsScene::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
                 return;
             }
         }
+        {
+            typedef void (GraphicsScene::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GraphicsScene::resetCursor)) {
+                *result = 6;
+                return;
+            }
+        }
     }
 }
 
@@ -177,13 +189,13 @@ int GraphicsScene::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 8;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 8;
     }
     return _id;
 }
@@ -212,6 +224,12 @@ void GraphicsScene::performDijkstra(int _t1, int _t2)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 4, _a);
+}
+
+// SIGNAL 6
+void GraphicsScene::resetCursor()
+{
+    QMetaObject::activate(this, &staticMetaObject, 6, nullptr);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

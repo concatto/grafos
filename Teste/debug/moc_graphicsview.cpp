@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_GraphicsView_t {
-    QByteArrayData data[18];
-    char stringdata0[186];
+    QByteArrayData data[19];
+    char stringdata0[198];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -48,14 +48,16 @@ QT_MOC_LITERAL(13, 123, 15), // "performDijkstra"
 QT_MOC_LITERAL(14, 139, 6), // "origem"
 QT_MOC_LITERAL(15, 146, 7), // "destino"
 QT_MOC_LITERAL(16, 154, 14), // "duplicatedEdge"
-QT_MOC_LITERAL(17, 169, 16) // "duplicatedVertex"
+QT_MOC_LITERAL(17, 169, 16), // "duplicatedVertex"
+QT_MOC_LITERAL(18, 186, 11) // "resetCursor"
 
     },
     "GraphicsView\0addVertex\0\0str\0removeVertex\0"
     "id\0addConnection\0id1\0id2\0weight\0"
     "removeConnection\0performWelshPowell\0"
     "performDsatur\0performDijkstra\0origem\0"
-    "destino\0duplicatedEdge\0duplicatedVertex"
+    "destino\0duplicatedEdge\0duplicatedVertex\0"
+    "resetCursor"
 };
 #undef QT_MOC_LITERAL
 
@@ -65,7 +67,7 @@ static const uint qt_meta_data_GraphicsView[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -73,18 +75,19 @@ static const uint qt_meta_data_GraphicsView[] = {
        8,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   64,    2, 0x06 /* Public */,
-       4,    1,   67,    2, 0x06 /* Public */,
-       6,    3,   70,    2, 0x06 /* Public */,
-      10,    2,   77,    2, 0x06 /* Public */,
-      11,    0,   82,    2, 0x06 /* Public */,
-      12,    0,   83,    2, 0x06 /* Public */,
-      13,    2,   84,    2, 0x06 /* Public */,
-      13,    1,   89,    2, 0x26 /* Public | MethodCloned */,
+       1,    1,   69,    2, 0x06 /* Public */,
+       4,    1,   72,    2, 0x06 /* Public */,
+       6,    3,   75,    2, 0x06 /* Public */,
+      10,    2,   82,    2, 0x06 /* Public */,
+      11,    0,   87,    2, 0x06 /* Public */,
+      12,    0,   88,    2, 0x06 /* Public */,
+      13,    2,   89,    2, 0x06 /* Public */,
+      13,    1,   94,    2, 0x26 /* Public | MethodCloned */,
 
  // slots: name, argc, parameters, tag, flags
-      16,    0,   92,    2, 0x0a /* Public */,
-      17,    0,   93,    2, 0x0a /* Public */,
+      16,    0,   97,    2, 0x0a /* Public */,
+      17,    0,   98,    2, 0x0a /* Public */,
+      18,    0,   99,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -97,6 +100,7 @@ static const uint qt_meta_data_GraphicsView[] = {
     QMetaType::Void, QMetaType::Int,   14,
 
  // slots: parameters
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -119,6 +123,7 @@ void GraphicsView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 7: _t->performDijkstra((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 8: _t->duplicatedEdge(); break;
         case 9: _t->duplicatedVertex(); break;
+        case 10: _t->resetCursor(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -201,13 +206,13 @@ int GraphicsView::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 11;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 11)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 10;
+        _id -= 11;
     }
     return _id;
 }

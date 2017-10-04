@@ -16,12 +16,13 @@ QRectF operator +(QRectF v1, qreal v2){
     return v1;
 }
 
-Vertex::Vertex(float radius, QString name) : QGraphicsEllipseItem(0, 0, radius, radius)
+Vertex::Vertex(float radius, QString name)
+    : QGraphicsEllipseItem(0, 0, radius, radius)
 {
+    setBrush(Qt::red);
     id = indexCounter;
     indexCounter++;
     this->name = name;
-    setBrush(QBrush(Qt::red));
     menuList = new QMenu();
     menuList->addAction("Remover vértice");
     menuList->addAction("Inserir aresta");
@@ -32,8 +33,10 @@ Vertex::Vertex(float radius, QString name) : QGraphicsEllipseItem(0, 0, radius, 
 
 void Vertex::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    (void)event;
-    emit mousePressed(this);
+//    if(event->type() & Qt::LeftButton){
+        emit mousePressed(this);
+//    }
+
 }
 
 int Vertex::indexCounter = 0;
@@ -116,7 +119,7 @@ QString Vertex::getName()
 void Vertex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     QGraphicsEllipseItem::paint(painter, option, widget);
-    this->boundingRect().bottom();
+//    this->boundingRect().bottom();
     painter->drawText(this->rect() + this->rect().height(), Qt::AlignCenter, this->name);
 }
 

@@ -20,10 +20,12 @@ protected:
 private:
     QMenu menuList;
     GraphicsScene scene;
+    setViewCursor(QCursor cursor);
 
 public slots:
     void duplicatedEdge();
     void duplicatedVertex();
+    void resetCursor();
 
 signals:
     void addVertex(QString str);

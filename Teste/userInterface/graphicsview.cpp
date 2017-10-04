@@ -24,6 +24,7 @@ GraphicsView::GraphicsView() : scene()
     QObject::connect(&scene, SIGNAL(duplicatedEdge()), this, SLOT(duplicatedEdge()));
     QObject::connect(&scene, SIGNAL(duplicatedVertex()), this, SLOT(duplicatedVertex()));
     QObject::connect(&scene, SIGNAL(performDijkstra(int, int)), this, SIGNAL(performDijkstra(int, int)));
+    QObject::connect(&scene, SIGNAL(resetCursor()), this, SLOT(resetCursor()));
 }
 
 void GraphicsView::paintVertices(QVector<int> cores)
@@ -67,9 +68,11 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
             }else if(action->text() == QString("Inserir aresta")){
 //                Vertex *item = (Vertex*)itemAt(event->pos());
                 scene.setLine(item);
+                setViewCursor(Qt::PointingHandCursor);
             }else if(action->text() == QString("Dijkstra a partir deste vértice")){
 //                Vertex *item = (Vertex*)itemAt(event->pos());
                 scene.setDijkstra(item);
+                setViewCursor(Qt::PointingHandCursor);
 //                emit performDijkstra(item->getName());
             }
         }else if(2 == item->type()){
@@ -129,6 +132,11 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
     }
 }
 
+GraphicsView::setViewCursor(QCursor cursor)
+{
+    viewport()->setCursor(cursor);
+}
+
 void GraphicsView::duplicatedEdge()
 {
     QMessageBox msgBox;
@@ -145,4 +153,9 @@ void GraphicsView::duplicatedVertex()
     msgBox.setText("Não é permitido inserir vértices duplicados");
     msgBox.setDefaultButton(QMessageBox::Ok);
     msgBox.exec();
+}
+
+void GraphicsView::resetCursor()
+{
+    setViewCursor(Qt::ArrowCursor);
 }

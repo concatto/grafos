@@ -126,14 +126,7 @@ public slots:
     void performDijkstra(int origem, int destino = -1){
         QStack <int> stack;
 
-//        int origem = obterIndice(name1.toStdString());
-//        int destino = obterIndice(name2.toStdString());
-
         vector <Path> lista = dijkstra(origem, destino);
-
-//        stack.push(destino);
-
-//        stackUp(lista, stack, destino);
 
         int vertice = destino;
 

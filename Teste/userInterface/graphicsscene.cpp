@@ -65,10 +65,15 @@ void GraphicsScene::paintVertices(QVector<int> cores, QBrush *brush)
         for(Vertex *v: vertices){
             v->setPen(Qt::NoPen);
             v->setBrush(*brush);
+//            v->update();
             v->paintEdge();
         }
         return;
     }
+
+    int value = 359 / cores.size();
+    QColor color;
+
 
     QStringList list = QColor::colorNames();
 
@@ -79,7 +84,9 @@ void GraphicsScene::paintVertices(QVector<int> cores, QBrush *brush)
 //    qDebug()<<"----------";
 
     for(int i = 0; i < vertices.size(); i++){
-       vertices[i]->setBrush(QBrush(QColor(list.at(cores[i] + 20))));
+//       vertices[i]->setBrush(QBrush(QColor(list.at(cores[i] + 10))));
+        vertices[i]->setBrush(color.fromHsv(value * cores[i], 255, 255, 255));
+        vertices[i]->update();
     }
 }
 
@@ -92,7 +99,7 @@ void GraphicsScene::paintDijkstra(QStack<int> stack)
         vertices[vertice]->setPen(QPen(QBrush(Qt::green), 4));
 
         if(stack.isEmpty())
-            break;
+            return;
         vertices[vertice]->paintEdge(stack.top());
 
         views().front()->viewport()->repaint();
@@ -139,6 +146,7 @@ void GraphicsScene::mousePressed(Vertex *vertex)
         curr_vertex = NULL;
         controle_dijkstra = false;
     }
+    emit resetCursor();
 }
 
 void GraphicsScene::sleep(int msec)
@@ -168,6 +176,6 @@ void GraphicsScene::keyPressEvent(QKeyEvent *event)
         }else if(controle_dijkstra){
             controle_dijkstra = false;
         }
+        emit resetCursor();
     }
-
 }
