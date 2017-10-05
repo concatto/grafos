@@ -6,10 +6,12 @@ INPUT(
 ./release\mainwindow.o
 ./release\controller.o
 ./release\graphicsline.o
+./release\graphdialog.o
 ./release\moc_grafo.o
 ./release\moc_graphicsview.o
 ./release\moc_graphicsscene.o
 ./release\moc_vertex.o
 ./release\moc_mainwindow.o
 ./release\moc_controller.o
+./release\moc_graphdialog.o
 );

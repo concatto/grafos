@@ -53,6 +53,7 @@ private:
     void moveLineToCenter(QPointF newPos);
     int id;
     static int indexCounter;
+    bool pressed;
 
 signals:
     void mousePressed(Vertex *vertex);

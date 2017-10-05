@@ -46,9 +46,10 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
 {
     if(QGraphicsItem *item = itemAt(event->pos())){
         if(1 == item->type()){
-            Vertex *item = (Vertex*)itemAt(event->pos());
+//            Vertex *item = (Vertex*)itemAt(event->pos());
+            Vertex *vertex = (Vertex*)item;
             QMenu *tmp;
-            tmp = item->getMenu();
+            tmp = vertex->getMenu();
             QAction *action = NULL;
             action = tmp->exec(QCursor::pos());
 
@@ -60,26 +61,27 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
                 reply = QMessageBox::question(this, "Remover vértice", "Você tem certeza que deseja remover este vértice?",
                                               QMessageBox::Yes|QMessageBox::No);
                 if(reply == QMessageBox::Yes){
-                    item->removeConnections();
+                    vertex->removeConnections();
 
-                    emit removeVertex(item->getId());
-                    scene.removeVertex(item);
+                    emit removeVertex(vertex->getId());
+                    scene.removeVertex(vertex);
                 }else{
                 }
             }else if(action->text() == QString("Inserir aresta")){
 //                Vertex *item = (Vertex*)itemAt(event->pos());
-                scene.setLine(item);
+                scene.setLine(vertex);
                 setViewCursor(Qt::PointingHandCursor);
             }else if(action->text() == QString("Dijkstra a partir deste vértice")){
 //                Vertex *item = (Vertex*)itemAt(event->pos());
-                scene.setDijkstra(item);
+                scene.setDijkstra(vertex);
                 setViewCursor(Qt::PointingHandCursor);
 //                emit performDijkstra(item->getName());
             }
         }else if(2 == item->type()){
-            GraphicsLine *item = (GraphicsLine *)itemAt(event->pos());
+//            GraphicsLine *item = (GraphicsLine *)itemAt(event->pos());
+            GraphicsLine *gline = (GraphicsLine*)item;
             QMenu *tmp;
-            tmp = item->getMenu();
+            tmp = gline->getMenu();
             QAction *action = NULL;
             action = tmp->exec(QCursor::pos());
 
@@ -88,15 +90,15 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
 
             if(action->text() == QString("Remover conexão")){
 
-                Vertex *vertex1 = item->getV1();
-                Vertex *vertex2 = item->getV2();
+                Vertex *vertex1 = gline->getV1();
+                Vertex *vertex2 = gline->getV2();
 
-                vertex1->removeConnection(item);
-                vertex2->removeConnection(item);
+                vertex1->removeConnection(gline);
+                vertex2->removeConnection(gline);
 
-                scene.removeItem(item);
+                scene.removeItem(gline);
                 emit removeConnection(vertex1->getId(), vertex2->getId());
-                delete item;
+                delete gline;
             }
         }
     }else{
@@ -140,6 +142,7 @@ void GraphicsView::setViewCursor(QCursor cursor)
 
 void GraphicsView::duplicatedEdge()
 {
+    setViewCursor(Qt::ArrowCursor);
     QMessageBox msgBox;
     msgBox.setWindowTitle("Aresta duplicada");
     msgBox.setText("Não é permitido inserir arestas duplicadas");

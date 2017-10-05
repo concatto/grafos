@@ -28,11 +28,13 @@ Vertex::Vertex(float radius, QString name)
     menuList->addAction("Inserir aresta");
     menuList->addAction("Dijkstra a partir deste vértice");
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges);
+    pressed = false;
 //    setFlag(QGraphicsItem::ItemIsMovable);
 }
 
 void Vertex::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    pressed = true;
     Q_UNUSED(event);
 }
 
@@ -40,7 +42,7 @@ int Vertex::indexCounter = 0;
 
 void Vertex::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(event->buttons() & Qt::LeftButton/* && sceneBoundingRect().y() > -115*/){
+    if(event->buttons() & Qt::LeftButton && pressed){
         QPointF delta = event->scenePos() - event->lastScenePos();
         moveBy(delta.x(), delta.y());
         moveLineToCenter(pos());
@@ -49,6 +51,7 @@ void Vertex::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void Vertex::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    pressed = false;
     if(event->type() & Qt::LeftButton){
         emit mousePressed(this);
     }
