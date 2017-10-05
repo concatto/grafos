@@ -296,19 +296,13 @@ public:
 
     //Acho que agora foi, rapazeada, esperando o aval do mestre Fernando.
     vector <Path> dijkstra(int origem, int destino = -1){
-//        int counter = 1;
-
-
         vector <Path> lista(nomes.size());
         priority_queue <pair<int, int>, std::vector<pair<int, int>>, ComparePair> pq;
 
         int backup = origem;
 
-        //lista[vertice].aberto = false;
         lista[origem].distancia = 0;
         lista[origem].anterior = -1;
-//        lista[origem].ordem = 0;
-
 
         pq.push(make_pair(lista[origem].distancia, origem));
 

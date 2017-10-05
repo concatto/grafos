@@ -187,8 +187,10 @@ void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if (curr_line != nullptr && curr_vertex != nullptr) {
         curr_line->setLine(QLineF(curr_vertex->getCenter(), event->scenePos()));
+
     }else if(QGraphicsItem *item = itemAt(event->scenePos(), QTransform())){
         if(item->type() == 1){
+//            qDebug()<<"Mouse scene pos:"<<event->scenePos();
             Vertex *vertex = (Vertex*)item;
             vertex->mouseMoveEvent(event);
         }
