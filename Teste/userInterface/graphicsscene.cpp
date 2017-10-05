@@ -25,7 +25,7 @@ bool GraphicsScene::addVertex(QString name, QPointF pos)
             return false;
         }
     }
-    Vertex *vertex = new Vertex(50, name);
+    Vertex *vertex = new Vertex(25, name);
     vertex->setPos(pos);
     vertices.append(vertex);
     addItem(vertices.back());
@@ -48,7 +48,10 @@ void GraphicsScene::setLine(Vertex *item)
     controle_aresta = true;
     curr_line = new GraphicsLine();
     curr_line->setV1(curr_vertex);
+    addItem(curr_line);
     item->addConnection(curr_line, true);
+
+    curr_line->setLine(QLineF(item->getCenter(), item->getCenter()));
 }
 
 void GraphicsScene::print()
@@ -119,6 +122,7 @@ void GraphicsScene::mousePressed(Vertex *vertex)
     if(controle_aresta){
         curr_line->setV2(vertex);
         if(!vertex->addConnection(curr_line, false)){
+            removeItem(curr_line);
             delete curr_line;
             curr_line = NULL;
             curr_vertex = NULL;
@@ -136,7 +140,6 @@ void GraphicsScene::mousePressed(Vertex *vertex)
                 return;
         }
         curr_line->setWeight(text.toInt());
-        addItem(curr_line);
         controle_aresta = false;
         emit addConnection(curr_vertex->getId(), vertex->getId(), curr_line->getWeight());
         curr_line = NULL;
@@ -177,5 +180,12 @@ void GraphicsScene::keyPressEvent(QKeyEvent *event)
             controle_dijkstra = false;
         }
         emit resetCursor();
+    }
+}
+
+void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+    if (curr_line != nullptr && curr_vertex != nullptr) {
+        curr_line->setLine(QLineF(curr_vertex->getCenter(), event->scenePos()));
     }
 }

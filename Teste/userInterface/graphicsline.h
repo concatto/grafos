@@ -26,7 +26,7 @@ private:
     QMenu *menuList;
     Vertex *v1;
     Vertex *v2;
-    int weight;
+    int weight = 0;
 
 };
 

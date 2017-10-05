@@ -20,6 +20,7 @@ GraphicsView::GraphicsView() : scene()
     //menuList.addAction("");
     setFixedSize(770, 570);
     setFrameShape(QGraphicsView::NoFrame);
+    setMouseTracking(true); //Permite que MouseMoveEvents sejam detectados pela scene sem clique prévio
     QObject::connect(&scene, SIGNAL(addConnection(int, int,int)), this, SIGNAL(addConnection(int, int,int)));
     QObject::connect(&scene, SIGNAL(duplicatedEdge()), this, SLOT(duplicatedEdge()));
     QObject::connect(&scene, SIGNAL(duplicatedVertex()), this, SLOT(duplicatedVertex()));
@@ -132,7 +133,7 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
     }
 }
 
-GraphicsView::setViewCursor(QCursor cursor)
+void GraphicsView::setViewCursor(QCursor cursor)
 {
     viewport()->setCursor(cursor);
 }

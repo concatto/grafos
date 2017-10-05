@@ -40,8 +40,10 @@ public:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
 
     void setId(int value);
+    QPointF getCenter() const;
 
 private:
+    float radius;
     QMenu *menuList;
     QString name;
 //    bool isP1;

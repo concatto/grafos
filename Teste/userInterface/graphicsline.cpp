@@ -60,8 +60,10 @@ void GraphicsLine::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
     QGraphicsLineItem::paint(painter, option, widget);
     QPointF p = line().p2() + line().p1();
 
-    painter->setFont(QFont("times", 12));
-    painter->drawText(p/2, QString::number(weight));
+    if (weight != 0) {
+        painter->setFont(QFont("times", 12));
+        painter->drawText(p/2, QString::number(weight));
+    }
 //    painter->drawText(line().length()/2, );
 
 //    qreal arrowSize = 20;

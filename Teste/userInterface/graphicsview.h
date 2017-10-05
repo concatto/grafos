@@ -20,7 +20,7 @@ protected:
 private:
     QMenu menuList;
     GraphicsScene scene;
-    setViewCursor(QCursor cursor);
+    void setViewCursor(QCursor cursor);
 
 public slots:
     void duplicatedEdge();

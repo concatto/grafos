@@ -24,12 +24,13 @@ public:
     void paintDijkstra(QStack <int> stack);
     void setDijkstra(Vertex *item);
     void keyPressEvent(QKeyEvent *event) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
 
 private:
     QVector <Vertex*> vertices;
     bool controle_aresta;
-    Vertex *curr_vertex;
-    GraphicsLine *curr_line;
+    Vertex *curr_vertex = nullptr;
+    GraphicsLine *curr_line = nullptr;
     void sleep(int msec);
     bool controle_dijkstra;
     //    QLineF line;

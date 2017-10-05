@@ -17,7 +17,7 @@ QRectF operator +(QRectF v1, qreal v2){
 }
 
 Vertex::Vertex(float radius, QString name)
-    : QGraphicsEllipseItem(0, 0, radius, radius)
+    : QGraphicsEllipseItem(0, 0, radius * 2, radius * 2), radius(radius)
 {
     setBrush(Qt::red);
     id = indexCounter;
@@ -104,6 +104,11 @@ void Vertex::setId(int value)
     id = value;
 }
 
+QPointF Vertex::getCenter() const
+{
+    return pos() + QPointF(radius, radius);
+}
+
 QMenu* Vertex::getMenu()
 {
     return menuList;
@@ -125,6 +130,8 @@ void Vertex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
 bool Vertex::addConnection(GraphicsLine *line, bool p1)
 {
     Line *nline = new Line(line, p1);
+
+    qDebug() << lines.size() << "\n";
 
     if(line->getV2() != NULL){
         for(Line *l: lines){

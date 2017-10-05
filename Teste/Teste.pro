@@ -14,7 +14,8 @@ SOURCES += main.cpp \
     userInterface/vertex.cpp \
     mainwindow.cpp \
     controller.cpp \
-    userInterface/graphicsline.cpp
+    userInterface/graphicsline.cpp \
+    graphdialog.cpp
 
 CONFIG += c++11
 QMAKE_CXXFLAGS += -Wno-sign-compare #Ignora "comparison between signed and unsigned"
@@ -33,8 +34,10 @@ HEADERS += \
     userInterface/vertex.h \
     mainwindow.h \
     controller.h \
-    userInterface/graphicsline.h
+    userInterface/graphicsline.h \
+    graphdialog.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    graphdialog.ui
 
