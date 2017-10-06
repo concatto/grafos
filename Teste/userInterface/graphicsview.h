@@ -10,7 +10,7 @@ class GraphicsView : public QGraphicsView
 {
     Q_OBJECT
 public:
-    GraphicsView();
+    GraphicsView(bool isWeighted, bool isDirected);
     void paintVertices(QVector <int> cores);
     void paintDijkstra(QStack <int> stack);
     // QWidget interface
@@ -18,7 +18,9 @@ protected:
     void contextMenuEvent(QContextMenuEvent *event) override;
 
 private:
-    QMenu menuList;
+    QMenu viewMenuList;
+    QMenu vertexMenuList;
+    QMenu lineMenuList;
     GraphicsScene scene;
     void setViewCursor(QCursor cursor);
 

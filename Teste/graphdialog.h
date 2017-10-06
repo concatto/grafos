@@ -7,10 +7,6 @@ namespace Ui {
 class GraphDialog;
 }
 
-enum GraphType {
-    AdjacencyMatrix, AdjacencyList
-};
-
 class GraphDialog : public QDialog
 {
     Q_OBJECT
@@ -18,6 +14,10 @@ class GraphDialog : public QDialog
 public:
     explicit GraphDialog(QWidget *parent = 0);
     ~GraphDialog();
+
+    enum GraphType {
+        AdjacencyMatrix, AdjacencyList
+    };
 
     bool isWeighted() const;
     bool isDirected() const;

@@ -3,9 +3,9 @@
 #include <QLayout>
 #include <QStack>
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(bool isWeighted, bool isDirected, QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow), view()
+    ui(new Ui::MainWindow), view(isWeighted, isDirected)
 {
     ui->setupUi(this);
 //    QObject::connect(&view, SIGNAL(addVertexRequest(QString)), this, SLOT(addVertexRequest(QString)));

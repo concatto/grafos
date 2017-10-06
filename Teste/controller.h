@@ -3,6 +3,7 @@
 #include "mainwindow.h"
 #include "grafo.h"
 #include "mgrafo.h"
+#include "lgrafo.h"
 #include <QObject>
 
 class Controller : public QObject
@@ -10,9 +11,8 @@ class Controller : public QObject
     Q_OBJECT
 public:
     Controller();
-
 private:
-    MainWindow window;
+    MainWindow *window;
     Grafo *graph;
 };
 

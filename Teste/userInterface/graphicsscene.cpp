@@ -119,6 +119,7 @@ void GraphicsScene::setDijkstra(Vertex *item)
 
 void GraphicsScene::mousePressed(Vertex *vertex)
 {
+    qDebug()<<"teste";
     if(controle_aresta){
         curr_line->setV2(vertex);
         if(!vertex->addConnection(curr_line, false)){

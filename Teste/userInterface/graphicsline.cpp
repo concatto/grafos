@@ -9,19 +9,12 @@ GraphicsLine::GraphicsLine() : QGraphicsLineItem()
 {
     this->v1 = NULL;
     this->v2 = NULL;
-    menuList = new QMenu();
-    menuList->addAction("Remover conexão");
     setPen(QPen(QBrush(Qt::black), 4));
 }
 
 int GraphicsLine::type() const
 {
     return 2;
-}
-
-QMenu* GraphicsLine::getMenu()
-{
-    return menuList;
 }
 
 void GraphicsLine::setV1(Vertex *v1)
@@ -59,9 +52,7 @@ void GraphicsLine::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
 {
     QGraphicsLineItem::paint(painter, option, widget);
 
-    painter->drawText(QPointF(0, 0), QString::number(weight));
-
-    qreal distance = 15;
+    qreal distance = 13;
     QPointF p = (line().p2() + line().p1())/2;
 
     qreal angle1 = line().angle() + 90;

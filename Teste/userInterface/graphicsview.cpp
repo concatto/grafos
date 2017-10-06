@@ -8,14 +8,22 @@
 #include <QMessageBox>
 #include <QStack>
 
-GraphicsView::GraphicsView() : scene()
+GraphicsView::GraphicsView(bool isWeighted, bool isDirected) : scene()
 {
     this->setScene(&scene);
-    this->menuList.addAction("Inserir vértice");
-    this->menuList.addAction("Welsh and Powell");
-    this->menuList.addAction("Dsatur");
-    this->menuList.addAction("Resetar cores");
-    this->menuList.addAction("Imprimir");
+    this->viewMenuList.addAction("Inserir vértice");
+    this->viewMenuList.addAction("Welsh and Powell");
+    this->viewMenuList.addAction("Dsatur");
+    this->viewMenuList.addAction("Resetar cores");
+    this->viewMenuList.addAction("Imprimir");
+
+
+    isDirected ? vertexMenuList.addAction("Inserir Arco") : vertexMenuList.addAction("Inserir aresta");
+    vertexMenuList.addAction("Remover vértice");
+    vertexMenuList.addAction("Dijkstra a partir deste vértice");
+
+    isDirected ? lineMenuList.addAction("Remover Arco") : lineMenuList.addAction("Remover Aresta");
+
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     //menuList.addAction("");
     setFixedSize(770, 570);
@@ -46,17 +54,14 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
 {
     if(QGraphicsItem *item = itemAt(event->pos())){
         if(1 == item->type()){
-//            Vertex *item = (Vertex*)itemAt(event->pos());
             Vertex *vertex = (Vertex*)item;
-            QMenu *tmp;
-            tmp = vertex->getMenu();
             QAction *action = NULL;
-            action = tmp->exec(QCursor::pos());
+            action = vertexMenuList.exec(QCursor::pos());
 
             if(action == NULL)
                 return;
 
-            if(action->text() == QString("Remover vértice")){
+            if(action == vertexMenuList.actions().at(1)){ // Remover vértice
                 QMessageBox::StandardButton reply;
                 reply = QMessageBox::question(this, "Remover vértice", "Você tem certeza que deseja remover este vértice?",
                                               QMessageBox::Yes|QMessageBox::No);
@@ -67,28 +72,23 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
                     scene.removeVertex(vertex);
                 }else{
                 }
-            }else if(action->text() == QString("Inserir aresta")){
-//                Vertex *item = (Vertex*)itemAt(event->pos());
+            }else if(action == vertexMenuList.actions().at(0)){ // Inserir arco ou aresta
                 scene.setLine(vertex);
                 setViewCursor(Qt::PointingHandCursor);
-            }else if(action->text() == QString("Dijkstra a partir deste vértice")){
-//                Vertex *item = (Vertex*)itemAt(event->pos());
+            }else if(action == vertexMenuList.actions().at(2)){ // Dijkstra
                 scene.setDijkstra(vertex);
                 setViewCursor(Qt::PointingHandCursor);
-//                emit performDijkstra(item->getName());
             }
         }else if(2 == item->type()){
-//            GraphicsLine *item = (GraphicsLine *)itemAt(event->pos());
             GraphicsLine *gline = (GraphicsLine*)item;
-            QMenu *tmp;
-            tmp = gline->getMenu();
+
             QAction *action = NULL;
-            action = tmp->exec(QCursor::pos());
+            action = lineMenuList.exec(QCursor::pos());
 
             if(action == NULL)
                 return;
 
-            if(action->text() == QString("Remover conexão")){
+            if(action == lineMenuList.actions().at(0)){ //Remover aresta ou arco
 
                 Vertex *vertex1 = gline->getV1();
                 Vertex *vertex2 = gline->getV2();
@@ -103,12 +103,12 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
         }
     }else{
         QAction *action = NULL;
-        action = menuList.exec(QCursor::pos());
+        action = viewMenuList.exec(QCursor::pos());
 
         if(action == NULL)
             return;
 
-        if(action->text() == QString("Inserir vértice")){
+        if(action->text() == viewMenuList.actions().at(0)){ //Inserir vértice
             bool ok = false;
             QString text;
             while(text.isEmpty()){
@@ -122,14 +122,14 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
                 emit addVertex(text);
             }
 
-        }else if(action->text() == QString("Welsh and Powell")){
+        }else if(action->text() == viewMenuList.actions().at(1)){ //Welsh and Powell
             emit performWelshPowell();
-        }else if(action->text() == QString("Dsatur")){
+        }else if(action->text() == viewMenuList.actions().at(2)){ // Dsatur
             emit performDsatur();
-        }else if(action->text() == QString("Resetar cores")){
+        }else if(action->text() == viewMenuList.actions().at(3)){ // Resetar cores
             QBrush brush(Qt::red);
             scene.paintVertices(QVector <int>(), &brush);
-        }else if(action->text() == QString("Imprimir")){
+        }else if(action->text() == viewMenuList.actions().at(4)){ // Print -- only for debugging
             scene.print();
         }
     }

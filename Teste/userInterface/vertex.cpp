@@ -23,10 +23,6 @@ Vertex::Vertex(float radius, QString name)
     id = indexCounter;
     indexCounter++;
     this->name = name;
-    menuList = new QMenu();
-    menuList->addAction("Remover vértice");
-    menuList->addAction("Inserir aresta");
-    menuList->addAction("Dijkstra a partir deste vértice");
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges);
     pressed = false;
 //    setFlag(QGraphicsItem::ItemIsMovable);
@@ -110,11 +106,6 @@ void Vertex::setId(int value)
 QPointF Vertex::getCenter() const
 {
     return pos() + QPointF(radius, radius);
-}
-
-QMenu* Vertex::getMenu()
-{
-    return menuList;
 }
 
 QString Vertex::getName()

@@ -851,6 +851,7 @@ release/moc_controller.cpp: mainwindow.h \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QStack \
 		C:/Qt/5.9/mingw53_32/include/QtCore/qstack.h \
 		mgrafo.h \
+		lgrafo.h \
 		controller.h \
 		release/moc_predefs.h \
 		C:/Qt/5.9/mingw53_32/bin/moc.exe
@@ -1865,6 +1866,7 @@ release/controller.o: controller.cpp controller.h \
 		C:/Qt/5.9/mingw53_32/include/QtCore/QStack \
 		C:/Qt/5.9/mingw53_32/include/QtCore/qstack.h \
 		mgrafo.h \
+		lgrafo.h \
 		graphdialog.h \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/QDialog \
 		C:/Qt/5.9/mingw53_32/include/QtWidgets/qdialog.h

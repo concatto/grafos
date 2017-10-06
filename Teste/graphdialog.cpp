@@ -23,7 +23,7 @@ bool GraphDialog::isDirected() const
     return ui->directedCheckbox->isChecked();
 }
 
-GraphType GraphDialog::getStructure() const
+GraphDialog::GraphType GraphDialog::getStructure() const
 {
     return ui->listButton->isChecked() ? GraphType::AdjacencyList : GraphType::AdjacencyMatrix;
 }

@@ -24,7 +24,6 @@ class Vertex : public QObject, public QGraphicsEllipseItem
     Q_OBJECT
 public:
     Vertex(float radius, QString name);
-    QMenu *getMenu();
     QString getName();
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     bool addConnection(GraphicsLine *line, bool p1);
@@ -44,7 +43,6 @@ public:
 
 private:
     float radius;
-    QMenu *menuList;
     QString name;
 //    bool isP1;
 //    GraphicsLine *line;
