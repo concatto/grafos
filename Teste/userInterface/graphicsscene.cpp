@@ -41,12 +41,12 @@ void GraphicsScene::removeVertex(Vertex *vertex)
     delete vertex;
 }
 
-void GraphicsScene::setLine(Vertex *item)
+void GraphicsScene::setLine(Vertex *item, bool isWeighted)
 {
 //    line.setP1(item->pos());
     curr_vertex = item;
     controle_aresta = true;
-    curr_line = new GraphicsLine();
+    curr_line = new GraphicsLine(isWeighted);
     curr_line->setV1(curr_vertex);
     addItem(curr_line);
     item->addConnection(curr_line, true);
@@ -129,12 +129,17 @@ void GraphicsScene::mousePressed(Vertex *vertex)
         }
         bool ok = false;
         QString text;
-        while(text.isEmpty()){
-            text = QInputDialog::getText(views().back(), tr("Peso da aresta"),
-                                                 tr("Peso da aresta:"), QLineEdit::Normal,
-                                                 "", &ok);
-            if(!ok)
-                return;
+        qDebug() << "Weighted: " << curr_line->isWeighted();
+        if (curr_line->isWeighted()) {
+            while(text.isEmpty()){
+                text = QInputDialog::getText(views().back(), tr("Peso da aresta"),
+                                                     tr("Peso da aresta:"), QLineEdit::Normal,
+                                                     "", &ok);
+                if(!ok)
+                    return;
+            }
+        } else {
+            text = "1";
         }
         curr_line->setWeight(text.toInt());
         controle_aresta = false;
@@ -185,10 +190,42 @@ void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     if (curr_line != nullptr && curr_vertex != nullptr) {
         curr_line->setLine(QLineF(curr_vertex->getCenter(), event->scenePos()));
 
-    }else if(QGraphicsItem *item = itemAt(event->scenePos(), QTransform())){
-        if(item->type() == 1){
-            Vertex *vertex = (Vertex*)item;
-            vertex->mouseMoveEvent(event);
-        }
     }
+
+    if (movingVertex != nullptr) {
+        movingVertex->handleMoveEvent(event);
+    }
+}
+
+void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    Vertex* v = findVertex(event->scenePos());
+    if (v != nullptr) {
+        movingVertex = v;
+        v->setPressed(true);
+    }
+}
+
+void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    Vertex* v = findVertex(event->scenePos());
+    if (v != nullptr) {
+        mousePressed(v);
+    }
+
+    if (movingVertex != nullptr) {
+        movingVertex->setPressed(false);
+        movingVertex = nullptr;
+    }
+}
+
+
+
+Vertex* GraphicsScene::findVertex(const QPointF& point)
+{
+    QGraphicsItem* item = itemAt(point, QTransform());
+    if (item != nullptr && item->type() == Vertex::Type) {
+        return static_cast<Vertex*>(item);
+    }
+    return nullptr;
 }

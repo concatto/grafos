@@ -9,7 +9,7 @@ class Vertex;
 class GraphicsLine : public QGraphicsLineItem
 {
 public:
-    GraphicsLine();
+    GraphicsLine(bool weighted = true);
     int type() const override;
     void setV1(Vertex *v1);
     void setV2(Vertex *v2);
@@ -20,11 +20,13 @@ public:
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
+    bool isWeighted() const;
+
 private:
     Vertex *v1;
     Vertex *v2;
     int weight = 0;
-
+    bool weighted;
 };
 
 #endif // GRAPHICSLINE_H

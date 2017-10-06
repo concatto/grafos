@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'graphicsscene.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.5.1)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,14 +12,12 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'graphicsscene.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.9.1. It"
+#error "This file was generated using the moc from 5.5.1. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-QT_WARNING_PUSH
-QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_GraphicsScene_t {
     QByteArrayData data[15];
     char stringdata0[147];
@@ -130,35 +128,30 @@ void GraphicsScene::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
             typedef void (GraphicsScene::*_t)(int , int , int );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GraphicsScene::addConnection)) {
                 *result = 0;
-                return;
             }
         }
         {
             typedef void (GraphicsScene::*_t)();
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GraphicsScene::duplicatedEdge)) {
                 *result = 2;
-                return;
             }
         }
         {
             typedef void (GraphicsScene::*_t)();
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GraphicsScene::duplicatedVertex)) {
                 *result = 3;
-                return;
             }
         }
         {
             typedef void (GraphicsScene::*_t)(int , int );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GraphicsScene::performDijkstra)) {
                 *result = 4;
-                return;
             }
         }
         {
             typedef void (GraphicsScene::*_t)();
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GraphicsScene::resetCursor)) {
                 *result = 6;
-                return;
             }
         }
     }
@@ -166,7 +159,7 @@ void GraphicsScene::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
 
 const QMetaObject GraphicsScene::staticMetaObject = {
     { &QGraphicsScene::staticMetaObject, qt_meta_stringdata_GraphicsScene.data,
-      qt_meta_data_GraphicsScene,  qt_static_metacall, nullptr, nullptr}
+      qt_meta_data_GraphicsScene,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
 };
 
 
@@ -177,7 +170,7 @@ const QMetaObject *GraphicsScene::metaObject() const
 
 void *GraphicsScene::qt_metacast(const char *_clname)
 {
-    if (!_clname) return nullptr;
+    if (!_clname) return Q_NULLPTR;
     if (!strcmp(_clname, qt_meta_stringdata_GraphicsScene.stringdata0))
         return static_cast<void*>(const_cast< GraphicsScene*>(this));
     return QGraphicsScene::qt_metacast(_clname);
@@ -203,33 +196,32 @@ int GraphicsScene::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 // SIGNAL 0
 void GraphicsScene::addConnection(int _t1, int _t2, int _t3)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 
 // SIGNAL 2
 void GraphicsScene::duplicatedEdge()
 {
-    QMetaObject::activate(this, &staticMetaObject, 2, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 2, Q_NULLPTR);
 }
 
 // SIGNAL 3
 void GraphicsScene::duplicatedVertex()
 {
-    QMetaObject::activate(this, &staticMetaObject, 3, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 3, Q_NULLPTR);
 }
 
 // SIGNAL 4
 void GraphicsScene::performDijkstra(int _t1, int _t2)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 4, _a);
 }
 
 // SIGNAL 6
 void GraphicsScene::resetCursor()
 {
-    QMetaObject::activate(this, &staticMetaObject, 6, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 6, Q_NULLPTR);
 }
-QT_WARNING_POP
 QT_END_MOC_NAMESPACE

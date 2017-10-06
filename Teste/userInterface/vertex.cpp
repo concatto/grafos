@@ -28,15 +28,24 @@ Vertex::Vertex(float radius, QString name)
 //    setFlag(QGraphicsItem::ItemIsMovable);
 }
 
-void Vertex::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-    pressed = true;
-    Q_UNUSED(event);
-}
+//void Vertex::mousePressEvent(QGraphicsSceneMouseEvent *event)
+//{
+//    pressed = true;
+//    Q_UNUSED(event);
+//}
 
 int Vertex::indexCounter = 0;
 
-void Vertex::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+//void Vertex::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+//{
+//    if(event->buttons() & Qt::LeftButton && pressed){
+//        QPointF delta = event->scenePos() - event->lastScenePos();
+//        moveBy(delta.x(), delta.y());
+//        moveLineToCenter(pos());
+//    }
+//}
+
+void Vertex::handleMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if(event->buttons() & Qt::LeftButton && pressed){
         QPointF delta = event->scenePos() - event->lastScenePos();
@@ -45,13 +54,13 @@ void Vertex::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     }
 }
 
-void Vertex::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-{
-    pressed = false;
-    if(event->type() & Qt::LeftButton){
-        emit mousePressed(this);
-    }
-}
+//void Vertex::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+//{
+//    pressed = false;
+//    if(event->type() & Qt::LeftButton){
+//        emit mousePressed(this);
+//    }
+//}
 
 bool Vertex::compareLines(GraphicsLine *l1, GraphicsLine *l2)
 {
@@ -96,6 +105,16 @@ void Vertex::moveLineToCenter(QPointF newPos)
     }
 
 
+}
+
+void Vertex::setPressed(bool value)
+{
+    pressed = value;
+}
+
+bool Vertex::getPressed() const
+{
+    return pressed;
 }
 
 void Vertex::setId(int value)
@@ -193,7 +212,7 @@ QVariant Vertex::itemChange(GraphicsItemChange change, const QVariant &value)
 
 int Vertex::type() const
 {
-    return 1;
+    return Type;
 }
 
 void Vertex::removeConnection(GraphicsLine *line)

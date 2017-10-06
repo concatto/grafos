@@ -22,6 +22,8 @@ private:
     QMenu vertexMenuList;
     QMenu lineMenuList;
     GraphicsScene scene;
+    bool isWeighted;
+    bool isDirected;
     void setViewCursor(QCursor cursor);
 
 public slots:

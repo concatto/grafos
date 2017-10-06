@@ -18,15 +18,19 @@ public:
     GraphicsScene();
     bool addVertex(QString name, QPointF pos);
     void removeVertex(Vertex *vertex);
-    void setLine(Vertex *item);
+    void setLine(Vertex *item, bool isWeighted);
     void print(); //temp, only for debugging
     void paintVertices(QVector <int> cores, QBrush *brush = NULL);
     void paintDijkstra(QStack <int> stack);
     void setDijkstra(Vertex *item);
     void keyPressEvent(QKeyEvent *event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
 
 private:
+    Vertex* movingVertex = nullptr;
+
     QVector <Vertex*> vertices;
     bool controle_aresta;
     Vertex *curr_vertex = nullptr;
@@ -35,6 +39,7 @@ private:
     bool controle_dijkstra;
     //    QLineF line;
 
+    Vertex *findVertex(const QPointF &point);
 public slots:
     void mousePressed(Vertex *vertex);
 

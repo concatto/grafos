@@ -23,6 +23,8 @@ class Vertex : public QObject, public QGraphicsEllipseItem
 {
     Q_OBJECT
 public:
+    const static int Type = 1;
+
     Vertex(float radius, QString name);
     QString getName();
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
@@ -34,12 +36,14 @@ public:
     void paintEdge(int vertice = -1);
     int getId();
 
-    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
+    void handleMoveEvent(QGraphicsSceneMouseEvent *event);
+//    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
 
     void setId(int value);
     QPointF getCenter() const;
+
+    bool getPressed() const;
+    void setPressed(bool value);
 
 private:
     float radius;

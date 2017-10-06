@@ -8,7 +8,8 @@
 #include <QMessageBox>
 #include <QStack>
 
-GraphicsView::GraphicsView(bool isWeighted, bool isDirected) : scene()
+GraphicsView::GraphicsView(bool isWeighted, bool isDirected) :
+    scene(), isWeighted(isWeighted), isDirected(isDirected)
 {
     this->setScene(&scene);
     this->viewMenuList.addAction("Inserir vértice");
@@ -73,7 +74,7 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
                 }else{
                 }
             }else if(action == vertexMenuList.actions().at(0)){ // Inserir arco ou aresta
-                scene.setLine(vertex);
+                scene.setLine(vertex, isWeighted);
                 setViewCursor(Qt::PointingHandCursor);
             }else if(action == vertexMenuList.actions().at(2)){ // Dijkstra
                 scene.setDijkstra(vertex);
