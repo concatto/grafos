@@ -84,24 +84,29 @@ void Vertex::moveLineToCenter(QPointF newPos)
     QPointF newCenterPos = QPointF(newPos.x() + xOffset, newPos.y() + yOffset);
 
     for(Line *nav: lines){
+        GraphicsLine* line = nav->line;
+
+        line->tryCentralize();
+
 
         // Move the required point of the line to the center of the elipse
-        QPointF p1 = nav->isP1 ? newCenterPos : nav->line->line().p1();
-        QPointF p2 = nav->isP1 ? nav->line->line().p2() : newCenterPos;
+//        QPointF p1 = nav->isP1 ? newCenterPos : nav->line->line().p1();
+//        QPointF p2 = nav->isP1 ? nav->line->line().p2() : newCenterPos;
 
-        QPointF delta = p2 - p1;
+//        QPointF delta = p2 - p1;
 
-        qreal angle1 = atan2(delta.y(), delta.x());
-        qreal radius = rect().width()/2;
+//        qreal angle1 = atan2(delta.y(), delta.x());
+//        qreal radius = rect().width()/2;
 
-        qreal xOffset = radius * cos(angle1);
-        qreal yOffset = radius * sin(angle1);
+//        qreal xOffset = radius * cos(angle1);
+//        qreal yOffset = radius * sin(angle1);
 
-        // TODO Fix when nav->isP1 is true
-        if(nav->isP1)
-            nav->line->setLine(QLineF(p1, p2));
-        else
-            nav->line->setLine(QLineF(p1, p2 - QPointF(xOffset, yOffset)));
+//        // TODO Fix when nav->isP1 is true
+//        qDebug() << nav->isP1;
+//        if(nav->isP1)
+//            nav->line->setLine(QLineF(p1, p2 - QPointF(xOffset, yOffset)));
+//        else
+//            nav->line->setLine(QLineF(p1, p2 - QPointF(xOffset, yOffset)));
     }
 
 
@@ -159,36 +164,37 @@ bool Vertex::addConnection(GraphicsLine *line, bool p1)
 
     lines.append(nline);
 
+    line->tryCentralize();
 
-    if(p1){
-        int xOffset = rect().x() + rect().width()/2;
-        int yOffset = rect().y() + rect().height()/2;
+//    if(p1){
+//        int xOffset = rect().x() + rect().width()/2;
+//        int yOffset = rect().y() + rect().height()/2;
 
-        QPointF newCenterPos = QPointF(this->scenePos().x() + xOffset, this->scenePos().y() + yOffset);
+//        QPointF newCenterPos = QPointF(this->scenePos().x() + xOffset, this->scenePos().y() + yOffset);
 
-        lines.back()->line->setLine(QLineF(newCenterPos, QPointF(0, 0)));
+//        lines.back()->line->setLine(QLineF(newCenterPos, QPointF(0, 0)));
 
-    }else {
-        QPointF p1 = line->line().p1();
-        QPointF p2 = rect().center();
+//    }else {
+//        QPointF p1 = line->line().p1();
+//        QPointF p2 = rect().center();
 
-        QPointF delta = p2 - p1;
+//        QPointF delta = p2 - p1;
 
-        qreal angle1 = atan2(delta.y(), delta.x());
-        qreal radius = rect().width()/2;
+//        qreal angle1 = atan2(delta.y(), delta.x());
+//        qreal radius = rect().width()/2;
 
-        qreal dxOffset = radius * cos(angle1);
-        qreal dyOffset = radius * sin(angle1);
+//        qreal dxOffset = radius * cos(angle1);
+//        qreal dyOffset = radius * sin(angle1);
 
 
 
-        int xOffset = rect().x() + rect().width()/2;
-        int yOffset = rect().y() + rect().height()/2;
+//        int xOffset = rect().x() + rect().width()/2;
+//        int yOffset = rect().y() + rect().height()/2;
 
-        QPointF newCenterPos = QPointF(this->scenePos().x() + xOffset, this->scenePos().y() + yOffset);
+//        QPointF newCenterPos = QPointF(this->scenePos().x() + xOffset, this->scenePos().y() + yOffset);
 
-        lines.back()->line->setLine(QLineF(line->line().p1(), newCenterPos - QPointF(dxOffset, dyOffset)));
-    }
+//        lines.back()->line->setLine(QLineF(line->line().p1(), newCenterPos - QPointF(dxOffset, dyOffset)));
+//    }
 
     return true;
 

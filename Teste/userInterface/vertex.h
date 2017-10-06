@@ -42,6 +42,7 @@ public:
     void setId(int value);
     QPointF getCenter() const;
 
+
     bool getPressed() const;
     void setPressed(bool value);
 

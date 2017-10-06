@@ -90,3 +90,10 @@ bool GraphicsLine::isWeighted() const
 {
     return weighted;
 }
+
+void GraphicsLine::tryCentralize()
+{
+    if (v1 != nullptr && v2 != nullptr) {
+        setLine(QLineF(v1->getCenter(), v2->getCenter()));
+    }
+}

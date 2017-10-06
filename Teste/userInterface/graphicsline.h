@@ -22,6 +22,8 @@ public:
 
     bool isWeighted() const;
 
+    void tryCentralize();
+
 private:
     Vertex *v1;
     Vertex *v2;
