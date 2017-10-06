@@ -191,7 +191,6 @@ void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
     }else if(QGraphicsItem *item = itemAt(event->scenePos(), QTransform())){
         if(item->type() == 1){
-//            qDebug()<<"Mouse scene pos:"<<event->scenePos();
             Vertex *vertex = (Vertex*)item;
             vertex->mouseMoveEvent(event);
         }

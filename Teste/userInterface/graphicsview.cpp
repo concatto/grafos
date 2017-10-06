@@ -108,7 +108,7 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
         if(action == NULL)
             return;
 
-        if(action->text() == viewMenuList.actions().at(0)){ //Inserir vértice
+        if(action == viewMenuList.actions().at(0)){ //Inserir vértice
             bool ok = false;
             QString text;
             while(text.isEmpty()){
@@ -122,14 +122,14 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
                 emit addVertex(text);
             }
 
-        }else if(action->text() == viewMenuList.actions().at(1)){ //Welsh and Powell
+        }else if(action == viewMenuList.actions().at(1)){ //Welsh and Powell
             emit performWelshPowell();
-        }else if(action->text() == viewMenuList.actions().at(2)){ // Dsatur
+        }else if(action == viewMenuList.actions().at(2)){ // Dsatur
             emit performDsatur();
-        }else if(action->text() == viewMenuList.actions().at(3)){ // Resetar cores
+        }else if(action == viewMenuList.actions().at(3)){ // Resetar cores
             QBrush brush(Qt::red);
             scene.paintVertices(QVector <int>(), &brush);
-        }else if(action->text() == viewMenuList.actions().at(4)){ // Print -- only for debugging
+        }else if(action == viewMenuList.actions().at(4)){ // Print -- only for debugging
             scene.print();
         }
     }
