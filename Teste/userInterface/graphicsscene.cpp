@@ -66,9 +66,8 @@ void GraphicsScene::paintVertices(QVector<int> cores, QBrush *brush)
 
     if(brush != NULL){ // Reset colors
         for(Vertex *v: vertices){
-            v->setPen(Qt::NoPen);
+            v->setPen(QPen());
             v->setBrush(*brush);
-//            v->update();
             v->paintEdge();
         }
         return;
@@ -76,9 +75,6 @@ void GraphicsScene::paintVertices(QVector<int> cores, QBrush *brush)
 
     int value = 359 / cores.size();
     QColor color;
-
-
-    QStringList list = QColor::colorNames();
 
 //    for(int i = 0; i < list.size(); i++){
 //        qDebug()<<list[i]<<i;
