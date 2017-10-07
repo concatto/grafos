@@ -118,12 +118,12 @@ public slots:
     void performDsatur(){
         if(nomes.size() == 0)
             return;
-        vector <Dsatur> lista = dsatur();
+
+//        vector <Dsatur> lista = dsatur();
 
         QVector <int> cores;
-        sort(lista.begin(), lista.end(), compareDsatur);
-        for(Dsatur d: lista){
-            cores.push_back(d.cor);
+        for(int d : dsatur_2()){
+            cores.push_back(d);
         }
 
         emit paintVertices(cores);
@@ -236,7 +236,67 @@ public:
 //        }
 
         return listaDsatur;
+    }
 
+    vector<int> dsatur_2() {
+        vector<int> cores(nomes.size(), -1);
+        vector<int> saturacao(nomes.size(), 0);
+        vector<int> graus;
+
+        for (int i = 0; i < nomes.size(); i++) {
+            graus.push_back(obterGrau(i));
+        }
+
+        while (true) {
+            int maior = -1;
+            for (int i = 0; i < nomes.size(); i++) {
+                if (cores[i] == -1) {
+                    if (maior == -1 || saturacao[i] > saturacao[maior]) {
+                        maior = i;
+                    } else if (saturacao[i] == saturacao[maior] && graus[i] > graus[maior]) {
+                        maior = i;
+                    }
+                }
+            }
+
+            if (maior == -1) {
+                break;
+            }
+
+            int cor;
+            for (cor = 0; cor < nomes.size(); cor++) {
+                bool invalido = false;
+                for (int vizinho : obterVerticesAdjacentes(maior)) {
+                    if (cores[vizinho] == cor) {
+                        invalido = true;
+                    }
+                }
+
+                if (!invalido) {
+                    break;
+                }
+            }
+
+            cores[maior] = cor;
+            for (int vizinho : obterVerticesAdjacentes(maior)) {
+                bool invalida = false;
+                for (int vizinho2 : obterVerticesAdjacentes(vizinho)) {
+                    if (vizinho2 != maior && cores[vizinho2] == cor) {
+                        invalida = true;
+                    }
+                }
+
+                if (!invalida) {
+                    saturacao[vizinho]++;
+                }
+            }
+        }
+
+        for (int i = 0; i < cores.size(); i++) {
+            qDebug() << cores[i];
+        }
+
+        return cores;
     }
 
     bool washAux(vector <WashPowell> listaWp, int cor, int origem){
@@ -262,7 +322,7 @@ public:
 
         sort(listaWp.begin(), listaWp.end());
 
-        for(WashPowell &i : listaWp){
+        for(WashPowell &i : listaWp) {
             if(counter == nomes.size())
                 break;
 
