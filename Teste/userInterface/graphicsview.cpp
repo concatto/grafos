@@ -76,7 +76,7 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
                 scene.createLine(vertex, isWeighted);
                 setViewCursor(Qt::PointingHandCursor);
             }else if(action == vertexMenuList.actions().at(2)){ // Dijkstra
-                scene.setDijkstra(vertex);
+                scene.prepareDijkstra(vertex);
                 setViewCursor(Qt::PointingHandCursor);
             }
         }else if(2 == item->type()){

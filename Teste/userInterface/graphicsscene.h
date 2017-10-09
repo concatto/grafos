@@ -22,7 +22,7 @@ public:
     void print(); //temp, only for debugging
     void paintVertices(QVector <int> cores, QBrush *brush = NULL);
     void paintDijkstra(QStack <int> stack);
-    void setDijkstra(Vertex *item);
+    void prepareDijkstra(Vertex *item);
     void keyPressEvent(QKeyEvent *event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
@@ -37,11 +37,10 @@ private:
     GraphicsLine *currentLine = nullptr;
     void sleep(int msec);
     bool performingDijkstra;
-    //    QLineF line;
-
+    void addLine(Vertex *vertex);
     Vertex *findVertex(const QPointF &point);
-public slots:
-    void mousePressed(Vertex *vertex);
+    void executeSecondClickAction(Vertex *vertex);
+    void resetControlVaraibles();
 
 signals:
     void addConnection(int id1, int id2, int weight = 1);
