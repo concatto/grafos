@@ -83,10 +83,10 @@ void Vertex::moveLineToCenter(QPointF newPos)
 
     QPointF newCenterPos = QPointF(newPos.x() + xOffset, newPos.y() + yOffset);
 
-    for(Line *nav: lines){
-        GraphicsLine* line = nav->line;
+    for(GraphicsLine *nav: lines){
+//        GraphicsLine* line = nav->line;
 
-        line->tryCentralize();
+        nav->tryCentralize();
 
 
         // Move the required point of the line to the center of the elipse
@@ -145,24 +145,23 @@ void Vertex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
     painter->drawText(this->rect() + this->rect().height(), Qt::AlignCenter, this->name);
 }
 
-bool Vertex::addConnection(GraphicsLine *line, bool p1)
+bool Vertex::addConnection(GraphicsLine *line)
 {
-    Line *nline = new Line(line, p1);
+//    Line *nline = new Line(line, p1);
 
-    qDebug() << lines.size() << "\n";
 
     if(line->getV2() != NULL){
-        for(Line *l: lines){
-            if(compareLines(l->line, line)){
+        for(GraphicsLine *l: lines){
+            if(compareLines(l, line)){
                 line->getV1()->removeConnection(line);
                 line->getV2()->removeConnection(line);
-                delete nline;
+//                delete nline;
                 return false;
             }
         }
     }
 
-    lines.append(nline);
+    lines.append(line);
 
     line->tryCentralize();
 
@@ -223,8 +222,8 @@ int Vertex::type() const
 
 void Vertex::removeConnection(GraphicsLine *line)
 {
-    for(Line *l : lines){
-        if(l->line == line){
+    for(GraphicsLine *l : lines){
+        if(l == line){
             lines.removeOne(l);
         }
     }
@@ -232,42 +231,41 @@ void Vertex::removeConnection(GraphicsLine *line)
 
 void Vertex::removeConnections()
 {
-    for(Line *l : lines){
-        if(l->isP1){
-            l->line->getV2()->removeConnection(l->line);
+    for(GraphicsLine *l : lines){
+        if(l->getV1()->getId() == id){
+            l->getV2()->removeConnection(l);
         }else {
-            l->line->getV1()->removeConnection(l->line);
+            l->getV1()->removeConnection(l);
         }
-        delete l->line;
         delete l;
     }
 }
 
 void Vertex::print()
 {
-    for(Line *l: lines){
-        qDebug()<<l->line->getV2()->getName();
-    }
+//    for(Line *l: lines){
+//        qDebug()<<l->line->getV2()->getName();
+//    }
 }
 
 void Vertex::paintEdge(int vertice)
 {
     if(vertice == -1){ // Reset colors
-        for(Line *line: lines){
-            line->line->setPen(QPen(QBrush(Qt::black), 4));
+        for(GraphicsLine *line: lines){
+            line->setPen(QPen(QBrush(Qt::black), 4));
 //            line->line->update();
         }
         return;
     }
 
-    for(Line *line: lines){
-        if(line->isP1){
-            if(line->line->getV2()->getId() == vertice){
-                line->line->setPen(QPen(QBrush(Qt::green), 4));
+    for(GraphicsLine *line: lines){
+        if(line->getV1()->getId() == id){
+            if(line->getV2()->getId() == vertice){
+                line->setPen(QPen(QBrush(Qt::green), 4));
             }
         }else {
-            if(line->line->getV1()->getId() == vertice){
-                line->line->setPen(QPen(QBrush(Qt::green), 4));
+            if(line->getV1()->getId() == vertice){
+                line->setPen(QPen(QBrush(Qt::green), 4));
             }
         }
     }

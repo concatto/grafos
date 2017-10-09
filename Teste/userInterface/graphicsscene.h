@@ -18,7 +18,7 @@ public:
     GraphicsScene();
     bool addVertex(QString name, QPointF pos);
     void removeVertex(Vertex *vertex);
-    void setLine(Vertex *item, bool isWeighted);
+    void createLine(Vertex *item, bool isWeighted);
     void print(); //temp, only for debugging
     void paintVertices(QVector <int> cores, QBrush *brush = NULL);
     void paintDijkstra(QStack <int> stack);
@@ -32,11 +32,11 @@ private:
     Vertex* movingVertex = nullptr;
 
     QVector <Vertex*> vertices;
-    bool controle_aresta;
-    Vertex *curr_vertex = nullptr;
-    GraphicsLine *curr_line = nullptr;
+    bool addingEdge;
+    Vertex *sourceVertex = nullptr;
+    GraphicsLine *currentLine = nullptr;
     void sleep(int msec);
-    bool controle_dijkstra;
+    bool performingDijkstra;
     //    QLineF line;
 
     Vertex *findVertex(const QPointF &point);

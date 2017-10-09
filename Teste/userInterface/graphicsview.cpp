@@ -71,10 +71,9 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
 
                     emit removeVertex(vertex->getId());
                     scene.removeVertex(vertex);
-                }else{
                 }
             }else if(action == vertexMenuList.actions().at(0)){ // Inserir arco ou aresta
-                scene.setLine(vertex, isWeighted);
+                scene.createLine(vertex, isWeighted);
                 setViewCursor(Qt::PointingHandCursor);
             }else if(action == vertexMenuList.actions().at(2)){ // Dijkstra
                 scene.setDijkstra(vertex);

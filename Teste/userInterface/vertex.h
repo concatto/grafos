@@ -10,14 +10,14 @@
 
 class GraphicsLine;
 
-struct Line {
-    Line(GraphicsLine *line, bool isP1){
-        this->line = line;
-        this->isP1 = isP1;
-    }
-    GraphicsLine *line;
-    bool isP1;
-};
+//struct Line {
+//    Line(GraphicsLine *line, bool isP1){
+//        this->line = line;
+//        this->isP1 = isP1;
+//    }
+//    GraphicsLine *line;
+//    bool isP1;
+//};
 
 class Vertex : public QObject, public QGraphicsEllipseItem
 {
@@ -28,7 +28,7 @@ public:
     Vertex(float radius, QString name);
     QString getName();
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-    bool addConnection(GraphicsLine *line, bool p1);
+    bool addConnection(GraphicsLine *line);
     int type() const override;
     void removeConnection(GraphicsLine *line);
     void removeConnections();
@@ -49,9 +49,7 @@ public:
 private:
     float radius;
     QString name;
-//    bool isP1;
-//    GraphicsLine *line;
-    QVector <Line*> lines;
+    QVector <GraphicsLine*> lines;
     bool compareLines(GraphicsLine *l1, GraphicsLine *l2);
     void moveLineToCenter(QPointF newPos);
     int id;

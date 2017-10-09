@@ -147,12 +147,12 @@ void menuPrincipal(Grafo& grafo) {
 int main(int argc, char *argv[]) {
 
 //    MGrafo grafo;
-//    grafo.inserirVertice("A");
-//    grafo.inserirVertice("B");
-//    grafo.inserirVertice("C");
-//    grafo.inserirVertice("D");
-//    grafo.inserirVertice("E");
-////    grafo.inserirVertice("F");
+//    grafo.inserirVertice("0");
+//    grafo.inserirVertice("1");
+//    grafo.inserirVertice("2");
+//    grafo.inserirVertice("3");
+//    grafo.inserirVertice("4");
+//    grafo.inserirVertice("5");
 
 //    grafo.inserirAresta(grafo.obterIndice("A"), grafo.obterIndice("B"));
 

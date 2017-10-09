@@ -12,9 +12,8 @@
 GraphicsScene::GraphicsScene() : QGraphicsScene()
 {
     setSceneRect(0, 0, 740, 340);
-    curr_vertex = NULL;
-    controle_aresta = false;
-    controle_dijkstra = false;
+    addingEdge = false;
+    performingDijkstra = false;
 }
 
 bool GraphicsScene::addVertex(QString name, QPointF pos)
@@ -41,17 +40,16 @@ void GraphicsScene::removeVertex(Vertex *vertex)
     delete vertex;
 }
 
-void GraphicsScene::setLine(Vertex *item, bool isWeighted)
+void GraphicsScene::createLine(Vertex *item, bool isWeighted)
 {
-//    line.setP1(item->pos());
-    curr_vertex = item;
-    controle_aresta = true;
-    curr_line = new GraphicsLine(isWeighted);
-    curr_line->setV1(curr_vertex);
-    addItem(curr_line);
-    item->addConnection(curr_line, true);
+    sourceVertex = item;
+    addingEdge = true;
+    currentLine = new GraphicsLine(isWeighted);
+    currentLine->setV1(sourceVertex);
+    addItem(currentLine);
+    item->addConnection(currentLine);
 
-    curr_line->setLine(QLineF(item->getCenter(), item->getCenter()));
+    currentLine->setLine(QLineF(item->getCenter(), item->getCenter()));
 }
 
 void GraphicsScene::print()
@@ -109,28 +107,27 @@ void GraphicsScene::paintDijkstra(QStack<int> stack)
 
 void GraphicsScene::setDijkstra(Vertex *item)
 {
-    curr_vertex = item;
-    controle_dijkstra = true;
+    sourceVertex = item;
+    performingDijkstra = true;
 }
 
 void GraphicsScene::mousePressed(Vertex *vertex)
 {
-    qDebug()<<"teste";
-    if(controle_aresta){
-        curr_line->setV2(vertex);
-        if(!vertex->addConnection(curr_line, false)){
-            removeItem(curr_line);
-            delete curr_line;
-            curr_line = NULL;
-            curr_vertex = NULL;
-            controle_aresta = false;
+    if(addingEdge){
+        currentLine->setV2(vertex);
+        if(!vertex->addConnection(currentLine)){
+            removeItem(currentLine);
+            delete currentLine;
+            currentLine = NULL;
+            sourceVertex = NULL;
+            addingEdge = false;
             emit duplicatedEdge();
             return;
         }
         bool ok = false;
         QString text;
-        qDebug() << "Weighted: " << curr_line->isWeighted();
-        if (curr_line->isWeighted()) {
+        qDebug() << "Weighted: " << currentLine->isWeighted();
+        if (currentLine->isWeighted()) {
             while(text.isEmpty()){
                 text = QInputDialog::getText(views().back(), tr("Peso da aresta"),
                                                      tr("Peso da aresta:"), QLineEdit::Normal,
@@ -141,15 +138,15 @@ void GraphicsScene::mousePressed(Vertex *vertex)
         } else {
             text = "1";
         }
-        curr_line->setWeight(text.toInt());
-        controle_aresta = false;
-        emit addConnection(curr_vertex->getId(), vertex->getId(), curr_line->getWeight());
-        curr_line = NULL;
-        curr_vertex = NULL;
-    }else if(controle_dijkstra){
-        emit performDijkstra(curr_vertex->getId(), vertex->getId());
-        curr_vertex = NULL;
-        controle_dijkstra = false;
+        currentLine->setWeight(text.toInt());
+        addingEdge = false;
+        emit addConnection(sourceVertex->getId(), vertex->getId(), currentLine->getWeight());
+        currentLine = NULL;
+        sourceVertex = NULL;
+    }else if(performingDijkstra){
+        emit performDijkstra(sourceVertex->getId(), vertex->getId());
+        sourceVertex = NULL;
+        performingDijkstra = false;
     }
     emit resetCursor();
 }
@@ -172,14 +169,14 @@ void GraphicsScene::sleep(int msec)
 void GraphicsScene::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() & Qt::Key_Escape){
-        if(controle_aresta){
-            curr_vertex->removeConnection(curr_line);
-            delete curr_line;
-            curr_line = NULL;
-            curr_vertex = NULL;
-            controle_aresta = false;
-        }else if(controle_dijkstra){
-            controle_dijkstra = false;
+        if(addingEdge){
+            sourceVertex->removeConnection(currentLine);
+            delete currentLine;
+            currentLine = NULL;
+            sourceVertex = NULL;
+            addingEdge = false;
+        }else if(performingDijkstra){
+            performingDijkstra = false;
         }
         emit resetCursor();
     }
@@ -187,9 +184,8 @@ void GraphicsScene::keyPressEvent(QKeyEvent *event)
 
 void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    if (curr_line != nullptr && curr_vertex != nullptr) {
-        curr_line->setLine(QLineF(curr_vertex->getCenter(), event->scenePos()));
-
+    if (currentLine != nullptr && sourceVertex != nullptr) {
+        currentLine->setLine(QLineF(sourceVertex->getCenter(), event->scenePos()));
     }
 
     if (movingVertex != nullptr) {
@@ -201,8 +197,16 @@ void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     Vertex* v = findVertex(event->scenePos());
     if (v != nullptr) {
-        movingVertex = v;
-        v->setPressed(true);
+
+        if(sourceVertex != nullptr){
+            //Todo
+            qDebug()<<v->getId();
+            mousePressed(v);
+        }else {
+            movingVertex = v;
+            v->setPressed(true);
+        }
+
     }
 }
 
