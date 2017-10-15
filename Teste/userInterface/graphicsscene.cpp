@@ -18,24 +18,22 @@ GraphicsScene::GraphicsScene() : QGraphicsScene()
 
 bool GraphicsScene::addVertex(QString name, QPointF pos)
 {
-    for(Vertex *v: vertices){
-        if(v->getName() == name){
-            emit duplicatedVertex();
-            return false;
-        }
-    }
-    Vertex *vertex = new Vertex(25, name);
-    vertex->setPos(pos);
+    float radius = 25;
+    Vertex *vertex = new Vertex(radius, name);
+    vertex->setPos(pos - QPointF(radius, radius));
+    vertex->setId(vertices.size());
     vertices.append(vertex);
     addItem(vertices.back());
-//    QObject::connect(vertex, SIGNAL(mousePressed(Vertex*)), this, SLOT(mousePressed(Vertex*)));
     return true;
 }
 
 void GraphicsScene::removeVertex(Vertex *vertex)
 {
+    for (int i = vertex->getId() + 1; i < vertices.size(); i++) {
+        vertices[i]->setId(vertices[i]->getId() - 1);
+    }
+
     vertices.removeOne(vertex);
-    vertex->setId(vertex->getId() - 1);
     removeItem(vertex);
     delete vertex;
 }
@@ -45,12 +43,20 @@ void GraphicsScene::createLine(Vertex *item, bool isWeighted)
     sourceVertex = item;
     addingEdge = true;
     currentLine = new GraphicsLine(isWeighted);
-    currentLine->setV1(sourceVertex);
+    currentLine->setV1(item);
     addItem(currentLine);
     item->addConnection(currentLine);
 
     currentLine->setLine(QLineF(item->getCenter(), item->getCenter()));
 }
+
+void GraphicsScene::finishConnectionCreation(int id1, int id2, int weight)
+{
+    currentLine->setV2(vertices[id2]);
+    currentLine->setWeight(weight);
+    vertices[id2]->addConnection(currentLine);
+}
+
 
 void GraphicsScene::print()
 {
@@ -61,7 +67,6 @@ void GraphicsScene::print()
 
 void GraphicsScene::paintVertices(QVector<int> cores, QBrush *brush)
 {
-
     if(brush != NULL){ // Reset colors
         for(Vertex *v: vertices){
             v->setPen(QPen());
@@ -71,7 +76,7 @@ void GraphicsScene::paintVertices(QVector<int> cores, QBrush *brush)
         return;
     }
 
-    int value = 359 / cores.size();
+    int value = 360 / cores.size();
     QColor color;
 
 //    for(int i = 0; i < list.size(); i++){
@@ -83,6 +88,7 @@ void GraphicsScene::paintVertices(QVector<int> cores, QBrush *brush)
     for(int i = 0; i < vertices.size(); i++){
 //       vertices[i]->setBrush(QBrush(QColor(list.at(cores[i] + 10))));
         vertices[i]->setBrush(color.fromHsv(value * cores[i], 255, 255, 255));
+        qDebug() << cores[i] << ": " << value * cores[i];
         vertices[i]->update();
     }
 }
@@ -114,8 +120,7 @@ void GraphicsScene::prepareDijkstra(Vertex *item)
 void GraphicsScene::executeSecondClickAction(Vertex *vertex)
 {
     if(addingEdge){
-        addLine(vertex);
-        emit addConnection(sourceVertex->getId(), vertex->getId(), currentLine->getWeight());
+        emit addConnection(sourceVertex->getId(), vertex->getId());
     }else if(performingDijkstra){
         emit performDijkstra(sourceVertex->getId(), vertex->getId());
         performingDijkstra = false;
@@ -145,30 +150,6 @@ void GraphicsScene::sleep(int msec)
 #endif
 }
 
-void GraphicsScene::addLine(Vertex *vertex)
-{
-        currentLine->setV2(vertex);
-        if(!vertex->addConnection(currentLine)){
-            removeItem(currentLine);
-            delete currentLine;
-            emit duplicatedEdge();
-            return;
-        }
-        bool ok = false;
-        QString text;
-        if (currentLine->isWeighted()) {
-            while(text.isEmpty()){
-                text = QInputDialog::getText(views().back(), tr("Peso da aresta"),
-                                                     tr("Peso da aresta:"), QLineEdit::Normal,
-                                                     "", &ok);
-                if(!ok)
-                    return;
-            }
-        } else {
-            text = "1";
-        }
-        currentLine->setWeight(text.toInt());
-}
 
 
 void GraphicsScene::keyPressEvent(QKeyEvent *event)
@@ -197,7 +178,8 @@ void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    Vertex* v = findVertex(event->scenePos());
+    Vertex* v = findItem<Vertex*>(event->scenePos()); // Verify if it's returning null pointer
+                                                      // when clicking on nothing
     if (v != nullptr) {
 
         if(sourceVertex != nullptr){
@@ -212,7 +194,7 @@ void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    Vertex* v = findVertex(event->scenePos());
+    Vertex* v = findItem<Vertex*>(event->scenePos());
     if (v != nullptr) {
         executeSecondClickAction(v);
     }
@@ -223,13 +205,11 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     }
 }
 
-
-
-Vertex* GraphicsScene::findVertex(const QPointF& point)
+int GraphicsScene::getTypeOfItemAt(QPointF point)
 {
     QGraphicsItem* item = itemAt(point, QTransform());
-    if (item != nullptr && item->type() == Vertex::Type) {
-        return static_cast<Vertex*>(item);
+    if (item != nullptr) {
+        return item->type();
     }
-    return nullptr;
+    return -1;
 }

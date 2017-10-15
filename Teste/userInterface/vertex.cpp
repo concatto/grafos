@@ -25,91 +25,31 @@ Vertex::Vertex(float radius, QString name)
     this->name = name;
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges);
     pressed = false;
-//    setFlag(QGraphicsItem::ItemIsMovable);
 }
 
-//void Vertex::mousePressEvent(QGraphicsSceneMouseEvent *event)
-//{
-//    pressed = true;
-//    Q_UNUSED(event);
-//}
-
 int Vertex::indexCounter = 0;
-
-//void Vertex::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
-//{
-//    if(event->buttons() & Qt::LeftButton && pressed){
-//        QPointF delta = event->scenePos() - event->lastScenePos();
-//        moveBy(delta.x(), delta.y());
-//        moveLineToCenter(pos());
-//    }
-//}
 
 void Vertex::handleMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if(event->buttons() & Qt::LeftButton && pressed){
         QPointF delta = event->scenePos() - event->lastScenePos();
         moveBy(delta.x(), delta.y());
-        moveLineToCenter(pos());
+        moveLineToCenter();
     }
 }
-
-//void Vertex::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-//{
-//    pressed = false;
-//    if(event->type() & Qt::LeftButton){
-//        emit mousePressed(this);
-//    }
-//}
 
 bool Vertex::compareLines(GraphicsLine *l1, GraphicsLine *l2)
 {
     return ((l1->getV1()->getId() == l2->getV1()->getId() && l1->getV2()->getId() == l2->getV2()->getId())
             || (l1->getV1()->getId() == l2->getV2()->getId() && l1->getV2()->getId() == l2->getV1()->getId()));
 
-//    return ((l1->getV1() == l2->getV1() && l1->getV2() == l2->getV2())
-//            || l1->getV1() == l2->getV2() && l1->getV2() == l2->getV1());
-
 }
 
-void Vertex::moveLineToCenter(QPointF newPos)
+void Vertex::moveLineToCenter()
 {
-
-//    QPointF p1 = getV1()->rect().center();
-//    QPointF p2 = getV2()->rect().center();
-
-    int xOffset = rect().x() + rect().width()/2;
-    int yOffset = rect().y() + rect().height()/2;
-
-    QPointF newCenterPos = QPointF(newPos.x() + xOffset, newPos.y() + yOffset);
-
     for(GraphicsLine *nav: lines){
-//        GraphicsLine* line = nav->line;
-
         nav->tryCentralize();
-
-
-        // Move the required point of the line to the center of the elipse
-//        QPointF p1 = nav->isP1 ? newCenterPos : nav->line->line().p1();
-//        QPointF p2 = nav->isP1 ? nav->line->line().p2() : newCenterPos;
-
-//        QPointF delta = p2 - p1;
-
-//        qreal angle1 = atan2(delta.y(), delta.x());
-//        qreal radius = rect().width()/2;
-
-//        qreal xOffset = radius * cos(angle1);
-//        qreal yOffset = radius * sin(angle1);
-
-//        // TODO Fix when nav->isP1 is true
-//        qDebug() << nav->isP1;
-//        if(nav->isP1)
-//            nav->line->setLine(QLineF(p1, p2 - QPointF(xOffset, yOffset)));
-//        else
-//            nav->line->setLine(QLineF(p1, p2 - QPointF(xOffset, yOffset)));
     }
-
-
 }
 
 void Vertex::setPressed(bool value)
@@ -142,14 +82,13 @@ void Vertex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
 {
     QGraphicsEllipseItem::paint(painter, option, widget);
 //    this->boundingRect().bottom();
-    painter->drawText(this->rect() + this->rect().height(), Qt::AlignCenter, this->name);
+
+
+    painter->drawText(rect().marginsAdded(QMarginsF(80, 0, 80, 0)) + rect().height(), Qt::AlignCenter, this->name);
 }
 
 bool Vertex::addConnection(GraphicsLine *line)
 {
-//    Line *nline = new Line(line, p1);
-
-
     if(line->getV2() != NULL){
         for(GraphicsLine *l: lines){
             if(compareLines(l, line)){
@@ -202,18 +141,8 @@ bool Vertex::addConnection(GraphicsLine *line)
 
 QVariant Vertex::itemChange(GraphicsItemChange change, const QVariant &value)
 {
-//    if(lines.size() > 0){
-//        if (change == ItemPositionChange && scene()) {
-//            QPointF newPos = value.toPointF();
-
-//            moveLineToCenter(newPos);
-//        }
-//    }
-
     return QGraphicsItem::itemChange(change, value);
 }
-
-
 
 int Vertex::type() const
 {

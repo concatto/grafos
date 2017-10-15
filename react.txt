@@ -1,0 +1,13 @@
+Anotações React
+ - Tudo no return precisa estar dentro de uma div
+ - basic logic eu posso por no render
+ - se eu tiver mais logica, preciso criar um método na classe e por lá.
+ - Construtor sempre deve chamar o super, eu posso criar atributos só invocando e usando eles
+ - Só uso state quando aquele valor afeta só o componente em si e nenhum outro, fora isso, uso props
+
+
+
+
+DUVIDAS
+this.props
+declaracao var

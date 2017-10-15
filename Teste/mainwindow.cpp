@@ -2,26 +2,24 @@
 #include "ui_mainwindow.h"
 #include <QLayout>
 #include <QStack>
+#include <QMessageBox>
 
 MainWindow::MainWindow(bool isWeighted, bool isDirected, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow), view(isWeighted, isDirected)
 {
     ui->setupUi(this);
-//    QObject::connect(&view, SIGNAL(addVertexRequest(QString)), this, SLOT(addVertexRequest(QString)));
-    QObject::connect(&view, SIGNAL(addVertex(QString)), this, SIGNAL(addVertex(QString)));
-    QObject::connect(&view, SIGNAL(removeVertex(int)), this, SIGNAL(removeVertex(int)));
-    QObject::connect(&view, SIGNAL(addConnection(int,int,int)), this, SIGNAL(addConnection(int,int,int)));
-    QObject::connect(&view, SIGNAL(removeConnection(int, int)), this, SIGNAL(removeConnection(int, int)));
-    QObject::connect(&view, SIGNAL(performWelshPowell()), this, SIGNAL(performWelshPowell()));
-    QObject::connect(&view, SIGNAL(performDsatur()), this, SIGNAL(performDsatur()));
-    QObject::connect(&view, SIGNAL(performDijkstra(int, int)), this, SIGNAL(performDijkstra(int, int)));
     ui->centralwidget->layout()->addWidget(&view);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+GraphicsView &MainWindow::getView()
+{
+    return view;
 }
 
 void MainWindow::paintVertices(QVector<int> cores)
@@ -32,4 +30,13 @@ void MainWindow::paintVertices(QVector<int> cores)
 void MainWindow::paintDijkstra(QStack<int> stack)
 {
     view.paintDijkstra(stack);
+}
+
+void MainWindow::showError(QString message, QString title)
+{
+    QMessageBox msgBox;
+    msgBox.setWindowTitle(title);
+    msgBox.setText(message);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    msgBox.exec();
 }

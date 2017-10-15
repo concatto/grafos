@@ -28,6 +28,15 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
 
+    template <class T>
+    T findItem(const QPointF &point) {
+        QGraphicsItem* item = itemAt(point, QTransform());
+        return item == nullptr ? nullptr : static_cast<T>(item);
+    }
+
+    int getTypeOfItemAt(QPointF point);
+    void finishConnectionCreation(int id1, int id2, int weight);
+
 private:
     Vertex* movingVertex = nullptr;
 
@@ -38,12 +47,12 @@ private:
     void sleep(int msec);
     bool performingDijkstra;
     void addLine(Vertex *vertex);
-    Vertex *findVertex(const QPointF &point);
+
     void executeSecondClickAction(Vertex *vertex);
     void resetControlVaraibles();
 
 signals:
-    void addConnection(int id1, int id2, int weight = 1);
+    void addConnection(int id1, int id2);
     void duplicatedEdge();
     void duplicatedVertex();
     void performDijkstra(int origem, int destino = -1);

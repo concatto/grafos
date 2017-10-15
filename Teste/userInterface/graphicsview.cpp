@@ -26,20 +26,17 @@ GraphicsView::GraphicsView(bool isWeighted, bool isDirected) :
     isDirected ? lineMenuList.addAction("Remover Arco") : lineMenuList.addAction("Remover Aresta");
 
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-    //menuList.addAction("");
+
     setFixedSize(770, 570);
     setFrameShape(QGraphicsView::NoFrame);
     setMouseTracking(true); //Permite que MouseMoveEvents sejam detectados pela scene sem clique prévio
-    QObject::connect(&scene, SIGNAL(addConnection(int, int,int)), this, SIGNAL(addConnection(int, int,int)));
-    QObject::connect(&scene, SIGNAL(duplicatedEdge()), this, SLOT(duplicatedEdge()));
-    QObject::connect(&scene, SIGNAL(duplicatedVertex()), this, SLOT(duplicatedVertex()));
+    QObject::connect(&scene, SIGNAL(addConnection(int, int)), this, SLOT(askConnectionWeight(int, int)));
     QObject::connect(&scene, SIGNAL(performDijkstra(int, int)), this, SIGNAL(performDijkstra(int, int)));
     QObject::connect(&scene, SIGNAL(resetCursor()), this, SLOT(resetCursor()));
 }
 
 void GraphicsView::paintVertices(QVector<int> cores)
 {
-//    scene.
     QBrush brush(Qt::black);
     scene.paintVertices(cores, &brush);
     scene.paintVertices(cores);
@@ -50,88 +47,127 @@ void GraphicsView::paintDijkstra(QStack<int> stack)
     scene.paintDijkstra(stack);
 }
 
+void GraphicsView::createVertex(QString name)
+{
+    scene.addVertex(name, consumeMousePosition());
+}
+
+void GraphicsView::createConnection(int id1, int id2, int weight)
+{
+    scene.finishConnectionCreation(id1, id2, weight);
+}
+
+QPointF GraphicsView::consumeMousePosition()
+{
+    QPointF point(storedMousePosition);
+    storedMousePosition = QPointF(0, 0);
+    return point;
+}
+
+int GraphicsView::showMenu(QMenu &menu)
+{
+    QAction *action = NULL;
+    action = menu.exec(QCursor::pos());
+
+    if(action == NULL)
+        return -1;
+
+    return menu.actions().indexOf(action);
+}
 
 void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
 {
-    if(QGraphicsItem *item = itemAt(event->pos())){
-        if(1 == item->type()){
-            Vertex *vertex = (Vertex*)item;
-            QAction *action = NULL;
-            action = vertexMenuList.exec(QCursor::pos());
+    QPointF pos = mapToScene(event->pos());
 
-            if(action == NULL)
-                return;
+    storeMousePosition(pos);
+    int type = scene.getTypeOfItemAt(pos);
+    int action = -1;
 
-            if(action == vertexMenuList.actions().at(1)){ // Remover vértice
-                QMessageBox::StandardButton reply;
-                reply = QMessageBox::question(this, "Remover vértice", "Você tem certeza que deseja remover este vértice?",
-                                              QMessageBox::Yes|QMessageBox::No);
-                if(reply == QMessageBox::Yes){
-                    vertex->removeConnections();
+    if (type == Vertex::Type){
+        Vertex *vertex = scene.findItem<Vertex*>(pos);
+        action = showMenu(vertexMenuList);
 
-                    emit removeVertex(vertex->getId());
-                    scene.removeVertex(vertex);
-                }
-            }else if(action == vertexMenuList.actions().at(0)){ // Inserir arco ou aresta
-                scene.createLine(vertex, isWeighted);
-                setViewCursor(Qt::PointingHandCursor);
-            }else if(action == vertexMenuList.actions().at(2)){ // Dijkstra
-                scene.prepareDijkstra(vertex);
-                setViewCursor(Qt::PointingHandCursor);
-            }
-        }else if(2 == item->type()){
-            GraphicsLine *gline = (GraphicsLine*)item;
-
-            QAction *action = NULL;
-            action = lineMenuList.exec(QCursor::pos());
-
-            if(action == NULL)
-                return;
-
-            if(action == lineMenuList.actions().at(0)){ //Remover aresta ou arco
-
-                Vertex *vertex1 = gline->getV1();
-                Vertex *vertex2 = gline->getV2();
-
-                vertex1->removeConnection(gline);
-                vertex2->removeConnection(gline);
-
-                scene.removeItem(gline);
-                emit removeConnection(vertex1->getId(), vertex2->getId());
-                delete gline;
-            }
+        if(action == 0) { // Inserir arco ou aresta
+           scene.createLine(vertex, isWeighted);
+           setViewCursor(Qt::PointingHandCursor);
+        } else if(action == 1) { // Remover vértice
+            handleVertexRemoval(vertex);
+        }else if(action == 2){ // Dijkstra
+            scene.prepareDijkstra(vertex);
+            setViewCursor(Qt::PointingHandCursor);
         }
-    }else{
-        QAction *action = NULL;
-        action = viewMenuList.exec(QCursor::pos());
+    }else if(type == GraphicsLine::Type){
+        GraphicsLine *gline = scene.findItem<GraphicsLine*>(pos);
+        action = showMenu(lineMenuList);
 
-        if(action == NULL)
-            return;
+        if(action == 0){ //Remover aresta ou arco
+            handleConnectionRemoval(gline);
+        }
+    } else {
+        action = showMenu(viewMenuList);
 
-        if(action == viewMenuList.actions().at(0)){ //Inserir vértice
-            bool ok = false;
-            QString text;
-            while(text.isEmpty()){
-                text = QInputDialog::getText(this, tr("QInputDialog::getText()"),
-                                                     tr("Nome do Vértice:"), QLineEdit::Normal,
-                                                     "", &ok);
-                if(!ok)
-                    return;
-            }
-            if(scene.addVertex(text, mapToScene(event->pos()))){
-                emit addVertex(text);
-            }
-
-        }else if(action == viewMenuList.actions().at(1)){ //Welsh and Powell
+        if(action == 0){ //Inserir vértice
+            handleVertexCreation();
+        }else if(action == 1){ //Welsh and Powell
             emit performWelshPowell();
-        }else if(action == viewMenuList.actions().at(2)){ // Dsatur
+        }else if(action == 2){ // Dsatur
             emit performDsatur();
-        }else if(action == viewMenuList.actions().at(3)){ // Resetar cores
+        }else if(action == 3){ // Resetar cores
             QBrush brush(Qt::red);
             scene.paintVertices(QVector <int>(), &brush);
-        }else if(action == viewMenuList.actions().at(4)){ // Print -- only for debugging
+        }else if(action == 4){ // Print -- only for debugging
             scene.print();
         }
+    }
+}
+
+bool GraphicsView::isGraphDirected() const
+{
+    return isDirected;
+}
+
+bool GraphicsView::isGraphWeighted() const
+{
+    return isWeighted;
+}
+
+void GraphicsView::handleConnectionRemoval(GraphicsLine* line)
+{
+    Vertex *vertex1 = line->getV1();
+    Vertex *vertex2 = line->getV2();
+
+    vertex1->removeConnection(line);
+    vertex2->removeConnection(line);
+
+    scene.removeItem(line);
+    emit removeConnection(vertex1->getId(), vertex2->getId());
+    //delete line; // TODO corrigir, está causando bug
+}
+
+void GraphicsView::handleVertexCreation()
+{
+    bool ok = false;
+    QString text;
+    while (text.isEmpty()) {
+        text = QInputDialog::getText(this, tr("Inserção de vértice"),
+                                             tr("Insira o nome:"), QLineEdit::Normal,
+                                             "", &ok);
+        if (!ok)
+            return;
+    }
+
+    emit addVertex(text);
+}
+
+void GraphicsView::handleVertexRemoval(Vertex* vertex)
+{
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Remover vértice", "Você tem certeza que deseja remover este vértice?",
+                                  QMessageBox::Yes|QMessageBox::No);
+    if(reply == QMessageBox::Yes){
+        vertex->removeConnections();
+        scene.removeVertex(vertex);
+        emit removeVertex(vertex->getId());
     }
 }
 
@@ -140,26 +176,26 @@ void GraphicsView::setViewCursor(QCursor cursor)
     viewport()->setCursor(cursor);
 }
 
-void GraphicsView::duplicatedEdge()
+void GraphicsView::storeMousePosition(QPointF position)
 {
-    setViewCursor(Qt::ArrowCursor);
-    QMessageBox msgBox;
-    msgBox.setWindowTitle("Aresta duplicada");
-    msgBox.setText("Não é permitido inserir arestas duplicadas");
-    msgBox.setDefaultButton(QMessageBox::Ok);
-    msgBox.exec();
-}
-
-void GraphicsView::duplicatedVertex()
-{
-    QMessageBox msgBox;
-    msgBox.setWindowTitle("Vértice duplicado");
-    msgBox.setText("Não é permitido inserir vértices duplicados");
-    msgBox.setDefaultButton(QMessageBox::Ok);
-    msgBox.exec();
+    storedMousePosition = position;
 }
 
 void GraphicsView::resetCursor()
 {
     setViewCursor(Qt::ArrowCursor);
+}
+
+void GraphicsView::askConnectionWeight(int id1, int id2)
+{
+    int weight = 1;
+    if (isWeighted) {
+        bool ok = false;
+        weight = QInputDialog::getInt(this, tr("Peso da aresta"),
+                                            tr("Peso da aresta:"), 1, 0, 999, 1, &ok);
+        if(!ok)
+            return;
+    }
+
+    emit addConnection(id1, id2, weight);
 }

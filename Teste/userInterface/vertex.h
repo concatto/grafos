@@ -23,7 +23,7 @@ class Vertex : public QObject, public QGraphicsEllipseItem
 {
     Q_OBJECT
 public:
-    const static int Type = 1;
+    enum { Type = UserType + 1};
 
     Vertex(float radius, QString name);
     QString getName();
@@ -51,7 +51,7 @@ private:
     QString name;
     QVector <GraphicsLine*> lines;
     bool compareLines(GraphicsLine *l1, GraphicsLine *l2);
-    void moveLineToCenter(QPointF newPos);
+    void moveLineToCenter();
     int id;
     static int indexCounter;
     bool pressed;

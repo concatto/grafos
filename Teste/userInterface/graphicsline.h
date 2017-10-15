@@ -8,7 +8,9 @@ class Vertex;
 
 class GraphicsLine : public QGraphicsLineItem
 {
+
 public:
+    enum {Type = UserType + 2};
     GraphicsLine(bool weighted = true);
     int type() const override;
     void setV1(Vertex *v1);

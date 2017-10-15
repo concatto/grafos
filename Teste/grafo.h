@@ -2,10 +2,8 @@
 #define GRAFO_H
 #include <vector>
 #include <string>
-#include <QObject>
 #include <QDebug>
 #include <iostream>
-#include <QStack>
 #include <stack>
 #include <queue>
 
@@ -81,73 +79,7 @@ struct Arco {
 };
 
 
-struct Grafo : public QObject{
-    Q_OBJECT
-public slots:
-    void addVertex(QString str){
-        inserirVertice(str.toStdString());
-    }
-    void removeVertex(int id1){
-        if(removerVertice(id1)){
-        }
-    }
-
-    void addConnection(int id1, int id2, int weight = 1){
-        inserirAresta(id1, id2, weight);
-    }
-
-    void removeConnection(int id1, int id2){
-        removerAresta(id1, id2);
-    }
-
-    void performWelshPowell(){
-        if(nomes.size() == 0)
-            return;
-
-        vector <WashPowell> lista = washPowell();
-        QVector <int> cores;
-        sort(lista.begin(), lista.end(), compareWelshSort);
-        for(WashPowell w: lista){
-//            qDebug()<<"Aqui - Vertice: "<<QString::fromStdString(obterNome(w.id));
-            cores.push_back(w.cor);
-        }
-
-        emit paintVertices(cores);
-    }
-
-    void performDsatur(){
-        if(nomes.size() == 0)
-            return;
-
-//        vector <Dsatur> lista = dsatur();
-
-        QVector <int> cores;
-        for(int d : dsatur_2()){
-            cores.push_back(d);
-        }
-
-        emit paintVertices(cores);
-    }
-
-    void performDijkstra(int origem, int destino = -1){
-        QStack <int> stack;
-
-        vector <Path> lista = dijkstra(origem, destino);
-
-        int vertice = destino;
-
-        do{
-            stack.push(vertice);
-            vertice = lista[vertice].anterior;
-        }while(stack.top() != origem);
-
-        emit paintDijkstra(stack);
-    }
-
-
-signals:
-    void paintVertices(QVector <int> lista);
-    void paintDijkstra(QStack <int> stack);
+struct Grafo{
 public:
     vector<string> nomes;
 
@@ -239,6 +171,8 @@ public:
     }
 
     vector<int> dsatur_2() {
+        imprimir();
+
         vector<int> cores(nomes.size(), -1);
         vector<int> saturacao(nomes.size(), 0);
         vector<int> graus;
@@ -309,8 +243,9 @@ public:
         return true;
     }
 
-    vector <WashPowell> washPowell(){
+    vector<int> washPowell(){
         vector <WashPowell> listaWp(nomes.size());
+        vector <int> cores;
         int corAtual = 0;
         int counter = 0;
 
@@ -345,11 +280,11 @@ public:
 
         }
 
-//        for(WashPowell l: listaWp){
-//            qDebug()<<"Vértice: "<<QString::fromStdString(obterNome(l.id))<<" - "<<l.cor;
-//        }
+        for(WashPowell l: listaWp){
+            cores.push_back(l.cor);
+        }
 
-        return listaWp;
+        return cores;
 
     }
 //    virtual vector<int> obterVerticesNaoAdjacentes(int origem) = 0;
@@ -560,19 +495,6 @@ public:
         return sequencia;
     }
 
-//private:
-//    void stackUp(vector <Path> list, QStack <int> &stack, int vertice){
-//        qDebug()<<"Vertice: "<<vertice;
-//        if(list[vertice].anterior == vertice){
-//            stack.push(list[vertice].anterior);
-//            return;
-//        }else{
-//            stack.push(vertice);
-//            stackUp(list, stack, list[vertice].anterior);
-//        }
-
-
-//    }
 };
 
 #endif // GRAFO_H

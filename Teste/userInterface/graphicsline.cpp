@@ -15,7 +15,7 @@ GraphicsLine::GraphicsLine(bool weighted) : QGraphicsLineItem(), weighted(weight
 
 int GraphicsLine::type() const
 {
-    return 2;
+    return Type;
 }
 
 void GraphicsLine::setV1(Vertex *v1)
@@ -63,7 +63,10 @@ void GraphicsLine::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
 
         if (weight != 0) {
             painter->setFont(QFont("times", 12));
-            painter->drawText(pn, QString::number(weight));
+            QRect rect = painter->fontMetrics().boundingRect(QString::number(weight));
+            rect.moveCenter(pn.toPoint());
+
+            painter->drawText(rect, Qt::AlignCenter, QString::number(weight));
         }
     }
 
