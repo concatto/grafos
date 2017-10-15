@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'graphdialog.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.9.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -87,13 +87,13 @@ public:
 
     void retranslateUi(QDialog *GraphDialog)
     {
-        GraphDialog->setWindowTitle(QApplication::translate("GraphDialog", "Dialog", 0));
-        structureGroup->setTitle(QApplication::translate("GraphDialog", "Estrutura do Grafo", 0));
-        matrixButton->setText(QApplication::translate("GraphDialog", "&Matriz de Adjac\303\252ncias", 0));
-        listButton->setText(QApplication::translate("GraphDialog", "Lista de Adjac&\303\252ncias", 0));
-        optionsGroup->setTitle(QApplication::translate("GraphDialog", "Op\303\247\303\265es do Grafo", 0));
-        weightedCheckbox->setText(QApplication::translate("GraphDialog", "Ponderado", 0));
-        directedCheckbox->setText(QApplication::translate("GraphDialog", "Orientado", 0));
+        GraphDialog->setWindowTitle(QApplication::translate("GraphDialog", "Dialog", Q_NULLPTR));
+        structureGroup->setTitle(QApplication::translate("GraphDialog", "Estrutura do Grafo", Q_NULLPTR));
+        matrixButton->setText(QApplication::translate("GraphDialog", "&Matriz de Adjac\303\252ncias", Q_NULLPTR));
+        listButton->setText(QApplication::translate("GraphDialog", "Lista de Adjac&\303\252ncias", Q_NULLPTR));
+        optionsGroup->setTitle(QApplication::translate("GraphDialog", "Op\303\247\303\265es do Grafo", Q_NULLPTR));
+        weightedCheckbox->setText(QApplication::translate("GraphDialog", "Ponderado", Q_NULLPTR));
+        directedCheckbox->setText(QApplication::translate("GraphDialog", "Orientado", Q_NULLPTR));
     } // retranslateUi
 
 };

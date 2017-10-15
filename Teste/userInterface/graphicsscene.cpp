@@ -8,6 +8,7 @@
 #include <QStack>
 #include <QInputDialog>
 #include <QLineEdit>
+#include <iostream>
 
 GraphicsScene::GraphicsScene() : QGraphicsScene()
 {
@@ -105,10 +106,25 @@ void GraphicsScene::paintDijkstra(QStack<int> stack)
             return;
         vertices[vertice]->paintEdge(stack.top());
 
-        views().front()->viewport()->repaint();
+        repaintViews();
         sleep(500);
     }
 
+}
+
+void GraphicsScene::paintSequence(QVector<int> sequence) {
+    for (int id : sequence) {
+        vertices[id]->setPen(QPen(QBrush(Qt::magenta), 4));
+        repaintViews();
+        sleep(333);
+    }
+}
+
+void GraphicsScene::repaintViews()
+{
+    for (QGraphicsView* view : views()) {
+        view->viewport()->repaint();
+    }
 }
 
 void GraphicsScene::prepareDijkstra(Vertex *item)
@@ -150,8 +166,6 @@ void GraphicsScene::sleep(int msec)
 #endif
 }
 
-
-
 void GraphicsScene::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() & Qt::Key_Escape){
@@ -178,13 +192,9 @@ void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    Vertex* v = findItem<Vertex*>(event->scenePos()); // Verify if it's returning null pointer
-                                                      // when clicking on nothing
+    Vertex* v = findItem<Vertex>(event->scenePos());
     if (v != nullptr) {
-
-        if(sourceVertex != nullptr){
-            executeSecondClickAction(v);
-        }else {
+        if(sourceVertex == nullptr){
             movingVertex = v;
             v->setPressed(true);
         }
@@ -194,7 +204,7 @@ void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    Vertex* v = findItem<Vertex*>(event->scenePos());
+    Vertex* v = findItem<Vertex>(event->scenePos());
     if (v != nullptr) {
         executeSecondClickAction(v);
     }

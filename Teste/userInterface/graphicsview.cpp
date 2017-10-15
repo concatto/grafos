@@ -22,6 +22,8 @@ GraphicsView::GraphicsView(bool isWeighted, bool isDirected) :
     isDirected ? vertexMenuList.addAction("Inserir Arco") : vertexMenuList.addAction("Inserir aresta");
     vertexMenuList.addAction("Remover vértice");
     vertexMenuList.addAction("Dijkstra a partir deste vértice");
+    vertexMenuList.addAction("Busca em profundidade a partir deste vértice");
+    vertexMenuList.addAction("Busca em largura a partir deste vértice");
 
     isDirected ? lineMenuList.addAction("Remover Arco") : lineMenuList.addAction("Remover Aresta");
 
@@ -84,7 +86,7 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
     int action = -1;
 
     if (type == Vertex::Type){
-        Vertex *vertex = scene.findItem<Vertex*>(pos);
+        Vertex *vertex = scene.findItem<Vertex>(pos);
         action = showMenu(vertexMenuList);
 
         if(action == 0) { // Inserir arco ou aresta
@@ -95,9 +97,11 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
         }else if(action == 2){ // Dijkstra
             scene.prepareDijkstra(vertex);
             setViewCursor(Qt::PointingHandCursor);
+        } else if(action == 3) {
+
         }
     }else if(type == GraphicsLine::Type){
-        GraphicsLine *gline = scene.findItem<GraphicsLine*>(pos);
+        GraphicsLine *gline = scene.findItem<GraphicsLine>(pos);
         action = showMenu(lineMenuList);
 
         if(action == 0){ //Remover aresta ou arco

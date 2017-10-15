@@ -29,13 +29,17 @@ public:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
 
     template <class T>
-    T findItem(const QPointF &point) {
+    T* findItem(const QPointF &point) {
         QGraphicsItem* item = itemAt(point, QTransform());
-        return item == nullptr ? nullptr : static_cast<T>(item);
+        if (item == nullptr || item->type() != T::Type) {
+            return nullptr;
+        }
+        return static_cast<T*>(item);
     }
 
     int getTypeOfItemAt(QPointF point);
     void finishConnectionCreation(int id1, int id2, int weight);
+    void paintSequence(QVector<int> sequence);
 
 private:
     Vertex* movingVertex = nullptr;
@@ -50,6 +54,7 @@ private:
 
     void executeSecondClickAction(Vertex *vertex);
     void resetControlVaraibles();
+    void repaintViews();
 
 signals:
     void addConnection(int id1, int id2);
