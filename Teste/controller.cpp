@@ -65,7 +65,7 @@ int Controller::exec(QApplication& a)
         });
 
         QObject::connect(&view, &GraphicsView::performDsatur, [&](){
-            vector<int> cores = graph->dsatur_2();
+            vector<int> cores = graph->dsatur();
             view.paintVertices(QVector<int>::fromStdVector(cores));
         });
 

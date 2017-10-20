@@ -9,13 +9,6 @@
 
 using namespace std;
 
-struct Dsatur {
-    int id;
-    int grau;
-    int sat;
-    int cor;
-};
-
 struct WashPowell {
     int id;
     int grau;
@@ -24,11 +17,9 @@ struct WashPowell {
 };
 
 struct Path{
-    //int vertice;
     int distancia;
     int anterior;
     bool aberto;
-//    int ordem = -1;
 
     Path(){
         anterior = -1;
@@ -43,32 +34,13 @@ struct ComparePair {
     }
 };
 
-inline bool operator > (Dsatur d1, Dsatur d2){
-    if(d1.sat > d2.sat)
-        return true;
-    else if(!(d1.sat > d2.sat))
-        return false;
-    else
-        return d1.grau > d2.grau;
-}
-
-inline bool operator < (Dsatur d1, Dsatur d2){
-    return d1.grau > d2.grau;
-}
-
 inline bool operator < (WashPowell w1, WashPowell w2){
     return w1.id < w2.id;
 }
 
-inline bool compareDsatur(Dsatur d1, Dsatur d2){
-    return d1.id < d2.id;
-}
-
-struct Greater {
-  bool operator() (WashPowell w1, WashPowell w2){
+inline bool welshPowellGreaterDegree (WashPowell w1, WashPowell w2){
     return w1.grau > w2.grau;
-  }
-};
+}
 
 struct Arco {
     int peso;
@@ -96,83 +68,7 @@ public:
     virtual bool removerVertice(int vertice) = 0;
     virtual int obterGrau(int vertice) = 0;
 
-    void dsaturAumentaSat(vector <Dsatur> &listaDsatur, int origem){
-        for(Dsatur &l: listaDsatur){
-            if(l.id != origem && consultarPeso(origem, l.id) > 0){
-                l.sat++;
-            }
-        }
-    }
-
-    int pegaProximoDsatur(const vector <Dsatur> &listaDsatur){
-        Dsatur v;
-        v.sat = -1;
-        v.grau = 0;
-
-        for(int i = 0; i < listaDsatur.size(); i++){
-            if(listaDsatur[i] > v && listaDsatur[i].cor == -1){
-                v.id = i;
-                v.grau = listaDsatur[i].grau;
-                v.sat = listaDsatur[i].sat;
-            }
-        }
-
-        return v.id;
-    }
-
-    bool analisaVizinhosDsatur(const vector <Dsatur> &listaDsatur, int origem, int cor){
-        for(Dsatur l: listaDsatur){
-            if(l.id != origem && consultarPeso(origem, l.id) > 0 && l.cor == cor){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    vector<Dsatur> dsatur(){
-        vector <Dsatur> listaDsatur(nomes.size());
-
-        int counter = 0;
-        int corAtual = 0;
-        int verticeAtual = 0;
-
-        for(int i = 0; i < listaDsatur.size(); i++){
-            listaDsatur[i].id = i;
-            listaDsatur[i].cor = -1;
-            listaDsatur[i].sat = 0;
-            listaDsatur[i].grau = obterGrau(i);
-        }
-
-        sort(listaDsatur.begin(), listaDsatur.end());
-
-        listaDsatur[0].cor = corAtual;
-        dsaturAumentaSat(listaDsatur, listaDsatur[0].id);
-        counter = 1;
-
-        while(counter < listaDsatur.size()){
-
-            verticeAtual = pegaProximoDsatur(listaDsatur);
-
-            while(!analisaVizinhosDsatur(listaDsatur, listaDsatur[verticeAtual].id, corAtual)){
-                corAtual++;
-            }
-
-            listaDsatur[verticeAtual].cor = corAtual;
-            dsaturAumentaSat(listaDsatur, listaDsatur[verticeAtual].id);
-
-            counter++;
-            corAtual = 0;
-
-        }
-
-//        for(Dsatur l: listaDsatur){
-//            qDebug()<<"Vértice: "<<QString::fromStdString(obterNome(l.id))<<" - "<<l.cor;
-//        }
-
-        return listaDsatur;
-    }
-
-    vector<int> dsatur_2() {
+    vector<int> dsatur() {
         imprimir();
 
         vector<int> cores(nomes.size(), -1);
@@ -257,7 +153,7 @@ public:
             listaWp[i].cor = -1;
         }
 
-        sort(listaWp.begin(), listaWp.end(), Greater());
+        sort(listaWp.begin(), listaWp.end(), welshPowellGreaterDegree);
 
         for(WashPowell &i : listaWp) {
             if(counter == nomes.size())
