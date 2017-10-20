@@ -57,16 +57,18 @@ inline bool operator < (Dsatur d1, Dsatur d2){
 }
 
 inline bool operator < (WashPowell w1, WashPowell w2){
-    return w1.grau > w2.grau;
-}
-
-inline bool compareWelshSort(WashPowell w1, WashPowell w2){
     return w1.id < w2.id;
 }
 
 inline bool compareDsatur(Dsatur d1, Dsatur d2){
     return d1.id < d2.id;
 }
+
+struct Greater {
+  bool operator() (WashPowell w1, WashPowell w2){
+    return w1.grau > w2.grau;
+  }
+};
 
 struct Arco {
     int peso;
@@ -255,7 +257,7 @@ public:
             listaWp[i].cor = -1;
         }
 
-        sort(listaWp.begin(), listaWp.end());
+        sort(listaWp.begin(), listaWp.end(), Greater());
 
         for(WashPowell &i : listaWp) {
             if(counter == nomes.size())
@@ -279,6 +281,8 @@ public:
             }
 
         }
+
+        sort(listaWp.begin(), listaWp.end());
 
         for(WashPowell l: listaWp){
             cores.push_back(l.cor);
