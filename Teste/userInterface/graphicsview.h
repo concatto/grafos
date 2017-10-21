@@ -11,13 +11,13 @@ class GraphicsView : public QGraphicsView
     Q_OBJECT
 public:
     GraphicsView(bool isWeighted, bool isDirected);
-    void paintVertices(QVector <int> cores);
+    void paintVertices(QVector <int> colors);
     void paintDijkstra(QStack <int> stack);
+    void paintSpanningTree(QVector<int> edges);
     void createVertex(QString name);
     void createConnection(int id1, int id2, int weight);
-    // QWidget interface
-    bool isGraphWeighted() const;
-    bool isGraphDirected() const;
+    void destroyVertex(int id);
+    void destroyConnection(int id1, int id2);
 
 protected:
     void contextMenuEvent(QContextMenuEvent *event) override;
@@ -37,7 +37,6 @@ private:
     int showMenu(QMenu &menu);
     void handleVertexCreation();
     void handleVertexRemoval(Vertex *vertex);
-    void handleConnectionRemoval(GraphicsLine *line);
 
 public slots:
     void resetCursor();    
@@ -51,7 +50,7 @@ signals:
     void performWelshPowell();
     void performDsatur();
     void performDijkstra(int origem, int destino = -1);
-
+    void printGraph();
 };
 
 #endif // GRAPHICSVIEW_H

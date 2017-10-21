@@ -27,7 +27,7 @@ struct LGrafo : public Grafo {
             return false;
         }
 
-        Arco arco(peso, destino);
+        Arco arco(peso, origem, destino);
         adjacencias[origem].push_back(arco);
 
         return true;
@@ -133,16 +133,6 @@ struct LGrafo : public Grafo {
     int obterGrau(int vertice) override {
         return adjacencias[vertice].size();
     }
-
-//    void washPowell(int vertice = 0){
-//        (void)vertice;
-//    }
-
-//    vector<int> obterVerticesNaoAdjacentes(int origem){
-//        (void)origem;
-//    }
-
-
 };
 
 

@@ -44,14 +44,15 @@ inline bool welshPowellGreaterDegree (WashPowell w1, WashPowell w2){
 
 struct Arco {
     int peso;
+    int vorigem;
     int vdestino;
 
-    Arco(int peso, int vdestino) {
+    Arco(int peso, int vorigem, int vdestino) {
         this->peso = peso;
+        this->vorigem = vorigem;
         this->vdestino = vdestino;
     }
 };
-
 
 struct Grafo{
 public:
@@ -141,7 +142,7 @@ public:
         return true;
     }
 
-    vector<int> washPowell(){
+    vector<int> welshPowell(){
         vector <WashPowell> listaWp(nomes.size());
         vector <int> cores;
         int corAtual = 0;
@@ -187,7 +188,6 @@ public:
         return cores;
 
     }
-//    virtual vector<int> obterVerticesNaoAdjacentes(int origem) = 0;
 
     //Acho que agora foi, rapazeada, esperando o aval do mestre Fernando.
     vector <Path> dijkstra(int origem, int destino = -1){
@@ -395,6 +395,51 @@ public:
         return sequencia;
     }
 
+
+    vector<Arco> obterConexoes() {
+        vector<Arco> resultado;
+
+        for (int i = 0; i < nomes.size(); i++) {
+            for (Arco a : obterVerticesAdjacentesComPeso(i)) {
+                bool contemInverso = false;
+
+                // Verifica se as conexões encontradas até o momento contém a conexão atual ou sua irmã
+                for (Arco b : resultado) {
+                    if ((a.vorigem == b.vorigem && a.vdestino == b.vdestino) ||
+                        (a.vdestino == b.vorigem && a.vorigem == b.vdestino)) {
+                        contemInverso = true;
+                        break;
+                    }
+                }
+
+                if (!contemInverso) {
+                    resultado.push_back(a);
+                }
+            }
+        }
+
+        return resultado;
+    }
+
+
+    // Computa a árvore geradora mínima por meio do Algoritmo de Prim.
+    // Retorna a sequência de arestas adicionadas, onde o índice 0 corresponde à primeira aresta adicionada.
+    vector<Arco> prim(int inicial) {
+        vector<Arco> arestas;
+
+        // TODO implementar
+
+        return arestas;
+    }
+
+    // Compute a AGM a partir do Algoritmo de Kruskal. Similar ao Prim.
+    vector<Arco> kruskal() {
+        vector<Arco> arestas;
+
+        // TODO implementar
+
+        return arestas;
+    }
 };
 
 #endif // GRAFO_H

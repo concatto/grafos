@@ -27,22 +27,26 @@ int Controller::exec(QApplication& a)
         window = new MainWindow(weighted, directed);
         GraphicsView& view = window->getView();
 
-        QObject::connect(&view, &GraphicsView::addVertex, [&](QString nome) {
+        connect(&view, &GraphicsView::addVertex, [&](QString nome) {
             if (graph->inserirVertice(nome.toStdString())) {
                 view.createVertex(nome);
             } else {
-                window->showError("Já existe um vértice com esse nome");
+                window->showError("Já existe um vértice com esse nome.");
             }
         });
 
-        QObject::connect(&view, &GraphicsView::removeVertex, [&](int id){
-            graph->removerVertice(id);
+        connect(&view, &GraphicsView::removeVertex, [&](int id){
+            if (graph->removerVertice(id)) {
+                view.destroyVertex(id);
+            } else {
+                window->showError("Impossível remover o vértice.");
+            }
         });
 
-        QObject::connect(&view, &GraphicsView::addConnection, [&](int origem, int destino, int peso){
+        connect(&view, &GraphicsView::addConnection, [&](int origem, int destino, int peso){
             bool result = false;
 
-            if(view.isGraphDirected()){
+            if(directed){
                 result = graph->inserirArco(origem, destino, peso);
             }else{
                 result = graph->inserirAresta(origem, destino, peso);
@@ -55,42 +59,54 @@ int Controller::exec(QApplication& a)
             }
         });
 
-        QObject::connect(&view, &GraphicsView::removeConnection, [&](int id1, int id2) {
-            if(view.isGraphDirected()){
-                graph->removerArco(id1, id2);
+        connect(&view, &GraphicsView::removeConnection, [&](int id1, int id2) {
+            bool result = false;
+
+            if(directed){
+                result = graph->removerArco(id1, id2);
             }else {
-                graph->removerAresta(id1, id2);
+                result = graph->removerAresta(id1, id2);
             }
 
+            if (result) {
+                view.destroyConnection(id1, id2);
+            } else {
+                window->showError("Impossível remover a conexão.");
+            }
         });
 
-        QObject::connect(&view, &GraphicsView::performDsatur, [&](){
+        connect(&view, &GraphicsView::performDsatur, [&](){
             vector<int> cores = graph->dsatur();
             view.paintVertices(QVector<int>::fromStdVector(cores));
         });
 
-        QObject::connect(&view, &GraphicsView::performWelshPowell, [&](){
-            vector<int> cores = graph->washPowell();
+        connect(&view, &GraphicsView::performWelshPowell, [&](){
+            vector<int> cores = graph->welshPowell();
             view.paintVertices(QVector<int>::fromStdVector(cores));
         });
 
-        QObject::connect(&view, &GraphicsView::performDijkstra, [&](int origem, int destino){
+        connect(&view, &GraphicsView::performDijkstra, [&](int origem, int destino){
             QStack <int> stack;
 
             vector <Path> lista = graph->dijkstra(origem, destino);
 
             int vertice = destino;
 
-            do{
+            do {
                 stack.push(vertice);
                 vertice = lista[vertice].anterior;
-            }while(stack.top() != origem);
+            } while(stack.top() != origem);
 
             view.paintDijkstra(stack);
-
         });
+
+        connect(&view, &GraphicsView::printGraph, [&]() {
+            graph->imprimir();
+        });
+
         window->show();
     }
 
+    // Bloqueia até que a aplicação termine
     return a.exec();
 }

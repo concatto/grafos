@@ -15,33 +15,34 @@ GraphicsView::GraphicsView(bool isWeighted, bool isDirected) :
     this->viewMenuList.addAction("Inserir vértice");
     this->viewMenuList.addAction("Welsh and Powell");
     this->viewMenuList.addAction("Dsatur");
-    this->viewMenuList.addAction("Resetar cores");
     this->viewMenuList.addAction("Imprimir");
+    this->viewMenuList.addAction("Resetar cores");
 
-
-    isDirected ? vertexMenuList.addAction("Inserir Arco") : vertexMenuList.addAction("Inserir aresta");
+    vertexMenuList.addAction(isDirected ? "Inserir Arco" : "Inserir aresta");
     vertexMenuList.addAction("Remover vértice");
     vertexMenuList.addAction("Dijkstra a partir deste vértice");
     vertexMenuList.addAction("Busca em profundidade a partir deste vértice");
     vertexMenuList.addAction("Busca em largura a partir deste vértice");
 
-    isDirected ? lineMenuList.addAction("Remover Arco") : lineMenuList.addAction("Remover Aresta");
+    lineMenuList.addAction(isDirected ? "Remover Arco" : "Remover Aresta");
 
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-
+    setRenderHint(QPainter::Antialiasing, true);
     setFixedSize(770, 570);
     setFrameShape(QGraphicsView::NoFrame);
     setMouseTracking(true); //Permite que MouseMoveEvents sejam detectados pela scene sem clique prévio
+
+    // A maioria destes sinais são emitidos pela cena quando o mouse é clicado pela segunda vez
     QObject::connect(&scene, SIGNAL(addConnection(int, int)), this, SLOT(askConnectionWeight(int, int)));
     QObject::connect(&scene, SIGNAL(performDijkstra(int, int)), this, SIGNAL(performDijkstra(int, int)));
     QObject::connect(&scene, SIGNAL(resetCursor()), this, SLOT(resetCursor()));
 }
 
-void GraphicsView::paintVertices(QVector<int> cores)
+void GraphicsView::paintVertices(QVector<int> colors)
 {
     QBrush brush(Qt::black);
-    scene.paintVertices(cores, &brush);
-    scene.paintVertices(cores);
+    scene.paintVertices(colors, &brush);
+    scene.paintVertices(colors);
 }
 
 void GraphicsView::paintDijkstra(QStack<int> stack)
@@ -49,21 +50,19 @@ void GraphicsView::paintDijkstra(QStack<int> stack)
     scene.paintDijkstra(stack);
 }
 
+void GraphicsView::paintSpanningTree(QVector<int> edges)
+{
+    // TODO fazer com que a scene pinte a árvore geradora
+}
+
 void GraphicsView::createVertex(QString name)
 {
-    scene.addVertex(name, consumeMousePosition());
+    scene.addVertex(name, storedMousePosition);
 }
 
 void GraphicsView::createConnection(int id1, int id2, int weight)
 {
     scene.finishConnectionCreation(id1, id2, weight);
-}
-
-QPointF GraphicsView::consumeMousePosition()
-{
-    QPointF point(storedMousePosition);
-    storedMousePosition = QPointF(0, 0);
-    return point;
 }
 
 int GraphicsView::showMenu(QMenu &menu)
@@ -89,23 +88,28 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
         Vertex *vertex = scene.findItem<Vertex>(pos);
         action = showMenu(vertexMenuList);
 
-        if(action == 0) { // Inserir arco ou aresta
-           scene.createLine(vertex, isWeighted);
-           setViewCursor(Qt::PointingHandCursor);
-        } else if(action == 1) { // Remover vértice
-            handleVertexRemoval(vertex);
-        }else if(action == 2){ // Dijkstra
-            scene.prepareDijkstra(vertex);
+        if (action == 0 || action >= 2) {
+            // Estas ações demandam um segundo clique
             setViewCursor(Qt::PointingHandCursor);
-        } else if(action == 3) {
+        }
+
+        if(action == 0) { // Inserir arco ou aresta
+            scene.createLine(vertex, isWeighted);
+        }else if(action == 1) { // Remover vértice
+            handleVertexRemoval(vertex);
+        }else if(action == 2) { // Dijkstra
+            scene.prepareDijkstra(vertex);
+        } else if(action == 3) { // DFS
+
+        } else if(action == 4) { // BFS
 
         }
-    }else if(type == GraphicsLine::Type){
+    }else if(type == GraphicsLine::Type) {
         GraphicsLine *gline = scene.findItem<GraphicsLine>(pos);
         action = showMenu(lineMenuList);
 
         if(action == 0){ //Remover aresta ou arco
-            handleConnectionRemoval(gline);
+            emit removeConnection(gline->getV1()->getId(), gline->getV2()->getId());
         }
     } else {
         action = showMenu(viewMenuList);
@@ -116,36 +120,38 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
             emit performWelshPowell();
         }else if(action == 2){ // Dsatur
             emit performDsatur();
-        }else if(action == 3){ // Resetar cores
+        }else if(action == 3){ // Print -- only for debugging
+            emit printGraph();
+        }else if(action == 4){ // Resetar cores
             QBrush brush(Qt::red);
             scene.paintVertices(QVector <int>(), &brush);
-        }else if(action == 4){ // Print -- only for debugging
-            scene.print();
         }
     }
 }
 
-bool GraphicsView::isGraphDirected() const
+void GraphicsView::destroyConnection(int id1, int id2)
 {
-    return isDirected;
+    GraphicsLine* line = scene.findLine(id1, id2);
+
+    if (line != nullptr) {
+        Vertex *vertex1 = line->getV1();
+        Vertex *vertex2 = line->getV2();
+
+        vertex1->removeConnection(line);
+        vertex2->removeConnection(line);
+
+        scene.removeItem(line);
+    }
 }
 
-bool GraphicsView::isGraphWeighted() const
+void GraphicsView::destroyVertex(int id)
 {
-    return isWeighted;
-}
+    Vertex* vertex = scene.getVertex(id);
 
-void GraphicsView::handleConnectionRemoval(GraphicsLine* line)
-{
-    Vertex *vertex1 = line->getV1();
-    Vertex *vertex2 = line->getV2();
-
-    vertex1->removeConnection(line);
-    vertex2->removeConnection(line);
-
-    scene.removeItem(line);
-    emit removeConnection(vertex1->getId(), vertex2->getId());
-    //delete line; // TODO corrigir, está causando bug
+    if (vertex != nullptr) {
+        vertex->removeConnections();
+        scene.removeVertex(vertex);
+    }
 }
 
 void GraphicsView::handleVertexCreation()
@@ -168,9 +174,8 @@ void GraphicsView::handleVertexRemoval(Vertex* vertex)
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Remover vértice", "Você tem certeza que deseja remover este vértice?",
                                   QMessageBox::Yes|QMessageBox::No);
+
     if(reply == QMessageBox::Yes){
-        vertex->removeConnections();
-        scene.removeVertex(vertex);
         emit removeVertex(vertex->getId());
     }
 }

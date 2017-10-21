@@ -40,6 +40,8 @@ public:
     int getTypeOfItemAt(QPointF point);
     void finishConnectionCreation(int id1, int id2, int weight);
     void paintSequence(QVector<int> sequence);
+    GraphicsLine* findLine(int id1, int id2);
+    Vertex* getVertex(int id);
 
 private:
     Vertex* movingVertex = nullptr;
@@ -58,11 +60,8 @@ private:
 
 signals:
     void addConnection(int id1, int id2);
-    void duplicatedEdge();
-    void duplicatedVertex();
     void performDijkstra(int origem, int destino = -1);
     void resetCursor();
-
 };
 
 #endif // GRAPHICSSCENE_H

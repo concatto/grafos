@@ -30,6 +30,7 @@ bool GraphicsScene::addVertex(QString name, QPointF pos)
 
 void GraphicsScene::removeVertex(Vertex *vertex)
 {
+    // Corrige os identificadores dos vértices para condizer com suas posições na lista
     for (int i = vertex->getId() + 1; i < vertices.size(); i++) {
         vertices[i]->setId(vertices[i]->getId() - 1);
     }
@@ -57,7 +58,6 @@ void GraphicsScene::finishConnectionCreation(int id1, int id2, int weight)
     currentLine->setWeight(weight);
     vertices[id2]->addConnection(currentLine);
 }
-
 
 void GraphicsScene::print()
 {
@@ -118,6 +118,27 @@ void GraphicsScene::paintSequence(QVector<int> sequence) {
         repaintViews();
         sleep(333);
     }
+}
+
+GraphicsLine* GraphicsScene::findLine(int id1, int id2)
+{
+    for (QGraphicsItem* item : items()) {
+        if (item->type() == GraphicsLine::Type) {
+            GraphicsLine* line = static_cast<GraphicsLine*>(item);
+
+            // Talvez seja necessário realizar a comparação inversa eventualmente
+            if (line->getV1()->getId() == id1 && line->getV2()->getId() == id2) {
+                return line;
+            }
+        }
+    }
+
+    return nullptr;
+}
+
+Vertex* GraphicsScene::getVertex(int id)
+{
+    return vertices[id];
 }
 
 void GraphicsScene::repaintViews()
