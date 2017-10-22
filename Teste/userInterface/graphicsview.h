@@ -4,6 +4,7 @@
 #include <QMenu>
 #include "graphicsscene.h"
 #include <QString>
+#include "grafo.h"
 #include <QObject>
 
 class GraphicsView : public QGraphicsView
@@ -12,12 +13,13 @@ class GraphicsView : public QGraphicsView
 public:
     GraphicsView(bool isWeighted, bool isDirected);
     void paintVertices(QVector <int> colors);
-    void paintDijkstra(QStack <int> stack);
-    void paintSpanningTree(QVector<int> edges);
+    void paintPath(QVector<Arco> path);
+    void paintSpanningTree(QVector<Arco> edges);
     void createVertex(QString name);
     void createConnection(int id1, int id2, int weight);
     void destroyVertex(int id);
     void destroyConnection(int id1, int id2);
+    void cancelConnection();
 
 protected:
     void contextMenuEvent(QContextMenuEvent *event) override;

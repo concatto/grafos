@@ -21,7 +21,7 @@ public:
 
 public slots:
     void paintVertices(QVector<int> cores);
-    void paintDijkstra(QStack <int> stack);
+//    void paintDijkstra(QStack <int> stack);
 
 private:
     GraphicsView view;

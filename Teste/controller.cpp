@@ -47,14 +47,19 @@ int Controller::exec(QApplication& a)
             bool result = false;
 
             if(directed){
-                result = graph->inserirArco(origem, destino, peso);
+                if (!graph->existeArco(origem, destino)) {
+                    result = graph->inserirArco(origem, destino, peso);
+                }
             }else{
-                result = graph->inserirAresta(origem, destino, peso);
+                if (!graph->existeAresta(origem, destino)) {
+                    result = graph->inserirAresta(origem, destino, peso);
+                }
             }
 
             if (result) {
                 view.createConnection(origem, destino, peso);
             } else {
+                view.cancelConnection();
                 window->showError("Falha ao inserir conexão");
             }
         });
@@ -88,16 +93,20 @@ int Controller::exec(QApplication& a)
         connect(&view, &GraphicsView::performDijkstra, [&](int origem, int destino){
             QStack <int> stack;
 
-            vector <Path> lista = graph->dijkstra(origem, destino);
-
+            vector <Arco> lista = graph->dijkstra(origem, destino);
+/*
             int vertice = destino;
 
             do {
                 stack.push(vertice);
                 vertice = lista[vertice].anterior;
-            } while(stack.top() != origem);
+            } while(stack.top() != origem);*/
 
-            view.paintDijkstra(stack);
+            for(Arco a: lista){
+                qDebug()<<a.vorigem;
+            }
+
+            view.paintPath(QVector<Arco>::fromStdVector(lista));
         });
 
         connect(&view, &GraphicsView::printGraph, [&]() {

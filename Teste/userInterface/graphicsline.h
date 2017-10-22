@@ -6,13 +6,12 @@
 
 class Vertex;
 
-class GraphicsLine : public QGraphicsLineItem
+class GraphicsLine
 {
 
 public:
-    enum {Type = UserType + 2};
-    GraphicsLine(bool weighted = true);
-    int type() const override;
+    enum { Type = 65536 + 2 };
+    GraphicsLine(bool directed, bool weighted = true);
     void setV1(Vertex *v1);
     void setV2(Vertex *v2);
     Vertex* getV1();
@@ -20,17 +19,19 @@ public:
     int getWeight();
     void setWeight(int weight);
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-
     bool isWeighted() const;
 
-    void tryCentralize();
+    virtual void setCustomPen(QPen pen) = 0;
+    virtual void setEndpoints(QPointF a, QPointF b) = 0;
+    virtual QGraphicsItem* item() = 0;
+    virtual void tryCentralize() = 0;
 
-private:
+protected:
     Vertex *v1;
     Vertex *v2;
     int weight = 0;
     bool weighted;
+    bool directed;
 };
 
 #endif // GRAPHICSLINE_H

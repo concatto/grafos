@@ -45,12 +45,12 @@ void GraphicsView::paintVertices(QVector<int> colors)
     scene.paintVertices(colors);
 }
 
-void GraphicsView::paintDijkstra(QStack<int> stack)
+void GraphicsView::paintPath(QVector<Arco> path)
 {
-    scene.paintDijkstra(stack);
+    scene.paintPath(path);
 }
 
-void GraphicsView::paintSpanningTree(QVector<int> edges)
+void GraphicsView::paintSpanningTree(QVector<Arco> edges)
 {
     // TODO fazer com que a scene pinte a árvore geradora
 }
@@ -94,7 +94,7 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
         }
 
         if(action == 0) { // Inserir arco ou aresta
-            scene.createLine(vertex, isWeighted);
+            scene.createLine(vertex, isDirected, isWeighted);
         }else if(action == 1) { // Remover vértice
             handleVertexRemoval(vertex);
         }else if(action == 2) { // Dijkstra
@@ -140,8 +140,13 @@ void GraphicsView::destroyConnection(int id1, int id2)
         vertex1->removeConnection(line);
         vertex2->removeConnection(line);
 
-        scene.removeItem(line);
+        scene.removeItem(line->item());
     }
+}
+
+void GraphicsView::cancelConnection()
+{
+    scene.removeCurrentLine();
 }
 
 void GraphicsView::destroyVertex(int id)

@@ -57,6 +57,11 @@ void Vertex::setPressed(bool value)
     pressed = value;
 }
 
+float Vertex::getRadius() const
+{
+    return radius;
+}
+
 bool Vertex::getPressed() const
 {
     return pressed;
@@ -89,16 +94,16 @@ void Vertex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
 
 bool Vertex::addConnection(GraphicsLine *line)
 {
-    if(line->getV2() != NULL){
-        for(GraphicsLine *l: lines){
-            if(compareLines(l, line)){
-                line->getV1()->removeConnection(line);
-                line->getV2()->removeConnection(line);
-//                delete nline;
-                return false;
-            }
-        }
-    }
+//    if(line->getV2() != NULL){
+//        for(GraphicsLine *l: lines){
+//            if(compareLines(l, line)){
+//                line->getV1()->removeConnection(line);
+//                line->getV2()->removeConnection(line);
+////                delete nline;
+//                return false;
+//            }
+//        }
+//    }
 
     lines.append(line);
 
@@ -151,11 +156,14 @@ int Vertex::type() const
 
 void Vertex::removeConnection(GraphicsLine *line)
 {
-    for(GraphicsLine *l : lines){
-        if(l == line){
-            lines.removeOne(l);
-        }
-    }
+
+    lines.removeOne(line);
+
+//    for(GraphicsLine *l : lines){
+//        if(l == line){
+//            lines.removeOne(l);
+//        }
+//    }
 }
 
 void Vertex::removeConnections()
@@ -181,7 +189,7 @@ void Vertex::paintEdge(int vertice)
 {
     if(vertice == -1){ // Reset colors
         for(GraphicsLine *line: lines){
-            line->setPen(QPen(QBrush(Qt::black), 4));
+            line->setCustomPen(QPen(QBrush(Qt::black), 4));
 //            line->line->update();
         }
         return;
@@ -190,11 +198,11 @@ void Vertex::paintEdge(int vertice)
     for(GraphicsLine *line: lines){
         if(line->getV1()->getId() == id){
             if(line->getV2()->getId() == vertice){
-                line->setPen(QPen(QBrush(Qt::green), 4));
+                line->setCustomPen(QPen(QBrush(Qt::blue), 4));
             }
         }else {
             if(line->getV1()->getId() == vertice){
-                line->setPen(QPen(QBrush(Qt::green), 4));
+                line->setCustomPen(QPen(QBrush(Qt::blue), 4));
             }
         }
     }
@@ -203,4 +211,15 @@ void Vertex::paintEdge(int vertice)
 int Vertex::getId()
 {
     return this->id;
+}
+
+bool Vertex::hasLine(int origin, int destination) const
+{
+    for (GraphicsLine* line : lines) {
+        if (line->getV1()->getId() == origin && line->getV2()->getId() == destination) {
+            return true;
+        }
+    }
+
+    return false;
 }

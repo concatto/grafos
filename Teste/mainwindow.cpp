@@ -27,10 +27,10 @@ void MainWindow::paintVertices(QVector<int> cores)
     view.paintVertices(cores);
 }
 
-void MainWindow::paintDijkstra(QStack<int> stack)
-{
-    view.paintDijkstra(stack);
-}
+//void MainWindow::paintDijkstra(QStack<int> stack)
+//{
+//    view.paint(stack);
+//}
 
 void MainWindow::showError(QString message, QString title)
 {

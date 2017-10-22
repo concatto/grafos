@@ -7,6 +7,7 @@ INPUT(
 ./debug\controller.o
 ./debug\graphicsline.o
 ./debug\graphdialog.o
+./debug\straightedge.o
 ./debug\moc_graphicsview.o
 ./debug\moc_graphicsscene.o
 ./debug\moc_vertex.o

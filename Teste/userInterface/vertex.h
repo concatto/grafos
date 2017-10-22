@@ -46,6 +46,9 @@ public:
     bool getPressed() const;
     void setPressed(bool value);
 
+    float getRadius() const;
+    bool hasLine(int origin, int destination) const;
+
 private:
     float radius;
     QString name;

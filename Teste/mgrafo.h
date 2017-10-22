@@ -79,7 +79,7 @@ struct MGrafo : public Grafo {
         vector<Arco> vetor;
 
         for (int v : obterVerticesAdjacentes(origem)) {
-            Arco arco(consultarPeso(origem, v), origem, v);
+            Arco arco(origem, v, consultarPeso(origem, v));
             vetor.push_back(arco);
         }
 

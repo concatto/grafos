@@ -7,6 +7,7 @@
 #include <QObject>
 #include <QGraphicsItem>
 #include "graphicsline.h"
+#include "grafo.h"
 #ifdef Q_OS_WIN
 #include <windows.h>
 #endif
@@ -18,15 +19,16 @@ public:
     GraphicsScene();
     bool addVertex(QString name, QPointF pos);
     void removeVertex(Vertex *vertex);
-    void createLine(Vertex *item, bool isWeighted);
+    void createLine(Vertex *item, bool isDirected, bool isWeighted);
     void print(); //temp, only for debugging
     void paintVertices(QVector <int> cores, QBrush *brush = NULL);
-    void paintDijkstra(QStack <int> stack);
+    void paintPath(QVector<Arco> stack);
     void prepareDijkstra(Vertex *item);
     void keyPressEvent(QKeyEvent *event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
+    void removeCurrentLine();
 
     template <class T>
     T* findItem(const QPointF &point) {
@@ -34,7 +36,7 @@ public:
         if (item == nullptr || item->type() != T::Type) {
             return nullptr;
         }
-        return static_cast<T*>(item);
+        return dynamic_cast<T*>(item);
     }
 
     int getTypeOfItemAt(QPointF point);

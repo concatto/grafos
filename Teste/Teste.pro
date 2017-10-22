@@ -15,7 +15,8 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     controller.cpp \
     userInterface/graphicsline.cpp \
-    graphdialog.cpp
+    graphdialog.cpp \
+    userInterface/straightedge.cpp
 
 CONFIG += c++11
 QMAKE_CXXFLAGS += -Wno-sign-compare #Ignora "comparison between signed and unsigned"
@@ -35,7 +36,8 @@ HEADERS += \
     mainwindow.h \
     controller.h \
     userInterface/graphicsline.h \
-    graphdialog.h
+    graphdialog.h \
+    userInterface/straightedge.h
 
 FORMS += \
     mainwindow.ui \

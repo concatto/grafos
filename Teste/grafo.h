@@ -6,6 +6,8 @@
 #include <iostream>
 #include <stack>
 #include <queue>
+#include <set>
+#define INF 9999999
 
 using namespace std;
 
@@ -28,6 +30,19 @@ struct Path{
     }
 };
 
+struct Prim {
+    int id;
+    int key;
+    bool adicionado;
+
+    Prim(int id){
+        adicionado = false;
+        this->id = id;
+        this->key = INF;
+    }
+
+};
+
 struct ComparePair {
     bool operator()(pair <int, int> p1, pair <int, int> p2){
         return p1.first > p2.first;
@@ -42,12 +57,20 @@ inline bool welshPowellGreaterDegree (WashPowell w1, WashPowell w2){
     return w1.grau > w2.grau;
 }
 
+struct ComparePrim {
+    bool operator()(Prim p1, Prim p2){
+        return p1.key < p1.key;
+    }
+};
+
 struct Arco {
     int peso;
     int vorigem;
     int vdestino;
 
-    Arco(int peso, int vorigem, int vdestino) {
+    Arco() : Arco(-1, -1, 0) {}
+
+    Arco(int vorigem, int vdestino, int peso = 1) {
         this->peso = peso;
         this->vorigem = vorigem;
         this->vdestino = vdestino;
@@ -190,9 +213,10 @@ public:
     }
 
     //Acho que agora foi, rapazeada, esperando o aval do mestre Fernando.
-    vector <Path> dijkstra(int origem, int destino = -1){
+    vector <Arco> dijkstra(int origem, int destino = -1){
         vector <Path> lista(nomes.size());
         priority_queue <pair<int, int>, std::vector<pair<int, int>>, ComparePair> pq;
+        vector <Arco> retorno;
 
         int backup = origem;
 
@@ -211,7 +235,7 @@ public:
                 }
 
                 cout<<"\n";
-                return lista;
+                break;
             }
             pq.pop();
             lista[origem].aberto = false;
@@ -222,6 +246,7 @@ public:
                 }
                 if(lista[adj].aberto == true){
                     pq.push(make_pair(lista[adj].distancia, adj));
+
 //                    lista[adj].ordem = counter;
 //                    counter++;
                 }
@@ -235,7 +260,15 @@ public:
         }
 
         cout<<"\n";
-        return lista;
+
+        int navegador = destino;
+
+        while(navegador != backup){
+            retorno.insert(retorno.begin(), Arco(lista[navegador].anterior, navegador));
+            navegador = lista[navegador].anterior;
+        }
+
+        return retorno;
     }
 
     //Recupera o nome do vértice desejado. Se não existir, retorna a string vazia.

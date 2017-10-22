@@ -9,6 +9,7 @@
 #include <QInputDialog>
 #include <QLineEdit>
 #include <iostream>
+#include "straightedge.h"
 
 GraphicsScene::GraphicsScene() : QGraphicsScene()
 {
@@ -40,16 +41,16 @@ void GraphicsScene::removeVertex(Vertex *vertex)
     delete vertex;
 }
 
-void GraphicsScene::createLine(Vertex *item, bool isWeighted)
+void GraphicsScene::createLine(Vertex *item, bool isDirected, bool isWeighted)
 {
     sourceVertex = item;
     addingEdge = true;
-    currentLine = new GraphicsLine(isWeighted);
+    currentLine = new StraightEdge(isDirected, isWeighted);
     currentLine->setV1(item);
-    addItem(currentLine);
+    addItem(currentLine->item());
     item->addConnection(currentLine);
 
-    currentLine->setLine(QLineF(item->getCenter(), item->getCenter()));
+    currentLine->setEndpoints(item->getCenter(), item->getCenter());
 }
 
 void GraphicsScene::finishConnectionCreation(int id1, int id2, int weight)
@@ -94,22 +95,19 @@ void GraphicsScene::paintVertices(QVector<int> cores, QBrush *brush)
     }
 }
 
-void GraphicsScene::paintDijkstra(QStack<int> stack)
+void GraphicsScene::paintPath(QVector<Arco> path)
 {
-    while(!stack.isEmpty()){
-        int vertice = stack.top();
-        stack.pop();
 
-        vertices[vertice]->setPen(QPen(QBrush(Qt::green), 4));
+    QPen pen(Qt::blue, 4);
 
-        if(stack.isEmpty())
-            return;
-        vertices[vertice]->paintEdge(stack.top());
-
+    for(Arco a: path){
+        vertices[a.vorigem]->setPen(pen);
+        vertices[a.vorigem]->paintEdge(a.vdestino);
         repaintViews();
         sleep(500);
     }
 
+    vertices[path.back().vdestino]->setPen(pen);
 }
 
 void GraphicsScene::paintSequence(QVector<int> sequence) {
@@ -124,7 +122,7 @@ GraphicsLine* GraphicsScene::findLine(int id1, int id2)
 {
     for (QGraphicsItem* item : items()) {
         if (item->type() == GraphicsLine::Type) {
-            GraphicsLine* line = static_cast<GraphicsLine*>(item);
+            GraphicsLine* line = dynamic_cast<GraphicsLine*>(item);
 
             // Talvez seja necessário realizar a comparação inversa eventualmente
             if (line->getV1()->getId() == id1 && line->getV2()->getId() == id2) {
@@ -203,7 +201,7 @@ void GraphicsScene::keyPressEvent(QKeyEvent *event)
 void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if (currentLine != nullptr && sourceVertex != nullptr) {
-        currentLine->setLine(QLineF(sourceVertex->getCenter(), event->scenePos()));
+        currentLine->setEndpoints(sourceVertex->getCenter(), event->scenePos());
     }
 
     if (movingVertex != nullptr) {
@@ -233,6 +231,16 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     if (movingVertex != nullptr) {
         movingVertex->setPressed(false);
         movingVertex = nullptr;
+    }
+}
+
+void GraphicsScene::removeCurrentLine()
+{
+    if(currentLine != nullptr){
+        currentLine->getV1()->removeConnection(currentLine);
+        removeItem(currentLine->item());
+        delete currentLine;
+        currentLine = nullptr;
     }
 }
 
