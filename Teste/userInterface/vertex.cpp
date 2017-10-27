@@ -111,27 +111,20 @@ int Vertex::type() const
 
 void Vertex::removeConnection(EdgeInterface *line)
 {
-
     lines.removeOne(line);
-
-//    for(GraphicsLine *l : lines){
-//        if(l == line){
-//            lines.removeOne(l);
-//        }
-//    }
 }
 
 void Vertex::removeConnections()
 {
-    for(EdgeInterface *line : lines){
-        Edge model = line->getModel();
-        if(model.getV1()->getId() == id){
-            model.getV2()->removeConnection(line);
-        }else {
-            model.getV1()->removeConnection(line);
-        }
-        //delete model; //Careful here
-    }
+//    for(EdgeInterface *line : lines) {
+//        Edge model = line->getModel();
+//        if(model.getV1()->getId() == id){
+//            model.getV2()->removeConnection(line);
+//        }else {
+//            model.getV1()->removeConnection(line);
+//        }
+//        //delete model; //Careful here
+//    }
 }
 
 void Vertex::print()
@@ -179,4 +172,9 @@ bool Vertex::hasLine(int origin, int destination) const
     }
 
     return false;
+}
+
+const QVector<EdgeInterface*>& Vertex::getLines() const
+{
+    return lines;
 }

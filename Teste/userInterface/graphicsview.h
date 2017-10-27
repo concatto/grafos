@@ -5,6 +5,7 @@
 #include "graphicsscene.h"
 #include <QString>
 #include "grafo.h"
+#include "edgeinterface.h"
 #include <QObject>
 
 class GraphicsView : public QGraphicsView
@@ -19,6 +20,7 @@ public:
     void createConnection(int id1, int id2, int weight);
     void destroyVertex(int id);
     void destroyConnection(int id1, int id2);
+    void destroyConnection(EdgeInterface* edge);
     void cancelConnection();
 
 protected:

@@ -51,6 +51,8 @@ public:
     float getRadius() const;
     bool hasLine(int origin, int destination) const;
 
+    const QVector<EdgeInterface*>& getLines() const;
+
 private:
     float radius;
     QString name;

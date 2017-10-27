@@ -14,6 +14,11 @@ StraightEdge::StraightEdge(Edge edge)
     setLine(QLineF(center, center));
 }
 
+int StraightEdge::type() const
+{
+    return Type;
+}
+
 void StraightEdge::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     Edge edge = getModel();

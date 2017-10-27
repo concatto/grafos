@@ -34,16 +34,16 @@ public:
     template <class T>
     T* findItem(const QPointF &point) {
         QGraphicsItem* item = itemAt(point, QTransform());
-        if (item == nullptr || item->type() != T::Type) {
+        if (item == nullptr) {
             return nullptr;
         }
-        return static_cast<T*>(item);
+        return dynamic_cast<T*>(item);
     }
 
     int getTypeOfItemAt(QPointF point);
     void finishConnectionCreation(int id1, int id2, int weight);
     void paintSequence(QVector<int> sequence);
-    Edge* findLine(int id1, int id2);
+    EdgeInterface* findLine(int id1, int id2);
     Vertex* getVertex(int id);
 
 private:

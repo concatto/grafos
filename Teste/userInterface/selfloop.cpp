@@ -9,6 +9,11 @@ SelfLoop::SelfLoop(Edge edge)
     setZValue(-1);
 }
 
+int SelfLoop::type() const
+{
+    return Type;
+}
+
 void SelfLoop::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
     Edge edge = getModel();

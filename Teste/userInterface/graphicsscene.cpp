@@ -46,7 +46,7 @@ void GraphicsScene::createLine(Vertex *item, bool isDirected, bool isWeighted)
     // Create a graphical edge, giving feedback to the user.
     Edge e(isDirected, isWeighted);
     e.setV1(item);
-    currentLine = new StraightEdge(e); // Stores as copy
+    currentLine = new StraightEdge(e); // Stores a copy
     addItem(currentLine);
 }
 
@@ -69,7 +69,10 @@ void GraphicsScene::finishConnectionCreation(int id1, int id2, int weight)
     }
 
     vertices[id1]->addConnection(line);
-    vertices[id2]->addConnection(line);
+
+    if (id1 != id2) { // No need to add twice if it's a self loop
+        vertices[id2]->addConnection(line);
+    }
 
     line->centralize();
 }
@@ -132,18 +135,16 @@ void GraphicsScene::paintSequence(QVector<int> sequence) {
     }
 }
 
-Edge* GraphicsScene::findLine(int id1, int id2)
+EdgeInterface* GraphicsScene::findLine(int id1, int id2)
 {
-//    for (QGraphicsItem* item : items()) {
-//        if (item->type() == Edge::Type) {
-//            Edge* line = dynamic_cast<Edge*>(item);
+    for (EdgeInterface* edge : vertices[id1]->getLines()) {
+        Edge model = edge->getModel();
 
-//            // Talvez seja necessário realizar a comparação inversa eventualmente
-//            if (line->getV1()->getId() == id1 && line->getV2()->getId() == id2) {
-//                return line;
-//            }
-//        }
-//    }
+        // Talvez seja necessário realizar a comparação inversa eventualmente
+        if (model.getV1()->getId() == id1 && model.getV2()->getId() == id2) {
+            return edge;
+        }
+    }
 
     return nullptr;
 }
@@ -225,27 +226,31 @@ void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    Vertex* v = findItem<Vertex>(event->scenePos());
-    if (v != nullptr) {
-        if(sourceVertex == nullptr){
-            movingVertex = v;
-            v->setPressed(true);
-        }
+    if (event->button() == Qt::LeftButton) {
+        Vertex* v = findItem<Vertex>(event->scenePos());
 
+        if (v != nullptr) {
+            if(sourceVertex == nullptr){
+                movingVertex = v;
+                v->setPressed(true);
+            }
+        }
     }
 }
 
 void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    Vertex* v = findItem<Vertex>(event->scenePos());
+    if (event->button() == Qt::LeftButton) {
+        Vertex* v = findItem<Vertex>(event->scenePos());
 
-    if (v != nullptr) {
-        executeSecondClickAction(v);
-    }
+        if (v != nullptr) {
+            executeSecondClickAction(v);
+        }
 
-    if (movingVertex != nullptr) {
-        movingVertex->setPressed(false);
-        movingVertex = nullptr;
+        if (movingVertex != nullptr) {
+            movingVertex->setPressed(false);
+            movingVertex = nullptr;
+        }
     }
 }
 

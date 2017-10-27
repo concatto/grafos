@@ -11,9 +11,11 @@ class StraightEdge : public QGraphicsLineItem, public EdgeInterface
 private:
     Edge model;
 public:
+    enum { Type = Edge::Type };
     StraightEdge(Edge edge);
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+    virtual int type() const override;
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
     virtual Edge getModel() override;
     virtual void setModel(Edge model) override;

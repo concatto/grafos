@@ -104,13 +104,15 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
         } else if(action == 4) { // BFS
 
         }
-    }else if(type == 0) {
-//        Edge *gline = scene.findItem<Edge>(pos);
-//        action = showMenu(lineMenuList);
+    }else if(type == Edge::Type) {
+        EdgeInterface* edge = scene.findItem<EdgeInterface>(pos);
+        Edge model = edge->getModel();
 
-//        if(action == 0){ //Remover aresta ou arco
-//            emit removeConnection(gline->getV1()->getId(), gline->getV2()->getId());
-//        }
+        action = showMenu(lineMenuList);
+
+        if(action == 0){ //Remover aresta ou arco
+            emit removeConnection(model.getV1()->getId(), model.getV2()->getId());
+        }
     } else {
         action = showMenu(viewMenuList);
 
@@ -131,17 +133,21 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
 
 void GraphicsView::destroyConnection(int id1, int id2)
 {
-//    Edge* line = scene.findLine(id1, id2);
+    destroyConnection(scene.findLine(id1, id2));
+}
 
-//    if (line != nullptr) {
-//        Vertex *vertex1 = line->getV1();
-//        Vertex *vertex2 = line->getV2();
+void GraphicsView::destroyConnection(EdgeInterface* edge) {
 
-//        vertex1->removeConnection(line);
-//        vertex2->removeConnection(line);
+    if (edge != nullptr) {
+        Edge model = edge->getModel();
+        qDebug() << "Removing id1: " << model.getV1()->getId() << "; id2: " << model.getV2()->getId();
 
-////        scene.removeItem(line->item());
-//    }
+        model.getV1()->removeConnection(edge);
+        model.getV2()->removeConnection(edge);
+
+        scene.removeItem(edge->getItem());
+        // Delete?
+    }
 }
 
 void GraphicsView::cancelConnection()
@@ -154,7 +160,11 @@ void GraphicsView::destroyVertex(int id)
     Vertex* vertex = scene.getVertex(id);
 
     if (vertex != nullptr) {
-        vertex->removeConnections();
+        auto lines = vertex->getLines();
+        for (auto it = lines.rbegin(); it != lines.rend(); ++it) {
+            destroyConnection(*it);
+        }
+
         scene.removeVertex(vertex);
     }
 }
