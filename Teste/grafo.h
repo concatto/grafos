@@ -253,6 +253,8 @@ public:
             }
         }
 
+        // Este bloco está causando violação de segmentação às vezes!
+        // Aparentemente apenas quando o vértice é isolado (nenhum out-arco).
         for(int i = 0; i < lista.size(); i++){
             if(i == backup)
                 lista[i].anterior = backup;
@@ -263,6 +265,7 @@ public:
 
         int navegador = destino;
 
+        // Violação de segmentação (aparentemente quando o destino não é atingível)
         while(navegador != backup){
             retorno.insert(retorno.begin(), Arco(lista[navegador].anterior, navegador));
             navegador = lista[navegador].anterior;

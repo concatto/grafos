@@ -20,7 +20,6 @@ public:
     void createConnection(int id1, int id2, int weight);
     void destroyVertex(int id);
     void destroyConnection(int id1, int id2);
-    void destroyConnection(EdgeInterface* edge);
     void cancelConnection();
 
 protected:

@@ -21,6 +21,7 @@ public:
     bool addVertex(QString name, QPointF pos);
     void removeVertex(Vertex *vertex);
     void createLine(Vertex *item, bool isDirected, bool isWeighted);
+    void removeLine(EdgeInterface* edge);
     void print(); //temp, only for debugging
     void paintVertices(QVector <int> cores, QBrush *brush = NULL);
     void paintPath(QVector<Arco> stack);
@@ -40,12 +41,12 @@ public:
         return dynamic_cast<T*>(item);
     }
 
+    bool isCreatingEdge();
     int getTypeOfItemAt(QPointF point);
     void finishConnectionCreation(int id1, int id2, int weight);
     void paintSequence(QVector<int> sequence);
     EdgeInterface* findLine(int id1, int id2);
-    Vertex* getVertex(int id);
-
+    Vertex* getVertex(int id);    
 private:
     Vertex* movingVertex = nullptr;
 

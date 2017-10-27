@@ -33,9 +33,7 @@ public:
     bool addConnection(EdgeInterface *line);
     int type() const override;
     void removeConnection(EdgeInterface *line);
-    void removeConnections();
-    void print(); //Temp, only for debugging
-    void paintEdge(int vertice = -1);
+    void paintEdge(int target = -1);
     int getId();
 
     void handleMoveEvent(QGraphicsSceneMouseEvent *event);
@@ -57,7 +55,6 @@ private:
     float radius;
     QString name;
     QVector<EdgeInterface*> lines;
-    bool compareLines(Edge *l1, Edge *l2);
     void alignEdges();
     int id;
     static int indexCounter;

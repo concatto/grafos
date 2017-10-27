@@ -1,4 +1,5 @@
 #include "graphicsscene.h"
+#include <algorithm>
 #include <QDebug>
 #include <QGraphicsSceneMouseEvent>
 #include <QTransform>
@@ -31,14 +32,21 @@ bool GraphicsScene::addVertex(QString name, QPointF pos)
 
 void GraphicsScene::removeVertex(Vertex *vertex)
 {
-    // Corrige os identificadores dos vértices para condizer com suas posições na lista
-    for (int i = vertex->getId() + 1; i < vertices.size(); i++) {
-        vertices[i]->setId(vertices[i]->getId() - 1);
-    }
+    if (vertex != nullptr) {
+        auto lines = vertex->getLines();
+        for (auto it = lines.rbegin(); it != lines.rend(); ++it) {
+            removeLine(*it);
+        }
 
-    vertices.removeOne(vertex);
-    removeItem(vertex);
-    delete vertex;
+        // Corrige os identificadores dos vértices para condizer com suas posições na lista
+        for (int i = vertex->getId() + 1; i < vertices.size(); i++) {
+            vertices[i]->setId(vertices[i]->getId() - 1);
+        }
+
+        vertices.removeOne(vertex);
+        removeItem(vertex);
+        delete vertex;
+    }
 }
 
 void GraphicsScene::createLine(Vertex *item, bool isDirected, bool isWeighted)
@@ -48,6 +56,20 @@ void GraphicsScene::createLine(Vertex *item, bool isDirected, bool isWeighted)
     e.setV1(item);
     currentLine = new StraightEdge(e); // Stores a copy
     addItem(currentLine);
+}
+
+void GraphicsScene::removeLine(EdgeInterface* edge) {
+
+    if (edge != nullptr) {
+        Edge model = edge->getModel();
+        qDebug() << "Removing id1: " << model.getV1()->getId() << "; id2: " << model.getV2()->getId();
+
+        model.getV1()->removeConnection(edge);
+        model.getV2()->removeConnection(edge);
+
+        removeItem(edge->getItem());
+        // Delete?
+    }
 }
 
 void GraphicsScene::finishConnectionCreation(int id1, int id2, int weight)
@@ -95,7 +117,8 @@ void GraphicsScene::paintVertices(QVector<int> cores, QBrush *brush)
         return;
     }
 
-    int value = 360 / cores.size();
+    int nColors = *std::max_element(cores.begin(), cores.end()) + 1;
+    int value = 360 / nColors;
     QColor color;
 
 //    for(int i = 0; i < list.size(); i++){
@@ -114,7 +137,6 @@ void GraphicsScene::paintVertices(QVector<int> cores, QBrush *brush)
 
 void GraphicsScene::paintPath(QVector<Arco> path)
 {
-
     QPen pen(Qt::blue, 4);
 
     for(Arco a: path){
@@ -169,7 +191,7 @@ void GraphicsScene::prepareDijkstra(Vertex *item)
 
 void GraphicsScene::executeSecondClickAction(Vertex *vertex)
 {
-    if(currentLine != nullptr) {
+    if(isCreatingEdge()) {
         emit addConnection(currentLine->getModel().getV1()->getId(), vertex->getId());
     }else if(performingDijkstra){
         emit performDijkstra(sourceVertex->getId(), vertex->getId());
@@ -203,7 +225,7 @@ void GraphicsScene::sleep(int msec)
 void GraphicsScene::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() & Qt::Key_Escape){
-        if (currentLine != nullptr) {
+        if (isCreatingEdge()) {
             removeCurrentLine();
         }
 
@@ -214,7 +236,7 @@ void GraphicsScene::keyPressEvent(QKeyEvent *event)
 
 void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    if (currentLine != nullptr) {
+    if (isCreatingEdge()) {
         Vertex* origin = currentLine->getModel().getV1();
         currentLine->setLine(QLineF(origin->getCenter(), event->scenePos()));
     }
@@ -256,11 +278,16 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void GraphicsScene::removeCurrentLine()
 {
-    if (currentLine != nullptr) {
+    if (isCreatingEdge()) {
         removeItem(currentLine);
         delete currentLine;
         currentLine = nullptr;
     }
+}
+
+bool GraphicsScene::isCreatingEdge()
+{
+    return currentLine != nullptr;
 }
 
 int GraphicsScene::getTypeOfItemAt(QPointF point)

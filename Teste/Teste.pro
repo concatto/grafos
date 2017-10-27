@@ -17,7 +17,6 @@ SOURCES += main.cpp \
     graphdialog.cpp \
     userInterface/straightedge.cpp \
     userInterface/edge.cpp \
-    userInterface/graphentity.cpp \
     userInterface/selfloop.cpp
 
 CONFIG += c++11
@@ -41,7 +40,6 @@ HEADERS += \
     graphdialog.h \
     userInterface/straightedge.h \
     userInterface/edge.h \
-    userInterface/graphentity.h \
     userInterface/edgeinterface.h \
     userInterface/selfloop.h
 

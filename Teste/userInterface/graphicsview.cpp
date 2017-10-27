@@ -78,6 +78,10 @@ int GraphicsView::showMenu(QMenu &menu)
 
 void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
 {
+    if (scene.isCreatingEdge()) {
+        return;
+    }
+
     QPointF pos = mapToScene(event->pos());
 
     storeMousePosition(pos);
@@ -133,21 +137,7 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
 
 void GraphicsView::destroyConnection(int id1, int id2)
 {
-    destroyConnection(scene.findLine(id1, id2));
-}
-
-void GraphicsView::destroyConnection(EdgeInterface* edge) {
-
-    if (edge != nullptr) {
-        Edge model = edge->getModel();
-        qDebug() << "Removing id1: " << model.getV1()->getId() << "; id2: " << model.getV2()->getId();
-
-        model.getV1()->removeConnection(edge);
-        model.getV2()->removeConnection(edge);
-
-        scene.removeItem(edge->getItem());
-        // Delete?
-    }
+    scene.removeLine(scene.findLine(id1, id2));
 }
 
 void GraphicsView::cancelConnection()
@@ -160,11 +150,6 @@ void GraphicsView::destroyVertex(int id)
     Vertex* vertex = scene.getVertex(id);
 
     if (vertex != nullptr) {
-        auto lines = vertex->getLines();
-        for (auto it = lines.rbegin(); it != lines.rend(); ++it) {
-            destroyConnection(*it);
-        }
-
         scene.removeVertex(vertex);
     }
 }

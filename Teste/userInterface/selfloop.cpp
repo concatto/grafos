@@ -5,7 +5,7 @@
 SelfLoop::SelfLoop(Edge edge)
 {
     setModel(edge);
-    setPen(QPen(QBrush(Qt::black), 4));
+    setColor(Qt::black);
     setZValue(-1);
 }
 
@@ -76,7 +76,7 @@ void SelfLoop::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, 
         QPointF t1 = ti + QPointF(yspace * std::cos(theta1), -yspace * std::sin(theta1));
         QPointF t3 = ti + QPointF(yspace * std::cos(theta1 + M_PI), -yspace * std::sin(theta1 + M_PI));
 
-        painter->setBrush(Qt::black);
+        painter->setBrush(pen().color());
         painter->drawConvexPolygon(QPolygonF({t1, t2, t3}));
     }
 }
@@ -97,12 +97,19 @@ void SelfLoop::centralize()
     float radius = v->getRadius();
     QPointF topLeft(v->getCenter() - QPointF(radius, radius));
     QSizeF size = QSizeF(radius, radius) * 1.7;
-    QPointF center = QPointF(size.width(), size.height()) * 0.5;
 
-    setRect(QRectF(topLeft - center + QPointF(4, -9), size));
+    QRectF rect(QPointF(0, 0), size);
+    rect.moveCenter(topLeft + QPointF(4, -9));
+
+    setRect(rect);
 }
 
 QGraphicsItem* SelfLoop::getItem()
 {
     return this;
+}
+
+void SelfLoop::setColor(Qt::GlobalColor color)
+{
+    setPen(QPen(QBrush(color), 4));
 }

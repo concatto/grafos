@@ -59,7 +59,6 @@ SOURCES       = main.cpp \
 		graphdialog.cpp \
 		userInterface/straightedge.cpp \
 		userInterface/edge.cpp \
-		userInterface/graphentity.cpp \
 		userInterface/selfloop.cpp moc_graphicsview.cpp \
 		moc_graphicsscene.cpp \
 		moc_vertex.cpp \
@@ -75,7 +74,6 @@ OBJECTS       = main.o \
 		graphdialog.o \
 		straightedge.o \
 		edge.o \
-		graphentity.o \
 		selfloop.o \
 		moc_graphicsview.o \
 		moc_graphicsscene.o \
@@ -368,7 +366,6 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		graphdialog.h \
 		userInterface/straightedge.h \
 		userInterface/edge.h \
-		userInterface/graphentity.h \
 		userInterface/edgeinterface.h \
 		userInterface/selfloop.h main.cpp \
 		userInterface/graphicsview.cpp \
@@ -379,7 +376,6 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		graphdialog.cpp \
 		userInterface/straightedge.cpp \
 		userInterface/edge.cpp \
-		userInterface/graphentity.cpp \
 		userInterface/selfloop.cpp
 QMAKE_TARGET  = Teste
 DESTDIR       = 
@@ -960,8 +956,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents grafo.h mgrafo.h stack.h lgrafo.h terminal_ui.h userInterface/graphicsview.h userInterface/graphicsscene.h userInterface/vertex.h mainwindow.h controller.h graphdialog.h userInterface/straightedge.h userInterface/edge.h userInterface/graphentity.h userInterface/edgeinterface.h userInterface/selfloop.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp userInterface/graphicsview.cpp userInterface/graphicsscene.cpp userInterface/vertex.cpp mainwindow.cpp controller.cpp graphdialog.cpp userInterface/straightedge.cpp userInterface/edge.cpp userInterface/graphentity.cpp userInterface/selfloop.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents grafo.h mgrafo.h stack.h lgrafo.h terminal_ui.h userInterface/graphicsview.h userInterface/graphicsscene.h userInterface/vertex.h mainwindow.h controller.h graphdialog.h userInterface/straightedge.h userInterface/edge.h userInterface/edgeinterface.h userInterface/selfloop.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp userInterface/graphicsview.cpp userInterface/graphicsscene.cpp userInterface/vertex.cpp mainwindow.cpp controller.cpp graphdialog.cpp userInterface/straightedge.cpp userInterface/edge.cpp userInterface/selfloop.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents mainwindow.ui graphdialog.ui $(DISTDIR)/
 
 
@@ -1120,11 +1116,11 @@ moc_graphicsview.cpp: /usr/include/qt/QtWidgets/QGraphicsView \
 		/usr/include/qt/QtGui/QMouseEvent \
 		/usr/include/qt/QtCore/QObject \
 		userInterface/edge.h \
-		/usr/include/qt/QtWidgets/QGraphicsLineItem \
+		/usr/include/qt/QtWidgets/QGraphicsItem \
 		/usr/include/qt/QtCore/QMetaType \
 		userInterface/edgeinterface.h \
-		/usr/include/qt/QtWidgets/QGraphicsItem \
 		userInterface/straightedge.h \
+		/usr/include/qt/QtWidgets/QGraphicsLineItem \
 		/usr/include/qt/QtGui/QPainter \
 		grafo.h \
 		/usr/include/qt/QtCore/QDebug \
@@ -1248,11 +1244,11 @@ moc_graphicsscene.cpp: /usr/include/qt/QtWidgets/QGraphicsScene \
 		/usr/include/qt/QtGui/QMouseEvent \
 		/usr/include/qt/QtCore/QObject \
 		userInterface/edge.h \
-		/usr/include/qt/QtWidgets/QGraphicsLineItem \
+		/usr/include/qt/QtWidgets/QGraphicsItem \
 		/usr/include/qt/QtCore/QMetaType \
 		userInterface/edgeinterface.h \
-		/usr/include/qt/QtWidgets/QGraphicsItem \
 		userInterface/straightedge.h \
+		/usr/include/qt/QtWidgets/QGraphicsLineItem \
 		/usr/include/qt/QtGui/QPainter \
 		/usr/include/qt/QtGui/qpainter.h \
 		/usr/include/qt/QtGui/qtextoption.h \
@@ -1377,7 +1373,6 @@ moc_vertex.cpp: /usr/include/qt/QtWidgets/QGraphicsEllipseItem \
 		userInterface/edgeinterface.h \
 		/usr/include/qt/QtWidgets/QGraphicsItem \
 		/usr/include/qt/QtCore/QVector \
-		/usr/include/qt/QtWidgets/QGraphicsLineItem \
 		/usr/include/qt/QtCore/QMetaType \
 		userInterface/vertex.h \
 		moc_predefs.h \
@@ -1511,11 +1506,11 @@ moc_mainwindow.cpp: /usr/include/qt/QtWidgets/QMainWindow \
 		/usr/include/qt/QtGui/QMouseEvent \
 		/usr/include/qt/QtCore/QObject \
 		userInterface/edge.h \
-		/usr/include/qt/QtWidgets/QGraphicsLineItem \
+		/usr/include/qt/QtWidgets/QGraphicsItem \
 		/usr/include/qt/QtCore/QMetaType \
 		userInterface/edgeinterface.h \
-		/usr/include/qt/QtWidgets/QGraphicsItem \
 		userInterface/straightedge.h \
+		/usr/include/qt/QtWidgets/QGraphicsLineItem \
 		/usr/include/qt/QtGui/QPainter \
 		grafo.h \
 		/usr/include/qt/QtCore/QDebug \
@@ -1652,11 +1647,11 @@ moc_controller.cpp: mainwindow.h \
 		/usr/include/qt/QtGui/QMouseEvent \
 		/usr/include/qt/QtCore/QObject \
 		userInterface/edge.h \
-		/usr/include/qt/QtWidgets/QGraphicsLineItem \
+		/usr/include/qt/QtWidgets/QGraphicsItem \
 		/usr/include/qt/QtCore/QMetaType \
 		userInterface/edgeinterface.h \
-		/usr/include/qt/QtWidgets/QGraphicsItem \
 		userInterface/straightedge.h \
+		/usr/include/qt/QtWidgets/QGraphicsLineItem \
 		/usr/include/qt/QtGui/QPainter \
 		grafo.h \
 		/usr/include/qt/QtCore/QDebug \
@@ -1944,11 +1939,11 @@ main.o: main.cpp grafo.h \
 		/usr/include/qt/QtGui/QMouseEvent \
 		/usr/include/qt/QtCore/QObject \
 		userInterface/edge.h \
-		/usr/include/qt/QtWidgets/QGraphicsLineItem \
+		/usr/include/qt/QtWidgets/QGraphicsItem \
 		/usr/include/qt/QtCore/QMetaType \
 		userInterface/edgeinterface.h \
-		/usr/include/qt/QtWidgets/QGraphicsItem \
 		userInterface/straightedge.h \
+		/usr/include/qt/QtWidgets/QGraphicsLineItem \
 		/usr/include/qt/QtGui/QPainter
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
@@ -2076,11 +2071,11 @@ graphicsview.o: userInterface/graphicsview.cpp userInterface/graphicsview.h \
 		/usr/include/qt/QtGui/QMouseEvent \
 		/usr/include/qt/QtCore/QObject \
 		userInterface/edge.h \
-		/usr/include/qt/QtWidgets/QGraphicsLineItem \
+		/usr/include/qt/QtWidgets/QGraphicsItem \
 		/usr/include/qt/QtCore/QMetaType \
 		userInterface/edgeinterface.h \
-		/usr/include/qt/QtWidgets/QGraphicsItem \
 		userInterface/straightedge.h \
+		/usr/include/qt/QtWidgets/QGraphicsLineItem \
 		/usr/include/qt/QtGui/QPainter \
 		grafo.h \
 		/usr/include/qt/QtCore/QDebug \
@@ -2220,11 +2215,11 @@ graphicsscene.o: userInterface/graphicsscene.cpp userInterface/graphicsscene.h \
 		/usr/include/qt/QtGui/QMouseEvent \
 		/usr/include/qt/QtCore/QObject \
 		userInterface/edge.h \
-		/usr/include/qt/QtWidgets/QGraphicsLineItem \
+		/usr/include/qt/QtWidgets/QGraphicsItem \
 		/usr/include/qt/QtCore/QMetaType \
 		userInterface/edgeinterface.h \
-		/usr/include/qt/QtWidgets/QGraphicsItem \
 		userInterface/straightedge.h \
+		/usr/include/qt/QtWidgets/QGraphicsLineItem \
 		/usr/include/qt/QtGui/QPainter \
 		/usr/include/qt/QtGui/qpainter.h \
 		/usr/include/qt/QtGui/qtextoption.h \
@@ -2363,10 +2358,9 @@ vertex.o: userInterface/vertex.cpp userInterface/vertex.h \
 		/usr/include/qt/QtGui/QMouseEvent \
 		/usr/include/qt/QtCore/QObject \
 		userInterface/edge.h \
-		/usr/include/qt/QtWidgets/QGraphicsLineItem \
+		/usr/include/qt/QtWidgets/QGraphicsItem \
 		/usr/include/qt/QtCore/QMetaType \
 		userInterface/edgeinterface.h \
-		/usr/include/qt/QtWidgets/QGraphicsItem \
 		/usr/include/qt/QtCore/QVector \
 		/usr/include/qt/QtGui/QBrush \
 		/usr/include/qt/QtCore/QDebug \
@@ -2377,6 +2371,7 @@ vertex.o: userInterface/vertex.cpp userInterface/vertex.h \
 		/usr/include/qt/QtWidgets/qgraphicsscene.h \
 		/usr/include/qt/QtGui/qpen.h \
 		userInterface/straightedge.h \
+		/usr/include/qt/QtWidgets/QGraphicsLineItem \
 		/usr/include/qt/QtGui/QPainter \
 		/usr/include/qt/QtGui/qpainter.h \
 		/usr/include/qt/QtGui/qtextoption.h \
@@ -2517,11 +2512,11 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		/usr/include/qt/QtGui/QMouseEvent \
 		/usr/include/qt/QtCore/QObject \
 		userInterface/edge.h \
-		/usr/include/qt/QtWidgets/QGraphicsLineItem \
+		/usr/include/qt/QtWidgets/QGraphicsItem \
 		/usr/include/qt/QtCore/QMetaType \
 		userInterface/edgeinterface.h \
-		/usr/include/qt/QtWidgets/QGraphicsItem \
 		userInterface/straightedge.h \
+		/usr/include/qt/QtWidgets/QGraphicsLineItem \
 		/usr/include/qt/QtGui/QPainter \
 		grafo.h \
 		/usr/include/qt/QtCore/QDebug \
@@ -2699,11 +2694,11 @@ controller.o: controller.cpp controller.h \
 		/usr/include/qt/QtGui/QMouseEvent \
 		/usr/include/qt/QtCore/QObject \
 		userInterface/edge.h \
-		/usr/include/qt/QtWidgets/QGraphicsLineItem \
+		/usr/include/qt/QtWidgets/QGraphicsItem \
 		/usr/include/qt/QtCore/QMetaType \
 		userInterface/edgeinterface.h \
-		/usr/include/qt/QtWidgets/QGraphicsItem \
 		userInterface/straightedge.h \
+		/usr/include/qt/QtWidgets/QGraphicsLineItem \
 		/usr/include/qt/QtGui/QPainter \
 		grafo.h \
 		/usr/include/qt/QtCore/QDebug \
@@ -3115,98 +3110,9 @@ edge.o: userInterface/edge.cpp userInterface/edge.h \
 		userInterface/edgeinterface.h \
 		/usr/include/qt/QtWidgets/QGraphicsItem \
 		/usr/include/qt/QtCore/QVector \
-		/usr/include/qt/QtWidgets/QGraphicsLineItem \
 		/usr/include/qt/QtCore/QMetaType \
 		/usr/include/qt/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o edge.o userInterface/edge.cpp
-
-graphentity.o: userInterface/graphentity.cpp userInterface/graphentity.h \
-		/usr/include/qt/QtWidgets/QGraphicsItem \
-		/usr/include/qt/QtWidgets/qgraphicsitem.h \
-		/usr/include/qt/QtWidgets/qtwidgetsglobal.h \
-		/usr/include/qt/QtGui/qtguiglobal.h \
-		/usr/include/qt/QtCore/qglobal.h \
-		/usr/include/qt/QtCore/qconfig-bootstrapped.h \
-		/usr/include/qt/QtCore/qconfig.h \
-		/usr/include/qt/QtCore/qtcore-config.h \
-		/usr/include/qt/QtCore/qsystemdetection.h \
-		/usr/include/qt/QtCore/qprocessordetection.h \
-		/usr/include/qt/QtCore/qcompilerdetection.h \
-		/usr/include/qt/QtCore/qtypeinfo.h \
-		/usr/include/qt/QtCore/qsysinfo.h \
-		/usr/include/qt/QtCore/qlogging.h \
-		/usr/include/qt/QtCore/qflags.h \
-		/usr/include/qt/QtCore/qatomic.h \
-		/usr/include/qt/QtCore/qbasicatomic.h \
-		/usr/include/qt/QtCore/qatomic_bootstrap.h \
-		/usr/include/qt/QtCore/qgenericatomic.h \
-		/usr/include/qt/QtCore/qatomic_cxx11.h \
-		/usr/include/qt/QtCore/qatomic_msvc.h \
-		/usr/include/qt/QtCore/qglobalstatic.h \
-		/usr/include/qt/QtCore/qmutex.h \
-		/usr/include/qt/QtCore/qnumeric.h \
-		/usr/include/qt/QtCore/qversiontagging.h \
-		/usr/include/qt/QtGui/qtgui-config.h \
-		/usr/include/qt/QtWidgets/qtwidgets-config.h \
-		/usr/include/qt/QtCore/qobject.h \
-		/usr/include/qt/QtCore/qobjectdefs.h \
-		/usr/include/qt/QtCore/qnamespace.h \
-		/usr/include/qt/QtCore/qobjectdefs_impl.h \
-		/usr/include/qt/QtCore/qstring.h \
-		/usr/include/qt/QtCore/qchar.h \
-		/usr/include/qt/QtCore/qbytearray.h \
-		/usr/include/qt/QtCore/qrefcount.h \
-		/usr/include/qt/QtCore/qarraydata.h \
-		/usr/include/qt/QtCore/qstringbuilder.h \
-		/usr/include/qt/QtCore/qlist.h \
-		/usr/include/qt/QtCore/qalgorithms.h \
-		/usr/include/qt/QtCore/qiterator.h \
-		/usr/include/qt/QtCore/qhashfunctions.h \
-		/usr/include/qt/QtCore/qpair.h \
-		/usr/include/qt/QtCore/qbytearraylist.h \
-		/usr/include/qt/QtCore/qstringlist.h \
-		/usr/include/qt/QtCore/qregexp.h \
-		/usr/include/qt/QtCore/qstringmatcher.h \
-		/usr/include/qt/QtCore/qcoreevent.h \
-		/usr/include/qt/QtCore/qscopedpointer.h \
-		/usr/include/qt/QtCore/qmetatype.h \
-		/usr/include/qt/QtCore/qvarlengtharray.h \
-		/usr/include/qt/QtCore/qcontainerfwd.h \
-		/usr/include/qt/QtCore/qobject_impl.h \
-		/usr/include/qt/QtCore/qvariant.h \
-		/usr/include/qt/QtCore/qmap.h \
-		/usr/include/qt/QtCore/qdebug.h \
-		/usr/include/qt/QtCore/qhash.h \
-		/usr/include/qt/QtCore/qtextstream.h \
-		/usr/include/qt/QtCore/qiodevice.h \
-		/usr/include/qt/QtCore/qlocale.h \
-		/usr/include/qt/QtCore/qshareddata.h \
-		/usr/include/qt/QtCore/qvector.h \
-		/usr/include/qt/QtCore/qpoint.h \
-		/usr/include/qt/QtCore/qset.h \
-		/usr/include/qt/QtCore/qcontiguouscache.h \
-		/usr/include/qt/QtCore/qsharedpointer.h \
-		/usr/include/qt/QtCore/qsharedpointer_impl.h \
-		/usr/include/qt/QtCore/qrect.h \
-		/usr/include/qt/QtCore/qmargins.h \
-		/usr/include/qt/QtCore/qsize.h \
-		/usr/include/qt/QtGui/qpainterpath.h \
-		/usr/include/qt/QtGui/qmatrix.h \
-		/usr/include/qt/QtGui/qpolygon.h \
-		/usr/include/qt/QtGui/qregion.h \
-		/usr/include/qt/QtGui/qwindowdefs.h \
-		/usr/include/qt/QtGui/qwindowdefs_win.h \
-		/usr/include/qt/QtCore/qdatastream.h \
-		/usr/include/qt/QtCore/qline.h \
-		/usr/include/qt/QtGui/qpixmap.h \
-		/usr/include/qt/QtGui/qpaintdevice.h \
-		/usr/include/qt/QtGui/qcolor.h \
-		/usr/include/qt/QtGui/qrgb.h \
-		/usr/include/qt/QtGui/qrgba64.h \
-		/usr/include/qt/QtGui/qimage.h \
-		/usr/include/qt/QtGui/qpixelformat.h \
-		/usr/include/qt/QtGui/qtransform.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o graphentity.o userInterface/graphentity.cpp
 
 selfloop.o: userInterface/selfloop.cpp userInterface/selfloop.h \
 		/usr/include/qt/QtWidgets/QGraphicsEllipseItem \
@@ -3327,7 +3233,6 @@ selfloop.o: userInterface/selfloop.cpp userInterface/selfloop.h \
 		/usr/include/qt/QtGui/QMouseEvent \
 		/usr/include/qt/QtCore/QObject \
 		/usr/include/qt/QtCore/QVector \
-		/usr/include/qt/QtWidgets/QGraphicsLineItem \
 		/usr/include/qt/QtCore/QMetaType \
 		/usr/include/qt/QtCore/QtMath \
 		/usr/include/qt/QtCore/qmath.h

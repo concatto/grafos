@@ -21,6 +21,7 @@ public:
     virtual void setModel(Edge model) override;
     virtual void centralize() override;
     virtual QGraphicsItem* getItem() override;
+    virtual void setColor(Qt::GlobalColor color) override;
 };
 
 #endif // STRAIGHTEDGE_H

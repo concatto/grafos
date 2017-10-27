@@ -13,6 +13,7 @@ public:
     virtual QGraphicsItem* getItem() = 0;
     virtual Edge getModel() = 0;
     virtual void setModel(Edge model) = 0;
+    virtual void setColor(Qt::GlobalColor color) = 0;
 };
 
 #endif // EDGEINTERFACE_H

@@ -7,7 +7,7 @@
 StraightEdge::StraightEdge(Edge edge)
 {
     setModel(edge);
-    setPen(QPen(QBrush(Qt::black), 4));
+    setColor(Qt::black);
     setZValue(-1);
 
     QPointF center = edge.getV1()->getCenter();
@@ -83,7 +83,7 @@ void StraightEdge::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
         QPointF t1 = ti + QPointF(yspace * std::cos(theta1), -yspace * std::sin(theta1));
         QPointF t3 = ti + QPointF(yspace * std::cos(theta1 + M_PI), -yspace * std::sin(theta1 + M_PI));
 
-        painter->setBrush(Qt::black);
+        painter->setBrush(pen().color());
         painter->drawConvexPolygon(QPolygonF({t1, t2, t3}));
     }
 }
@@ -110,4 +110,9 @@ void StraightEdge::centralize()
 QGraphicsItem* StraightEdge::getItem()
 {
     return this;
+}
+
+void StraightEdge::setColor(Qt::GlobalColor color)
+{
+    setPen(QPen(QBrush(color), 4));
 }

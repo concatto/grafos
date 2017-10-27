@@ -38,13 +38,6 @@ void Vertex::handleMoveEvent(QGraphicsSceneMouseEvent *event)
     }
 }
 
-bool Vertex::compareLines(Edge *l1, Edge *l2)
-{
-    return ((l1->getV1()->getId() == l2->getV1()->getId() && l1->getV2()->getId() == l2->getV2()->getId())
-            || (l1->getV1()->getId() == l2->getV2()->getId() && l1->getV2()->getId() == l2->getV1()->getId()));
-
-}
-
 void Vertex::alignEdges()
 {
     for(EdgeInterface *nav: lines) {
@@ -82,14 +75,12 @@ QString Vertex::getName()
     return name;
 }
 
-
 void Vertex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     QGraphicsEllipseItem::paint(painter, option, widget);
-//    this->boundingRect().bottom();
+    QRectF wideRect = rect().marginsAdded(QMarginsF(80, 0, 80, 0));
 
-
-    painter->drawText(rect().marginsAdded(QMarginsF(80, 0, 80, 0)) + rect().height(), Qt::AlignCenter, this->name);
+    painter->drawText(wideRect.translated(0, rect().height()), Qt::AlignHCenter, this->name);
 }
 
 bool Vertex::addConnection(EdgeInterface *line)
@@ -114,28 +105,19 @@ void Vertex::removeConnection(EdgeInterface *line)
     lines.removeOne(line);
 }
 
-void Vertex::removeConnections()
+void Vertex::paintEdge(int target)
 {
-//    for(EdgeInterface *line : lines) {
-//        Edge model = line->getModel();
-//        if(model.getV1()->getId() == id){
-//            model.getV2()->removeConnection(line);
-//        }else {
-//            model.getV1()->removeConnection(line);
-//        }
-//        //delete model; //Careful here
-//    }
-}
+    for (EdgeInterface* edge : lines) {
+        Edge model = edge->getModel();
 
-void Vertex::print()
-{
-//    for(Line *l: lines){
-//        qDebug()<<l->line->getV2()->getName();
-//    }
-}
+        if (target == -1) {
+            edge->setColor(Qt::black);
+        } else if (target == model.getV2()->getId()
+                   || (!model.isDirected() && target == model.getV1()->getId())) {
+            edge->setColor(Qt::blue);
+        }
+    }
 
-void Vertex::paintEdge(int vertice)
-{
 //    if(vertice == -1){ // Reset colors
 //        for(Edge *line: lines){
 //            line->setCustomPen(QPen(QBrush(Qt::black), 4));
