@@ -301,7 +301,7 @@ public:
 
     //Insere um arco origem -> destino e um arco destino -> origem, ambos com o peso especificado
     bool inserirAresta(int origem, int destino, int peso = 1) {
-        if (existeAresta(origem, destino)) {
+        if (existeAresta(origem, destino) || origem == destino) {
             return false;
         }
 

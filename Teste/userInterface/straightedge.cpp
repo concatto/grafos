@@ -1,63 +1,46 @@
 #include "straightedge.h"
+#include <QVariant>
+#include <QDebug>
+#include <cmath>
+#include <QtMath>
 
-int StraightEdge::type() const
+StraightEdge::StraightEdge(Edge edge)
 {
-    return Type;
-}
-
-StraightEdge::StraightEdge(bool isDirected, bool isWeighted) : GraphicsLine(isDirected, isWeighted)
-{
+    setModel(edge);
     setPen(QPen(QBrush(Qt::black), 4));
     setZValue(-1);
-}
 
-void StraightEdge::setCustomPen(QPen pen)
-{
-    setPen(pen);
-}
-
-void StraightEdge::tryCentralize()
-{
-    if (v1 != nullptr && v2 != nullptr) {
-        setLine(QLineF(v1->getCenter(), v2->getCenter()));
-    }
-}
-
-void StraightEdge::setEndpoints(QPointF a, QPointF b)
-{
-    setLine(QLineF(a, b));
-}
-
-QGraphicsItem* StraightEdge::item()
-{
-    return this;
+    QPointF center = edge.getV1()->getCenter();
+    setLine(QLineF(center, center));
 }
 
 void StraightEdge::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    QPen pen = painter->pen();
-    QBrush brush = painter->brush();
+    Edge edge = getModel();
+    QGraphicsLineItem::paint(painter, option, widget);
 
-    if (weighted) {
+    if (edge.isWeighted()) {
         qreal distance = 13;
-        QPointF p = (line().p2() + line().p1())/2;
+        QPointF p = (line().p2() + line().p1()) / 2;
 
-        qreal angle1 = line().angle() + 90;
-        angle1 = angle1 * M_PI / 180;
+        qreal angle1 = qDegreesToRadians(line().angle() + 90);
         QPointF pn(p.x() + distance * cos(angle1), p.y() - distance * sin(angle1));
 
-        if (weight != 0) {
+        QString numStr = QString::number(edge.getWeight());
+        if (edge.getWeight() != 0) {
             painter->setFont(QFont("times", 12));
-            QRect rect = painter->fontMetrics().boundingRect(QString::number(weight));
+            QRect rect = painter->fontMetrics().boundingRect(numStr);
             rect.moveCenter(pn.toPoint());
 
-            painter->drawText(rect, Qt::AlignCenter, QString::number(weight));
+            painter->drawText(rect, Qt::AlignCenter, numStr);
         }
     }
 
-    if (directed) {
-        bool hasReverse = getV2() != nullptr && getV1()->hasLine(getV2()->getId(), getV1()->getId());
-        double radius = getV1()->getRadius();
+    if (edge.isDirected()) {
+        double radius = edge.getV1()->getRadius();
+
+        /*
+        bool hasReverse = edge.getV2() != nullptr && edge.getV1()->hasLine(edge.getV2()->getId(), edge.getV1()->getId());
 
         if (hasReverse) {
             // Implementar arcos curvados algum dia.
@@ -68,7 +51,7 @@ void StraightEdge::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
 
 //            painter->drawArc(rect.normalized(), startAngle, spanAngle);
 
-            if(getV1()->getId() == getV2()->getId()){
+            if(edge.getV1()->getId() == edge.getV2()->getId()){
                 painter->setPen(QPen(Qt::black, 4));
                 painter->drawEllipse(getV1()->getCenter() - QPointF(0, radius), 15, 30);
             }
@@ -76,13 +59,15 @@ void StraightEdge::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
         } else {
             QGraphicsLineItem::paint(painter, option, widget);
         }
+        */
 
-        double theta = (line().angle() / 180.0) * M_PI;
+        double theta = qDegreesToRadians(line().angle());
 
-        if (getV2() == nullptr) {
+        if (edge.getV2() == nullptr) {
             radius = 0;
         }
 
+        // Draws a triangle
         QPointF t2 = line().p2() - QPointF(radius * std::cos(theta), -radius * std::sin(theta));
 
         double distance = 14;
@@ -95,7 +80,29 @@ void StraightEdge::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
 
         painter->setBrush(Qt::black);
         painter->drawConvexPolygon(QPolygonF({t1, t2, t3}));
-    } else {
-        QGraphicsLineItem::paint(painter, option, widget);
     }
+}
+
+Edge StraightEdge::getModel()
+{
+    return model;
+}
+
+void StraightEdge::setModel(Edge model)
+{
+    this->model = model;
+}
+
+void StraightEdge::centralize()
+{
+    Vertex* v1 = model.getV1();
+    Vertex* v2 = model.getV2();
+    if (v1 != nullptr && v2 != nullptr) {
+        setLine(QLineF(v1->getCenter(), v2->getCenter()));
+    }
+}
+
+QGraphicsItem* StraightEdge::getItem()
+{
+    return this;
 }

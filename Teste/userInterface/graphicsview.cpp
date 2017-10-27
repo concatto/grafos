@@ -104,13 +104,13 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
         } else if(action == 4) { // BFS
 
         }
-    }else if(type == GraphicsLine::Type) {
-        GraphicsLine *gline = scene.findItem<GraphicsLine>(pos);
-        action = showMenu(lineMenuList);
+    }else if(type == 0) {
+//        Edge *gline = scene.findItem<Edge>(pos);
+//        action = showMenu(lineMenuList);
 
-        if(action == 0){ //Remover aresta ou arco
-            emit removeConnection(gline->getV1()->getId(), gline->getV2()->getId());
-        }
+//        if(action == 0){ //Remover aresta ou arco
+//            emit removeConnection(gline->getV1()->getId(), gline->getV2()->getId());
+//        }
     } else {
         action = showMenu(viewMenuList);
 
@@ -131,17 +131,17 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
 
 void GraphicsView::destroyConnection(int id1, int id2)
 {
-    GraphicsLine* line = scene.findLine(id1, id2);
+//    Edge* line = scene.findLine(id1, id2);
 
-    if (line != nullptr) {
-        Vertex *vertex1 = line->getV1();
-        Vertex *vertex2 = line->getV2();
+//    if (line != nullptr) {
+//        Vertex *vertex1 = line->getV1();
+//        Vertex *vertex2 = line->getV2();
 
-        vertex1->removeConnection(line);
-        vertex2->removeConnection(line);
+//        vertex1->removeConnection(line);
+//        vertex2->removeConnection(line);
 
-        scene.removeItem(line->item());
-    }
+////        scene.removeItem(line->item());
+//    }
 }
 
 void GraphicsView::cancelConnection()

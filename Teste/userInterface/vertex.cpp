@@ -34,21 +34,21 @@ void Vertex::handleMoveEvent(QGraphicsSceneMouseEvent *event)
     if(event->buttons() & Qt::LeftButton && pressed){
         QPointF delta = event->scenePos() - event->lastScenePos();
         moveBy(delta.x(), delta.y());
-        moveLineToCenter();
+        alignEdges();
     }
 }
 
-bool Vertex::compareLines(GraphicsLine *l1, GraphicsLine *l2)
+bool Vertex::compareLines(Edge *l1, Edge *l2)
 {
     return ((l1->getV1()->getId() == l2->getV1()->getId() && l1->getV2()->getId() == l2->getV2()->getId())
             || (l1->getV1()->getId() == l2->getV2()->getId() && l1->getV2()->getId() == l2->getV1()->getId()));
 
 }
 
-void Vertex::moveLineToCenter()
+void Vertex::alignEdges()
 {
-    for(GraphicsLine *nav: lines){
-        nav->tryCentralize();
+    for(EdgeInterface *nav: lines) {
+        nav->centralize();
     }
 }
 
@@ -92,55 +92,10 @@ void Vertex::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QW
     painter->drawText(rect().marginsAdded(QMarginsF(80, 0, 80, 0)) + rect().height(), Qt::AlignCenter, this->name);
 }
 
-bool Vertex::addConnection(GraphicsLine *line)
+bool Vertex::addConnection(EdgeInterface *line)
 {
-//    if(line->getV2() != NULL){
-//        for(GraphicsLine *l: lines){
-//            if(compareLines(l, line)){
-//                line->getV1()->removeConnection(line);
-//                line->getV2()->removeConnection(line);
-////                delete nline;
-//                return false;
-//            }
-//        }
-//    }
-
     lines.append(line);
-
-    line->tryCentralize();
-
-//    if(p1){
-//        int xOffset = rect().x() + rect().width()/2;
-//        int yOffset = rect().y() + rect().height()/2;
-
-//        QPointF newCenterPos = QPointF(this->scenePos().x() + xOffset, this->scenePos().y() + yOffset);
-
-//        lines.back()->line->setLine(QLineF(newCenterPos, QPointF(0, 0)));
-
-//    }else {
-//        QPointF p1 = line->line().p1();
-//        QPointF p2 = rect().center();
-
-//        QPointF delta = p2 - p1;
-
-//        qreal angle1 = atan2(delta.y(), delta.x());
-//        qreal radius = rect().width()/2;
-
-//        qreal dxOffset = radius * cos(angle1);
-//        qreal dyOffset = radius * sin(angle1);
-
-
-
-//        int xOffset = rect().x() + rect().width()/2;
-//        int yOffset = rect().y() + rect().height()/2;
-
-//        QPointF newCenterPos = QPointF(this->scenePos().x() + xOffset, this->scenePos().y() + yOffset);
-
-//        lines.back()->line->setLine(QLineF(line->line().p1(), newCenterPos - QPointF(dxOffset, dyOffset)));
-//    }
-
     return true;
-
 }
 
 
@@ -154,7 +109,7 @@ int Vertex::type() const
     return Type;
 }
 
-void Vertex::removeConnection(GraphicsLine *line)
+void Vertex::removeConnection(EdgeInterface *line)
 {
 
     lines.removeOne(line);
@@ -168,13 +123,14 @@ void Vertex::removeConnection(GraphicsLine *line)
 
 void Vertex::removeConnections()
 {
-    for(GraphicsLine *l : lines){
-        if(l->getV1()->getId() == id){
-            l->getV2()->removeConnection(l);
+    for(EdgeInterface *line : lines){
+        Edge model = line->getModel();
+        if(model.getV1()->getId() == id){
+            model.getV2()->removeConnection(line);
         }else {
-            l->getV1()->removeConnection(l);
+            model.getV1()->removeConnection(line);
         }
-        delete l;
+        //delete model; //Careful here
     }
 }
 
@@ -187,25 +143,25 @@ void Vertex::print()
 
 void Vertex::paintEdge(int vertice)
 {
-    if(vertice == -1){ // Reset colors
-        for(GraphicsLine *line: lines){
-            line->setCustomPen(QPen(QBrush(Qt::black), 4));
-//            line->line->update();
-        }
-        return;
-    }
+//    if(vertice == -1){ // Reset colors
+//        for(Edge *line: lines){
+//            line->setCustomPen(QPen(QBrush(Qt::black), 4));
+////            line->line->update();
+//        }
+//        return;
+//    }
 
-    for(GraphicsLine *line: lines){
-        if(line->getV1()->getId() == id){
-            if(line->getV2()->getId() == vertice){
-                line->setCustomPen(QPen(QBrush(Qt::blue), 4));
-            }
-        }else {
-            if(line->getV1()->getId() == vertice){
-                line->setCustomPen(QPen(QBrush(Qt::blue), 4));
-            }
-        }
-    }
+//    for(Edge *line: lines){
+//        if(line->getV1()->getId() == id){
+//            if(line->getV2()->getId() == vertice){
+//                line->setCustomPen(QPen(QBrush(Qt::blue), 4));
+//            }
+//        }else {
+//            if(line->getV1()->getId() == vertice){
+//                line->setCustomPen(QPen(QBrush(Qt::blue), 4));
+//            }
+//        }
+//    }
 }
 
 int Vertex::getId()
@@ -215,8 +171,9 @@ int Vertex::getId()
 
 bool Vertex::hasLine(int origin, int destination) const
 {
-    for (GraphicsLine* line : lines) {
-        if (line->getV1()->getId() == origin && line->getV2()->getId() == destination) {
+    for (EdgeInterface* edge : lines) {
+        Edge line = edge->getModel();
+        if (line.getV1()->getId() == origin && line.getV2()->getId() == destination) {
             return true;
         }
     }

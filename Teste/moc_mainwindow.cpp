@@ -10,7 +10,6 @@
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #include <QtCore/QVector>
-#include <QtCore/QStack>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'mainwindow.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
@@ -23,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[8];
-    char stringdata0[77];
+    QByteArrayData data[5];
+    char stringdata0[45];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,14 +36,11 @@ QT_MOC_LITERAL(0, 0, 10), // "MainWindow"
 QT_MOC_LITERAL(1, 11, 13), // "paintVertices"
 QT_MOC_LITERAL(2, 25, 0), // ""
 QT_MOC_LITERAL(3, 26, 12), // "QVector<int>"
-QT_MOC_LITERAL(4, 39, 5), // "cores"
-QT_MOC_LITERAL(5, 45, 13), // "paintDijkstra"
-QT_MOC_LITERAL(6, 59, 11), // "QStack<int>"
-QT_MOC_LITERAL(7, 71, 5) // "stack"
+QT_MOC_LITERAL(4, 39, 5) // "cores"
 
     },
     "MainWindow\0paintVertices\0\0QVector<int>\0"
-    "cores\0paintDijkstra\0QStack<int>\0stack"
+    "cores"
 };
 #undef QT_MOC_LITERAL
 
@@ -54,7 +50,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       1,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -62,12 +58,10 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   24,    2, 0x0a /* Public */,
-       5,    1,   27,    2, 0x0a /* Public */,
+       1,    1,   19,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
-    QMetaType::Void, 0x80000000 | 6,    7,
 
        0        // eod
 };
@@ -79,7 +73,6 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->paintVertices((*reinterpret_cast< QVector<int>(*)>(_a[1]))); break;
-        case 1: _t->paintDijkstra((*reinterpret_cast< QStack<int>(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -90,13 +83,6 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QVector<int> >(); break;
-            }
-            break;
-        case 1:
-            switch (*reinterpret_cast<int*>(_a[1])) {
-            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
-            case 0:
-                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QStack<int> >(); break;
             }
             break;
         }
@@ -128,13 +114,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 1)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 1;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 2)
+        if (_id < 1)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 1;
     }
     return _id;
 }

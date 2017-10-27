@@ -5,10 +5,12 @@
 #include <QString>
 #include <QMouseEvent>
 #include <QObject>
-#include "graphicsline.h"
+#include "edge.h"
+#include "edgeinterface.h"
 #include <QVector>
 
-class GraphicsLine;
+class Edge;
+class EdgeInterface;
 
 //struct Line {
 //    Line(GraphicsLine *line, bool isP1){
@@ -28,9 +30,9 @@ public:
     Vertex(float radius, QString name);
     QString getName();
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-    bool addConnection(GraphicsLine *line);
+    bool addConnection(EdgeInterface *line);
     int type() const override;
-    void removeConnection(GraphicsLine *line);
+    void removeConnection(EdgeInterface *line);
     void removeConnections();
     void print(); //Temp, only for debugging
     void paintEdge(int vertice = -1);
@@ -52,9 +54,9 @@ public:
 private:
     float radius;
     QString name;
-    QVector <GraphicsLine*> lines;
-    bool compareLines(GraphicsLine *l1, GraphicsLine *l2);
-    void moveLineToCenter();
+    QVector<EdgeInterface*> lines;
+    bool compareLines(Edge *l1, Edge *l2);
+    void alignEdges();
     int id;
     static int indexCounter;
     bool pressed;

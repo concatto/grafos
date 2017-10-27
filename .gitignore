@@ -1,1 +1,3 @@
-/*.rar
+*.o
+Teste/*.o
+Teste/moc_*

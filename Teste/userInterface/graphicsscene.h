@@ -6,7 +6,8 @@
 #include <QString>
 #include <QObject>
 #include <QGraphicsItem>
-#include "graphicsline.h"
+#include "straightedge.h"
+#include "edge.h"
 #include "grafo.h"
 #ifdef Q_OS_WIN
 #include <windows.h>
@@ -36,13 +37,13 @@ public:
         if (item == nullptr || item->type() != T::Type) {
             return nullptr;
         }
-        return dynamic_cast<T*>(item);
+        return static_cast<T*>(item);
     }
 
     int getTypeOfItemAt(QPointF point);
     void finishConnectionCreation(int id1, int id2, int weight);
     void paintSequence(QVector<int> sequence);
-    GraphicsLine* findLine(int id1, int id2);
+    Edge* findLine(int id1, int id2);
     Vertex* getVertex(int id);
 
 private:
@@ -51,7 +52,7 @@ private:
     QVector <Vertex*> vertices;
     bool addingEdge;
     Vertex *sourceVertex = nullptr;
-    GraphicsLine *currentLine = nullptr;
+    StraightEdge *currentLine = nullptr;
     void sleep(int msec);
     bool performingDijkstra;
     void addLine(Vertex *vertex);

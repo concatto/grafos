@@ -14,12 +14,15 @@ SOURCES += main.cpp \
     userInterface/vertex.cpp \
     mainwindow.cpp \
     controller.cpp \
-    userInterface/graphicsline.cpp \
     graphdialog.cpp \
-    userInterface/straightedge.cpp
+    userInterface/straightedge.cpp \
+    userInterface/edge.cpp \
+    userInterface/graphentity.cpp \
+    userInterface/selfloop.cpp
 
 CONFIG += c++11
 QMAKE_CXXFLAGS += -Wno-sign-compare #Ignora "comparison between signed and unsigned"
+DEFINES += _USE_MATH_DEFINES #Concede M_PI em qualquer plataforma
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -35,9 +38,12 @@ HEADERS += \
     userInterface/vertex.h \
     mainwindow.h \
     controller.h \
-    userInterface/graphicsline.h \
     graphdialog.h \
-    userInterface/straightedge.h
+    userInterface/straightedge.h \
+    userInterface/edge.h \
+    userInterface/graphentity.h \
+    userInterface/edgeinterface.h \
+    userInterface/selfloop.h
 
 FORMS += \
     mainwindow.ui \

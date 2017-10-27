@@ -2,19 +2,23 @@
 #define STRAIGHTEDGE_H
 
 #include <QGraphicsLineItem>
-#include "graphicsline.h"
+#include <QPainter>
+#include "edge.h"
+#include "edgeinterface.h"
 
-class StraightEdge : public QGraphicsLineItem, public GraphicsLine
+class StraightEdge : public QGraphicsLineItem, public EdgeInterface
 {
+private:
+    Edge model;
 public:
-    int type() const override;
-    StraightEdge(bool isDirected, bool isWeighted);
+    StraightEdge(Edge edge);
 
-    virtual void setCustomPen(QPen pen) override;
-    virtual void tryCentralize() override;
-    virtual void setEndpoints(QPointF a, QPointF b) override;
-    virtual QGraphicsItem* item() override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+
+    virtual Edge getModel() override;
+    virtual void setModel(Edge model) override;
+    virtual void centralize() override;
+    virtual QGraphicsItem* getItem() override;
 };
 
 #endif // STRAIGHTEDGE_H

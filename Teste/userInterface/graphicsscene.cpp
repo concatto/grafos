@@ -9,7 +9,7 @@
 #include <QInputDialog>
 #include <QLineEdit>
 #include <iostream>
-#include "straightedge.h"
+#include "selfloop.h"
 
 GraphicsScene::GraphicsScene() : QGraphicsScene()
 {
@@ -43,21 +43,35 @@ void GraphicsScene::removeVertex(Vertex *vertex)
 
 void GraphicsScene::createLine(Vertex *item, bool isDirected, bool isWeighted)
 {
-    sourceVertex = item;
-    addingEdge = true;
-    currentLine = new StraightEdge(isDirected, isWeighted);
-    currentLine->setV1(item);
-    addItem(currentLine->item());
-    item->addConnection(currentLine);
-
-    currentLine->setEndpoints(item->getCenter(), item->getCenter());
+    // Create a graphical edge, giving feedback to the user.
+    Edge e(isDirected, isWeighted);
+    e.setV1(item);
+    currentLine = new StraightEdge(e); // Stores as copy
+    addItem(currentLine);
 }
 
 void GraphicsScene::finishConnectionCreation(int id1, int id2, int weight)
 {
-    currentLine->setV2(vertices[id2]);
-    currentLine->setWeight(weight);
-    vertices[id2]->addConnection(currentLine);
+    Edge model = currentLine->getModel();
+    model.setV1(vertices[id1]);
+    model.setV2(vertices[id2]);
+    model.setWeight(weight);
+    currentLine->setModel(model);
+
+    EdgeInterface* line = currentLine;
+
+    if (id1 == id2) {
+        // It's a self loop!
+        line = new SelfLoop(model);
+        removeItem(currentLine);
+        addItem(line->getItem());
+        delete currentLine; // Careful
+    }
+
+    vertices[id1]->addConnection(line);
+    vertices[id2]->addConnection(line);
+
+    line->centralize();
 }
 
 void GraphicsScene::print()
@@ -118,18 +132,18 @@ void GraphicsScene::paintSequence(QVector<int> sequence) {
     }
 }
 
-GraphicsLine* GraphicsScene::findLine(int id1, int id2)
+Edge* GraphicsScene::findLine(int id1, int id2)
 {
-    for (QGraphicsItem* item : items()) {
-        if (item->type() == GraphicsLine::Type) {
-            GraphicsLine* line = dynamic_cast<GraphicsLine*>(item);
+//    for (QGraphicsItem* item : items()) {
+//        if (item->type() == Edge::Type) {
+//            Edge* line = dynamic_cast<Edge*>(item);
 
-            // Talvez seja necessário realizar a comparação inversa eventualmente
-            if (line->getV1()->getId() == id1 && line->getV2()->getId() == id2) {
-                return line;
-            }
-        }
-    }
+//            // Talvez seja necessário realizar a comparação inversa eventualmente
+//            if (line->getV1()->getId() == id1 && line->getV2()->getId() == id2) {
+//                return line;
+//            }
+//        }
+//    }
 
     return nullptr;
 }
@@ -154,8 +168,8 @@ void GraphicsScene::prepareDijkstra(Vertex *item)
 
 void GraphicsScene::executeSecondClickAction(Vertex *vertex)
 {
-    if(addingEdge){
-        emit addConnection(sourceVertex->getId(), vertex->getId());
+    if(currentLine != nullptr) {
+        emit addConnection(currentLine->getModel().getV1()->getId(), vertex->getId());
     }else if(performingDijkstra){
         emit performDijkstra(sourceVertex->getId(), vertex->getId());
         performingDijkstra = false;
@@ -188,9 +202,8 @@ void GraphicsScene::sleep(int msec)
 void GraphicsScene::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() & Qt::Key_Escape){
-        if(addingEdge){
-            sourceVertex->removeConnection(currentLine);
-            delete currentLine;
+        if (currentLine != nullptr) {
+            removeCurrentLine();
         }
 
         resetControlVaraibles();
@@ -200,8 +213,9 @@ void GraphicsScene::keyPressEvent(QKeyEvent *event)
 
 void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    if (currentLine != nullptr && sourceVertex != nullptr) {
-        currentLine->setEndpoints(sourceVertex->getCenter(), event->scenePos());
+    if (currentLine != nullptr) {
+        Vertex* origin = currentLine->getModel().getV1();
+        currentLine->setLine(QLineF(origin->getCenter(), event->scenePos()));
     }
 
     if (movingVertex != nullptr) {
@@ -224,6 +238,7 @@ void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     Vertex* v = findItem<Vertex>(event->scenePos());
+
     if (v != nullptr) {
         executeSecondClickAction(v);
     }
@@ -236,9 +251,8 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void GraphicsScene::removeCurrentLine()
 {
-    if(currentLine != nullptr){
-        currentLine->getV1()->removeConnection(currentLine);
-        removeItem(currentLine->item());
+    if (currentLine != nullptr) {
+        removeItem(currentLine);
         delete currentLine;
         currentLine = nullptr;
     }
