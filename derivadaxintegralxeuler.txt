@@ -1,0 +1,10 @@
+derivada me da a tangente da função
+integral me da a area embaixo da função
+
+a tangente (derivada) me da a projeção de crescimento ou decrescimento a partir do ponto atual
+
+utilizamos o método de euler para uma melhor precisão
+
+como funciona
+
+você fica calculando a projeção de step em step, definido por H, ou seja, projetei crescimento de 10 a partir do ponto 0, multiplico 10 por h (step) e caminho aquilo, então, faço a projeção novamente (derivada)

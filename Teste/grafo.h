@@ -57,6 +57,8 @@ inline bool welshPowellGreaterDegree (WashPowell w1, WashPowell w2){
     return w1.grau > w2.grau;
 }
 
+
+
 struct ComparePrim {
     bool operator()(Prim p1, Prim p2){
         return p1.key < p1.key;
@@ -74,6 +76,12 @@ struct Arco {
         this->peso = peso;
         this->vorigem = vorigem;
         this->vdestino = vdestino;
+    }
+};
+
+struct CompareArco {
+    bool operator()(Arco a1, Arco a2){
+        return a1.peso < a2.peso;
     }
 };
 
@@ -471,10 +479,38 @@ public:
     // Compute a AGM a partir do Algoritmo de Kruskal. Similar ao Prim.
     vector<Arco> kruskal() {
         vector<Arco> arestas;
+        vector<Arco> solucao;
 
-        // TODO implementar
+        vector<int> ciclo(nomes.size(), -1);
 
-        return arestas;
+        arestas = obterConexoes();
+        sort(arestas.begin(), arestas.end(), CompareArco());
+
+
+        while(solucao.size() < nomes.size() - 1){
+            if(ciclo[arestas.front().vorigem] != ciclo[arestas.front().vdestino]
+                    || (ciclo[arestas.front().vorigem] == -1 && ciclo[arestas.front().vdestino] == -1)){
+                //TODO verificar regra para atribuição de ciclos e junção de ciclos
+
+
+                for(int &a: ciclo){
+                    if(a != -1 && (a == ciclo[arestas.front().vorigem] || a == ciclo[arestas.front().vdestino])){
+                        a = arestas.front().vorigem;
+                    }
+                }
+
+                ciclo[arestas.front().vorigem] = arestas.front().vorigem;
+                ciclo[arestas.front().vdestino] = arestas.front().vorigem;
+                solucao.push_back(arestas.front());
+            }
+            arestas.erase(arestas.begin());
+        }
+
+        for(Arco a: solucao){
+            std::cout<<obterNome(a.vorigem)<<" , "<<obterNome(a.vdestino)<<"\n";
+        }
+
+        return solucao;
     }
 };
 

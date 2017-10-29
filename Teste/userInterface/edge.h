@@ -31,6 +31,4 @@ protected:
     bool directed;
 };
 
-Q_DECLARE_METATYPE(Edge) // Qt witchcraft, allows the usage of QVariant
-
 #endif // GRAPHICSLINE_H

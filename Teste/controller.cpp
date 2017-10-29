@@ -83,6 +83,10 @@ int Controller::exec(QApplication& a)
         connect(&view, &GraphicsView::performDsatur, [&](){
             vector<int> cores = graph->dsatur();
             view.paintVertices(QVector<int>::fromStdVector(cores));
+
+            //Testing
+            graph->kruskal();
+
         });
 
         connect(&view, &GraphicsView::performWelshPowell, [&](){
