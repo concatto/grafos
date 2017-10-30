@@ -15,6 +15,7 @@ GraphicsView::GraphicsView(bool isWeighted, bool isDirected) :
     this->viewMenuList.addAction("Inserir vértice");
     this->viewMenuList.addAction("Welsh and Powell");
     this->viewMenuList.addAction("Dsatur");
+    this->viewMenuList.addAction("Kruskal");
     this->viewMenuList.addAction("Imprimir");
     this->viewMenuList.addAction("Resetar cores");
 
@@ -126,9 +127,11 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
             emit performWelshPowell();
         }else if(action == 2){ // Dsatur
             emit performDsatur();
-        }else if(action == 3){ // Print -- only for debugging
+        }else if(action == 3){
+            emit performKruskal();
+        }else if(action == 4){ // Print -- only for debugging
             emit printGraph();
-        }else if(action == 4){ // Resetar cores
+        }else if(action == 5){ // Resetar cores
             QBrush brush(Qt::red);
             scene.paintVertices(QVector <int>(), &brush);
         }

@@ -54,6 +54,7 @@ signals:
     void performDsatur();
     void performDijkstra(int origem, int destino = -1);
     void printGraph();
+    void performKruskal();
 };
 
 #endif // GRAPHICSVIEW_H

@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_GraphicsView_t {
-    QByteArrayData data[19];
-    char stringdata0[197];
+    QByteArrayData data[20];
+    char stringdata0[212];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -48,16 +48,17 @@ QT_MOC_LITERAL(13, 123, 15), // "performDijkstra"
 QT_MOC_LITERAL(14, 139, 6), // "origem"
 QT_MOC_LITERAL(15, 146, 7), // "destino"
 QT_MOC_LITERAL(16, 154, 10), // "printGraph"
-QT_MOC_LITERAL(17, 165, 11), // "resetCursor"
-QT_MOC_LITERAL(18, 177, 19) // "askConnectionWeight"
+QT_MOC_LITERAL(17, 165, 14), // "performKruskal"
+QT_MOC_LITERAL(18, 180, 11), // "resetCursor"
+QT_MOC_LITERAL(19, 192, 19) // "askConnectionWeight"
 
     },
     "GraphicsView\0addVertex\0\0str\0addConnection\0"
     "id1\0id2\0weight\0removeVertex\0id\0"
     "removeConnection\0performWelshPowell\0"
     "performDsatur\0performDijkstra\0origem\0"
-    "destino\0printGraph\0resetCursor\0"
-    "askConnectionWeight"
+    "destino\0printGraph\0performKruskal\0"
+    "resetCursor\0askConnectionWeight"
 };
 #undef QT_MOC_LITERAL
 
@@ -67,27 +68,28 @@ static const uint qt_meta_data_GraphicsView[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      11,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       9,       // signalCount
+      10,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   69,    2, 0x06 /* Public */,
-       4,    3,   72,    2, 0x06 /* Public */,
-       8,    1,   79,    2, 0x06 /* Public */,
-      10,    2,   82,    2, 0x06 /* Public */,
-      11,    0,   87,    2, 0x06 /* Public */,
-      12,    0,   88,    2, 0x06 /* Public */,
-      13,    2,   89,    2, 0x06 /* Public */,
-      13,    1,   94,    2, 0x26 /* Public | MethodCloned */,
-      16,    0,   97,    2, 0x06 /* Public */,
+       1,    1,   74,    2, 0x06 /* Public */,
+       4,    3,   77,    2, 0x06 /* Public */,
+       8,    1,   84,    2, 0x06 /* Public */,
+      10,    2,   87,    2, 0x06 /* Public */,
+      11,    0,   92,    2, 0x06 /* Public */,
+      12,    0,   93,    2, 0x06 /* Public */,
+      13,    2,   94,    2, 0x06 /* Public */,
+      13,    1,   99,    2, 0x26 /* Public | MethodCloned */,
+      16,    0,  102,    2, 0x06 /* Public */,
+      17,    0,  103,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      17,    0,   98,    2, 0x0a /* Public */,
-      18,    2,   99,    2, 0x0a /* Public */,
+      18,    0,  104,    2, 0x0a /* Public */,
+      19,    2,  105,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -98,6 +100,7 @@ static const uint qt_meta_data_GraphicsView[] = {
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int, QMetaType::Int,   14,   15,
     QMetaType::Void, QMetaType::Int,   14,
+    QMetaType::Void,
     QMetaType::Void,
 
  // slots: parameters
@@ -122,8 +125,9 @@ void GraphicsView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 6: _t->performDijkstra((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 7: _t->performDijkstra((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 8: _t->printGraph(); break;
-        case 9: _t->resetCursor(); break;
-        case 10: _t->askConnectionWeight((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 9: _t->performKruskal(); break;
+        case 10: _t->resetCursor(); break;
+        case 11: _t->askConnectionWeight((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -185,6 +189,13 @@ void GraphicsView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
                 return;
             }
         }
+        {
+            typedef void (GraphicsView::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&GraphicsView::performKruskal)) {
+                *result = 9;
+                return;
+            }
+        }
     }
 }
 
@@ -213,13 +224,13 @@ int GraphicsView::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 12;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 11)
+        if (_id < 12)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 11;
+        _id -= 12;
     }
     return _id;
 }
@@ -275,6 +286,12 @@ void GraphicsView::performDijkstra(int _t1, int _t2)
 void GraphicsView::printGraph()
 {
     QMetaObject::activate(this, &staticMetaObject, 8, nullptr);
+}
+
+// SIGNAL 9
+void GraphicsView::performKruskal()
+{
+    QMetaObject::activate(this, &staticMetaObject, 9, nullptr);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

@@ -95,10 +95,11 @@ int Controller::exec(QApplication& a)
         });
 
         connect(&view, &GraphicsView::performDijkstra, [&](int origem, int destino){
-            QStack <int> stack;
 
-            vector <Arco> lista = graph->dijkstra(origem, destino);
+
+            vector <Arco> list = graph->dijkstra(origem, destino);
 /*
+            QStack <int> stack;
             int vertice = destino;
 
             do {
@@ -106,11 +107,16 @@ int Controller::exec(QApplication& a)
                 vertice = lista[vertice].anterior;
             } while(stack.top() != origem);*/
 
-            for(Arco a: lista){
+            for(Arco a: list){
                 qDebug()<<a.vorigem;
             }
 
-            view.paintPath(QVector<Arco>::fromStdVector(lista));
+            view.paintPath(QVector<Arco>::fromStdVector(list));
+        });
+
+        connect(&view, &GraphicsView::performKruskal, [&](){
+            vector <Arco> list = graph->kruskal();
+            view.paintPath(QVector<Arco>::fromStdVector(list));
         });
 
         connect(&view, &GraphicsView::printGraph, [&]() {

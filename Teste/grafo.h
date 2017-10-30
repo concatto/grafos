@@ -494,8 +494,9 @@ public:
 
 
                 for(int &a: ciclo){
-                    if(a != -1 && (a == ciclo[arestas.front().vorigem] || a == ciclo[arestas.front().vdestino])){
-                        a = arestas.front().vorigem;
+                    if(a != -1 && (/*a == ciclo[arestas.front().vorigem] || */a == ciclo[arestas.front().vdestino])){
+                        //a = arestas.front().vorigem;
+                        a = ciclo[arestas.front().vorigem];
                     }
                 }
 
