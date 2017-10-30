@@ -35,6 +35,14 @@ int Controller::exec(QApplication& a)
             }
         });
 
+        connect(&view, &GraphicsView::performPlanarityCheck, [&](){
+           if(graph->checkPlanarity()){
+               view.displayMessageBox("O Grafo pode ser planar!");
+           }else{
+               view.displayMessageBox("O Grafo não é planar");
+           }
+        });
+
         connect(&view, &GraphicsView::removeVertex, [&](int id){
             if (graph->removerVertice(id)) {
                 view.destroyVertex(id);

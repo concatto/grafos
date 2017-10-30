@@ -21,6 +21,7 @@ public:
     void destroyVertex(int id);
     void destroyConnection(int id1, int id2);
     void cancelConnection();
+    void displayMessageBox(QString message);
 
 protected:
     void contextMenuEvent(QContextMenuEvent *event) override;
@@ -55,6 +56,7 @@ signals:
     void performDijkstra(int origem, int destino = -1);
     void printGraph();
     void performKruskal();
+    void performPlanarityCheck();
 };
 
 #endif // GRAPHICSVIEW_H

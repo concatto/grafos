@@ -16,6 +16,7 @@ GraphicsView::GraphicsView(bool isWeighted, bool isDirected) :
     this->viewMenuList.addAction("Welsh and Powell");
     this->viewMenuList.addAction("Dsatur");
     this->viewMenuList.addAction("Kruskal");
+    this->viewMenuList.addAction("Teste de planaridade");
     this->viewMenuList.addAction("Imprimir");
     this->viewMenuList.addAction("Resetar cores");
 
@@ -127,11 +128,13 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
             emit performWelshPowell();
         }else if(action == 2){ // Dsatur
             emit performDsatur();
-        }else if(action == 3){
+        }else if(action == 3){ // Kruskal
             emit performKruskal();
-        }else if(action == 4){ // Print -- only for debugging
+        }else if(action == 4){ // Planarity check
+            emit performPlanarityCheck();
+        }else if(action == 5){ // Print -- only for debugging
             emit printGraph();
-        }else if(action == 5){ // Resetar cores
+        }else if(action == 6){ // Resetar cores
             QBrush brush(Qt::red);
             scene.paintVertices(QVector <int>(), &brush);
         }
@@ -146,6 +149,12 @@ void GraphicsView::destroyConnection(int id1, int id2)
 void GraphicsView::cancelConnection()
 {
     scene.removeCurrentLine();
+}
+
+void GraphicsView::displayMessageBox(QString message)
+{
+    QMessageBox::question(this, "Checagem de planaridade", message,
+                                  QMessageBox::Ok);
 }
 
 void GraphicsView::destroyVertex(int id)

@@ -490,12 +490,9 @@ public:
         while(solucao.size() < nomes.size() - 1){
             if(ciclo[arestas.front().vorigem] != ciclo[arestas.front().vdestino]
                     || (ciclo[arestas.front().vorigem] == -1 && ciclo[arestas.front().vdestino] == -1)){
-                //TODO verificar regra para atribuição de ciclos e junção de ciclos
-
 
                 for(int &a: ciclo){
-                    if(a != -1 && (/*a == ciclo[arestas.front().vorigem] || */a == ciclo[arestas.front().vdestino])){
-                        //a = arestas.front().vorigem;
+                    if(a != -1 && (a == ciclo[arestas.front().vdestino])){
                         a = ciclo[arestas.front().vorigem];
                     }
                 }
@@ -513,6 +510,34 @@ public:
 
         return solucao;
     }
+
+    bool temCiclo3(){
+        for(int i = 0; i < nomes.size(); i++){
+            for(int v: obterVerticesAdjacentes(i)){
+                for(int v2: obterVerticesAdjacentes(v)){
+                    for(int v3: obterVerticesAdjacentes(v2)){
+                        if(v3 == i){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    bool checkPlanarity(){
+
+        if(nomes.size() <= 2)
+            return true;
+
+        if(temCiclo3()){
+            return obterConexoes().size() <= 3*nomes.size() - 6;
+        }else {
+            return obterConexoes().size() <= 2*nomes.size() - 4;
+        }
+
+    }
+
 };
 
 #endif // GRAFO_H
