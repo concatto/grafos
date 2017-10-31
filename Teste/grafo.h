@@ -476,37 +476,66 @@ public:
         return arestas;
     }
 
+    int find(vector<int> ciclo, int i){
+        if(ciclo[i] == -1)
+            return i;
+        return find(ciclo, ciclo[i]);
+    }
+
     // Compute a AGM a partir do Algoritmo de Kruskal. Similar ao Prim.
     vector<Arco> kruskal() {
         vector<Arco> arestas;
         vector<Arco> solucao;
+        int total = 0;
 
         vector<int> ciclo(nomes.size(), -1);
 
         arestas = obterConexoes();
         sort(arestas.begin(), arestas.end(), CompareArco());
 
-
         while(solucao.size() < nomes.size() - 1){
-            if(ciclo[arestas.front().vorigem] != ciclo[arestas.front().vdestino]
-                    || (ciclo[arestas.front().vorigem] == -1 && ciclo[arestas.front().vdestino] == -1)){
+            int g1 = find(ciclo, arestas.front().vorigem);
+            int g2 = find(ciclo, arestas.front().vdestino);
 
-                for(int &a: ciclo){
-                    if(a != -1 && (a == ciclo[arestas.front().vdestino])){
-                        a = ciclo[arestas.front().vorigem];
-                    }
+            if(g1 != g2){
+                if(ciclo[g1] != -1){
+                    ciclo[g2] = g1;
+                }else {
+                    ciclo[g1] = g2;
                 }
-
-                ciclo[arestas.front().vorigem] = arestas.front().vorigem;
-                ciclo[arestas.front().vdestino] = arestas.front().vorigem;
+                total += arestas.front().peso;
                 solucao.push_back(arestas.front());
             }
+
+
             arestas.erase(arestas.begin());
         }
+
+//        while(solucao.size() < nomes.size() - 1){
+//            if(ciclo[arestas.front().vorigem] != ciclo[arestas.front().vdestino]
+//                    || (ciclo[arestas.front().vorigem] == -1 && ciclo[arestas.front().vdestino] == -1)){
+
+//                if(ciclo[arestas.front().vdestino] != -1 && ciclo[arestas.front().vdestino] != -1){
+//                    for(int i = 0; i < ciclo.size(); i++){
+//                        if(i != arestas.front().vdestino && ciclo[i] == ciclo[arestas.front().vdestino]){
+//                            ciclo[i] = ciclo[arestas.front().vorigem];
+//                        }
+//                    }
+//                }
+
+//                ciclo[arestas.front().vorigem] = arestas.front().vorigem;
+//                ciclo[arestas.front().vdestino] = arestas.front().vorigem;
+//                solucao.push_back(arestas.front());
+//                total += arestas.front().peso;
+//            }
+//            arestas.erase(arestas.begin());
+//        }
 
         for(Arco a: solucao){
             std::cout<<obterNome(a.vorigem)<<" , "<<obterNome(a.vdestino)<<"\n";
         }
+
+        std::cout<<"Total: "<<total<<"\n";
 
         return solucao;
     }
