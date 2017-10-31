@@ -473,7 +473,7 @@ public:
     vector<Arco> prim(int inicial) {
         int intmax = numeric_limits<int>::max();
 
-        vector<Arco> resultado;
+        vector<Arco> retorno;
         vector<int> S;
         vector<int> Q;
 
@@ -486,6 +486,8 @@ public:
        Arco menor;
 
        S.push_back(inicial);
+
+       vector<int>::iterator posicao;
 
         while(Q.size() != 0){
             menor.peso = intmax;
@@ -500,13 +502,16 @@ public:
                 }
             }
 
+                Q.erase(remove(Q.begin(), Q.end(), menor.vdestino), Q.end());
+                S.push_back(menor.vdestino);
+                retorno.push_back(menor);
 
         }
 
 
         // TODO implementar
 
-        return resultado;
+        return retorno;
     }
 
     // Compute a AGM a partir do Algoritmo de Kruskal. Similar ao Prim.
