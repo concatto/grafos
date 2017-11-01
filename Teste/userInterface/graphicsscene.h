@@ -6,7 +6,7 @@
 #include <QString>
 #include <QObject>
 #include <QGraphicsItem>
-#include "straightedge.h"
+#include "regularedge.h"
 #include "edge.h"
 #include "grafo.h"
 #ifdef Q_OS_WIN
@@ -53,7 +53,7 @@ private:
     QVector <Vertex*> vertices;
     bool addingEdge;
     Vertex *sourceVertex = nullptr;
-    StraightEdge *currentLine = nullptr;
+    RegularEdge *currentLine = nullptr;
     void sleep(int msec);
     bool performingDijkstra;
     void addLine(Vertex *vertex);

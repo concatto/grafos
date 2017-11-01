@@ -111,32 +111,12 @@ void Vertex::paintEdge(int target)
         Edge model = edge->getModel();
 
         if (target == -1) {
-            edge->setColor(Qt::black);
+            edge->setStyle(Qt::black, 2);
         } else if (target == model.getV2()->getId()
                    || (!model.isDirected() && target == model.getV1()->getId())) {
-            edge->setColor(Qt::blue);
+            edge->setStyle(Qt::blue, 4);
         }
     }
-
-//    if(vertice == -1){ // Reset colors
-//        for(Edge *line: lines){
-//            line->setCustomPen(QPen(QBrush(Qt::black), 4));
-////            line->line->update();
-//        }
-//        return;
-//    }
-
-//    for(Edge *line: lines){
-//        if(line->getV1()->getId() == id){
-//            if(line->getV2()->getId() == vertice){
-//                line->setCustomPen(QPen(QBrush(Qt::blue), 4));
-//            }
-//        }else {
-//            if(line->getV1()->getId() == vertice){
-//                line->setCustomPen(QPen(QBrush(Qt::blue), 4));
-//            }
-//        }
-//    }
 }
 
 int Vertex::getId()

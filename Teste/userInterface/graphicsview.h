@@ -15,7 +15,6 @@ public:
     GraphicsView(bool isWeighted, bool isDirected);
     void paintVertices(QVector <int> colors);
     void paintPath(QVector<Arco> path);
-    void paintSpanningTree(QVector<Arco> edges);
     void createVertex(QString name);
     void createConnection(int id1, int id2, int weight);
     void destroyVertex(int id);
@@ -56,6 +55,7 @@ signals:
     void performDijkstra(int origem, int destino = -1);
     void printGraph();
     void performKruskal();
+    void performPrim(int id);
     void performPlanarityCheck();
 };
 

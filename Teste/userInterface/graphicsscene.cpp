@@ -54,7 +54,7 @@ void GraphicsScene::createLine(Vertex *item, bool isDirected, bool isWeighted)
     // Create a graphical edge, giving feedback to the user.
     Edge e(isDirected, isWeighted);
     e.setV1(item);
-    currentLine = new StraightEdge(e); // Stores a copy
+    currentLine = new RegularEdge(e); // Stores a copy
     addItem(currentLine);
 }
 
@@ -68,7 +68,11 @@ void GraphicsScene::removeLine(EdgeInterface* edge) {
         model.getV2()->removeConnection(edge);
 
         removeItem(edge->getItem());
-        // Delete?
+
+        EdgeInterface* reverse = findLine(model.getV2()->getId(), model.getV1()->getId());
+        if (reverse != nullptr) {
+            reverse->centralize();
+        }
     }
 }
 
@@ -97,6 +101,11 @@ void GraphicsScene::finishConnectionCreation(int id1, int id2, int weight)
     }
 
     line->centralize();
+
+    EdgeInterface* reverse = findLine(id2, id1);
+    if (reverse != nullptr) {
+        reverse->centralize();
+    }
 }
 
 void GraphicsScene::print()
@@ -142,11 +151,10 @@ void GraphicsScene::paintPath(QVector<Arco> path)
     for(Arco a: path){
         vertices[a.vorigem]->setPen(pen);
         vertices[a.vorigem]->paintEdge(a.vdestino);
+        vertices[a.vdestino]->setPen(pen);
         repaintViews();
         sleep(500);
     }
-
-    vertices[path.back().vdestino]->setPen(pen);
 }
 
 void GraphicsScene::paintSequence(QVector<int> sequence) {
@@ -238,7 +246,7 @@ void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if (isCreatingEdge()) {
         Vertex* origin = currentLine->getModel().getV1();
-        currentLine->setLine(QLineF(origin->getCenter(), event->scenePos()));
+        currentLine->setLine(origin->getCenter(), event->scenePos());
     }
 
     if (movingVertex != nullptr) {

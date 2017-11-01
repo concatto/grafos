@@ -5,7 +5,7 @@
 SelfLoop::SelfLoop(Edge edge)
 {
     setModel(edge);
-    setColor(Qt::black);
+    setStyle(Qt::black, 2);
     setZValue(-1);
 }
 
@@ -20,8 +20,6 @@ void SelfLoop::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, 
     QGraphicsEllipseItem::paint(painter, option, widget);
 
     if (edge.isWeighted()) {
-        qreal distance = 13;
-
         QPointF pn = rect().center();
 
         QString numStr = QString::number(edge.getWeight());
@@ -36,29 +34,6 @@ void SelfLoop::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, 
 
     if (edge.isDirected()) {
         double radius = edge.getV1()->getRadius();
-
-        /*
-        bool hasReverse = edge.getV2() != nullptr && edge.getV1()->hasLine(edge.getV2()->getId(), edge.getV1()->getId());
-
-        if (hasReverse) {
-            // Implementar arcos curvados algum dia.
-//            QRectF rect(line().p1(), QSizeF(line().dx(), line().dy()));
-
-//            int startAngle = 30 * 16;
-//            int spanAngle = 120 * 16;
-
-//            painter->drawArc(rect.normalized(), startAngle, spanAngle);
-
-            if(edge.getV1()->getId() == edge.getV2()->getId()){
-                painter->setPen(QPen(Qt::black, 4));
-                painter->drawEllipse(getV1()->getCenter() - QPointF(0, radius), 15, 30);
-            }
-            QGraphicsLineItem::paint(painter, option, widget);
-        } else {
-            QGraphicsLineItem::paint(painter, option, widget);
-        }
-        */
-
         double theta = M_PI * 1.5;
 
         if (edge.getV2() == nullptr) {
@@ -109,7 +84,7 @@ QGraphicsItem* SelfLoop::getItem()
     return this;
 }
 
-void SelfLoop::setColor(Qt::GlobalColor color)
+void SelfLoop::setStyle(Qt::GlobalColor color, int width)
 {
-    setPen(QPen(QBrush(color), 4));
+    setPen(QPen(QBrush(color), width));
 }

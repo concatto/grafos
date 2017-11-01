@@ -1,6 +1,7 @@
 #include "controller.h"
 #include "graphdialog.h"
 #include <QDebug>
+#include <algorithm>
 #include <QStack>
 
 Controller::Controller()
@@ -103,17 +104,7 @@ int Controller::exec(QApplication& a)
         });
 
         connect(&view, &GraphicsView::performDijkstra, [&](int origem, int destino){
-
-
             vector <Arco> list = graph->dijkstra(origem, destino);
-/*
-            QStack <int> stack;
-            int vertice = destino;
-
-            do {
-                stack.push(vertice);
-                vertice = lista[vertice].anterior;
-            } while(stack.top() != origem);*/
 
             for(Arco a: list){
                 qDebug()<<a.vorigem;
@@ -124,6 +115,19 @@ int Controller::exec(QApplication& a)
 
         connect(&view, &GraphicsView::performKruskal, [&](){
             vector <Arco> list = graph->kruskal();
+            view.paintPath(QVector<Arco>::fromStdVector(list));
+        });
+
+        connect(&view, &GraphicsView::performPrim, [&](int id){
+            vector<Arco> list = graph->prim(id);
+
+            int total = 0;
+            for (Arco a : list) {
+                total += a.peso;
+            }
+
+            qDebug() << "Total: " << total;
+
             view.paintPath(QVector<Arco>::fromStdVector(list));
         });
 

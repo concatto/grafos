@@ -15,9 +15,9 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     controller.cpp \
     graphdialog.cpp \
-    userInterface/straightedge.cpp \
     userInterface/edge.cpp \
-    userInterface/selfloop.cpp
+    userInterface/selfloop.cpp \
+    userInterface/regularedge.cpp
 
 CONFIG += c++11
 QMAKE_CXXFLAGS += -Wno-sign-compare #Ignora "comparison between signed and unsigned"
@@ -38,10 +38,10 @@ HEADERS += \
     mainwindow.h \
     controller.h \
     graphdialog.h \
-    userInterface/straightedge.h \
     userInterface/edge.h \
     userInterface/edgeinterface.h \
-    userInterface/selfloop.h
+    userInterface/selfloop.h \
+    userInterface/regularedge.h
 
 FORMS += \
     mainwindow.ui \

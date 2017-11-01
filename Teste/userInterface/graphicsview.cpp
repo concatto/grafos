@@ -22,6 +22,7 @@ GraphicsView::GraphicsView(bool isWeighted, bool isDirected) :
 
     vertexMenuList.addAction(isDirected ? "Inserir Arco" : "Inserir aresta");
     vertexMenuList.addAction("Remover vértice");
+    vertexMenuList.addAction("Prim a partir deste vértice");
     vertexMenuList.addAction("Dijkstra a partir deste vértice");
     vertexMenuList.addAction("Busca em profundidade a partir deste vértice");
     vertexMenuList.addAction("Busca em largura a partir deste vértice");
@@ -50,11 +51,6 @@ void GraphicsView::paintVertices(QVector<int> colors)
 void GraphicsView::paintPath(QVector<Arco> path)
 {
     scene.paintPath(path);
-}
-
-void GraphicsView::paintSpanningTree(QVector<Arco> edges)
-{
-    // TODO fazer com que a scene pinte a árvore geradora
 }
 
 void GraphicsView::createVertex(QString name)
@@ -94,7 +90,7 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
         Vertex *vertex = scene.findItem<Vertex>(pos);
         action = showMenu(vertexMenuList);
 
-        if (action == 0 || action >= 2) {
+        if (action == 0 || action >= 3) {
             // Estas ações demandam um segundo clique
             setViewCursor(Qt::PointingHandCursor);
         }
@@ -103,11 +99,13 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
             scene.createLine(vertex, isDirected, isWeighted);
         }else if(action == 1) { // Remover vértice
             handleVertexRemoval(vertex);
-        }else if(action == 2) { // Dijkstra
+        }else if(action == 2) { // Prim
+            emit performPrim(vertex->getId());
+        }else if(action == 3) { // Dijkstra
             scene.prepareDijkstra(vertex);
-        } else if(action == 3) { // DFS
+        } else if(action == 4) { // DFS
 
-        } else if(action == 4) { // BFS
+        } else if(action == 5) { // BFS
 
         }
     }else if(type == Edge::Type) {

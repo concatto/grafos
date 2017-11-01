@@ -7,6 +7,8 @@
 #include <stack>
 #include <queue>
 #include <set>
+#include <limits>
+#include <algorithm>
 #define INF 9999999
 
 using namespace std;
@@ -30,19 +32,6 @@ struct Path{
     }
 };
 
-struct Prim {
-    int id;
-    int key;
-    bool adicionado;
-
-    Prim(int id){
-        adicionado = false;
-        this->id = id;
-        this->key = INF;
-    }
-
-};
-
 struct ComparePair {
     bool operator()(pair <int, int> p1, pair <int, int> p2){
         return p1.first > p2.first;
@@ -56,14 +45,6 @@ inline bool operator < (WashPowell w1, WashPowell w2){
 inline bool welshPowellGreaterDegree (WashPowell w1, WashPowell w2){
     return w1.grau > w2.grau;
 }
-
-
-
-struct ComparePrim {
-    bool operator()(Prim p1, Prim p2){
-        return p1.key < p1.key;
-    }
-};
 
 struct Arco {
     int peso;
@@ -469,20 +450,53 @@ public:
     // Computa a árvore geradora mínima por meio do Algoritmo de Prim.
     // Retorna a sequência de arestas adicionadas, onde o índice 0 corresponde à primeira aresta adicionada.
     vector<Arco> prim(int inicial) {
-        vector<Arco> arestas;
+        int intmax = numeric_limits<int>::max();
 
-        // TODO implementar
+        vector<Arco> retorno;
+        vector<int> S;
+        vector<int> Q;
 
-        return arestas;
+        for(int i=0; i<nomes.size();i++){
+            if(i!= inicial){
+                Q.push_back(i);
+            }
+        }
+
+       Arco menor;
+
+       S.push_back(inicial);
+
+       vector<int>::iterator posicao;
+
+        while(Q.size() != 0){
+            menor.peso = intmax;
+
+            for (int e : S){
+                for (Arco k : obterVerticesAdjacentesComPeso(e)){
+                    if(k.peso < menor.peso){
+                        if(find(Q.begin(), Q.end(), k.vdestino) != Q.end()){
+                                menor = k;
+                          }
+                    }
+                }
+            }
+
+            Q.erase(remove(Q.begin(), Q.end(), menor.vdestino), Q.end());
+            S.push_back(menor.vdestino);
+            retorno.push_back(menor);
+
+        }
+
+        return retorno;
     }
 
-    int find(vector<int> ciclo, int i){
+    int buscar(vector<int> ciclo, int i){
         if(ciclo[i] == -1)
             return i;
-        return find(ciclo, ciclo[i]);
+        return buscar(ciclo, ciclo[i]);
     }
 
-    // Compute a AGM a partir do Algoritmo de Kruskal. Similar ao Prim.
+    // Computa a AGM a partir do Algoritmo de Kruskal. Similar ao Prim.
     vector<Arco> kruskal() {
         vector<Arco> arestas;
         vector<Arco> solucao;
@@ -494,8 +508,8 @@ public:
         sort(arestas.begin(), arestas.end(), CompareArco());
 
         while(solucao.size() < nomes.size() - 1){
-            int g1 = find(ciclo, arestas.front().vorigem);
-            int g2 = find(ciclo, arestas.front().vdestino);
+            int g1 = buscar(ciclo, arestas.front().vorigem);
+            int g2 = buscar(ciclo, arestas.front().vdestino);
 
             if(g1 != g2){
                 if(ciclo[g1] != -1){
@@ -552,6 +566,7 @@ public:
                 }
             }
         }
+        return false;
     }
 
     bool checkPlanarity(){
