@@ -34,8 +34,8 @@ void GraphicsScene::removeVertex(Vertex *vertex)
 {
     if (vertex != nullptr) {
         auto lines = vertex->getLines();
-        for (auto it = lines.rbegin(); it != lines.rend(); ++it) {
-            removeLine(*it);
+        for (int i = lines.size() - 1; i >= 0; i--) {
+            removeLine(lines[i]);
         }
 
         // Corrige os identificadores dos vértices para condizer com suas posições na lista
@@ -159,9 +159,9 @@ void GraphicsScene::paintPath(QVector<Arco> path)
 
 void GraphicsScene::paintSequence(QVector<int> sequence) {
     for (int id : sequence) {
-        vertices[id]->setPen(QPen(QBrush(Qt::magenta), 4));
+        vertices[id]->setPen(QPen(QBrush(QColor("#19a019")), 4));
         repaintViews();
-        sleep(333);
+        sleep(750);
     }
 }
 

@@ -436,7 +436,7 @@ public:
             for (Arco a : obterVerticesAdjacentesComPeso(i)) {
                 bool contemInverso = false;
 
-                // Verifica se as conexões encontradas até o momento contém a conexão atual ou sua irmã
+                // Verifica se as conexões encontradas até o momento contém a conexão atual ou a inversa
                 for (Arco b : resultado) {
                     if ((a.vorigem == b.vorigem && a.vdestino == b.vdestino) ||
                         (a.vdestino == b.vorigem && a.vorigem == b.vdestino)) {
@@ -532,26 +532,6 @@ public:
 
             arestas.erase(arestas.begin());
         }
-
-//        while(solucao.size() < nomes.size() - 1){
-//            if(ciclo[arestas.front().vorigem] != ciclo[arestas.front().vdestino]
-//                    || (ciclo[arestas.front().vorigem] == -1 && ciclo[arestas.front().vdestino] == -1)){
-
-//                if(ciclo[arestas.front().vdestino] != -1 && ciclo[arestas.front().vdestino] != -1){
-//                    for(int i = 0; i < ciclo.size(); i++){
-//                        if(i != arestas.front().vdestino && ciclo[i] == ciclo[arestas.front().vdestino]){
-//                            ciclo[i] = ciclo[arestas.front().vorigem];
-//                        }
-//                    }
-//                }
-
-//                ciclo[arestas.front().vorigem] = arestas.front().vorigem;
-//                ciclo[arestas.front().vdestino] = arestas.front().vorigem;
-//                solucao.push_back(arestas.front());
-//                total += arestas.front().peso;
-//            }
-//            arestas.erase(arestas.begin());
-//        }
 
         for(Arco a: solucao){
             std::cout<<obterNome(a.vorigem)<<" , "<<obterNome(a.vdestino)<<"\n";

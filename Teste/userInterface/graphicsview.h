@@ -13,6 +13,7 @@ class GraphicsView : public QGraphicsView
     Q_OBJECT
 public:
     GraphicsView(bool isWeighted, bool isDirected);
+    void paintSequence(QVector<int> sequence);
     void paintVertices(QVector <int> colors);
     void paintPath(QVector<Arco> path);
     void createVertex(QString name);
@@ -57,6 +58,8 @@ signals:
     void performKruskal();
     void performPrim(int id);
     void performPlanarityCheck();
+    void performBFS(int id);
+    void performDFS(int id);
 };
 
 #endif // GRAPHICSVIEW_H

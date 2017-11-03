@@ -13,16 +13,16 @@ GraphicsView::GraphicsView(bool isWeighted, bool isDirected) :
 {
     this->setScene(&scene);
     this->viewMenuList.addAction("Inserir vértice");
-    this->viewMenuList.addAction("Welsh and Powell");
-    this->viewMenuList.addAction("Dsatur");
-    this->viewMenuList.addAction("Kruskal");
+    this->viewMenuList.addAction("Welsh and Powell")->setDisabled(isDirected);
+    this->viewMenuList.addAction("Dsatur")->setDisabled(isDirected);
+    this->viewMenuList.addAction("Kruskal")->setDisabled(isDirected);
     this->viewMenuList.addAction("Teste de planaridade");
     this->viewMenuList.addAction("Imprimir");
     this->viewMenuList.addAction("Resetar cores");
 
     vertexMenuList.addAction(isDirected ? "Inserir Arco" : "Inserir aresta");
     vertexMenuList.addAction("Remover vértice");
-    vertexMenuList.addAction("Prim a partir deste vértice");
+    vertexMenuList.addAction("Prim a partir deste vértice")->setDisabled(isDirected);
     vertexMenuList.addAction("Dijkstra a partir deste vértice");
     vertexMenuList.addAction("Busca em profundidade a partir deste vértice");
     vertexMenuList.addAction("Busca em largura a partir deste vértice");
@@ -51,6 +51,11 @@ void GraphicsView::paintVertices(QVector<int> colors)
 void GraphicsView::paintPath(QVector<Arco> path)
 {
     scene.paintPath(path);
+}
+
+void GraphicsView::paintSequence(QVector<int> sequence)
+{
+    scene.paintSequence(sequence);
 }
 
 void GraphicsView::createVertex(QString name)
@@ -90,7 +95,7 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
         Vertex *vertex = scene.findItem<Vertex>(pos);
         action = showMenu(vertexMenuList);
 
-        if (action == 0 || action >= 3) {
+        if (action == 0 || action == 3) {
             // Estas ações demandam um segundo clique
             setViewCursor(Qt::PointingHandCursor);
         }
@@ -103,10 +108,10 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
             emit performPrim(vertex->getId());
         }else if(action == 3) { // Dijkstra
             scene.prepareDijkstra(vertex);
-        } else if(action == 4) { // DFS
-
-        } else if(action == 5) { // BFS
-
+        }else if(action == 4) { // DFS
+            emit performDFS(vertex->getId());
+        }else if(action == 5) { // BFS
+            emit performBFS(vertex->getId());
         }
     }else if(type == Edge::Type) {
         EdgeInterface* edge = scene.findItem<EdgeInterface>(pos);

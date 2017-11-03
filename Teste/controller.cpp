@@ -135,6 +135,18 @@ int Controller::exec(QApplication& a)
             graph->imprimir();
         });
 
+        connect(&view, &GraphicsView::performBFS, [&](int id) {
+            vector<int> vertices = graph->buscaEmLargura(id);
+
+            view.paintSequence(QVector<int>::fromStdVector(vertices));
+        });
+
+        connect(&view, &GraphicsView::performDFS, [&](int id) {
+            vector<int> vertices = graph->buscaEmProfundidade(id);
+
+            view.paintSequence(QVector<int>::fromStdVector(vertices));
+        });
+
         window->show();
     }
 
