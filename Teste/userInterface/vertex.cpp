@@ -111,7 +111,7 @@ void Vertex::paintEdge(int target)
         Edge model = edge->getModel();
 
         if (target == -1) {
-            edge->setStyle(Qt::black, 2);
+            edge->setStyle(Qt::black, 4);
         } else if (target == model.getV2()->getId()
                    || (!model.isDirected() && target == model.getV1()->getId())) {
             edge->setStyle(Qt::blue, 4);

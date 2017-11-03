@@ -5,7 +5,7 @@
 SelfLoop::SelfLoop(Edge edge)
 {
     setModel(edge);
-    setStyle(Qt::black, 2);
+    setStyle(Qt::black, 4);
     setZValue(-1);
 }
 

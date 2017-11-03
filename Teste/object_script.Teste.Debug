@@ -6,9 +6,9 @@ INPUT(
 ./debug\mainwindow.o
 ./debug\controller.o
 ./debug\graphdialog.o
-./debug\straightedge.o
 ./debug\edge.o
 ./debug\selfloop.o
+./debug\regularedge.o
 ./debug\moc_graphicsview.o
 ./debug\moc_graphicsscene.o
 ./debug\moc_vertex.o

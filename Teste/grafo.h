@@ -206,6 +206,7 @@ public:
         vector <Path> lista(nomes.size());
         priority_queue <pair<int, int>, std::vector<pair<int, int>>, ComparePair> pq;
         vector <Arco> retorno;
+        int lastVisited = 0;
 
         int backup = origem;
 
@@ -216,6 +217,7 @@ public:
 
         while(!pq.empty()){
             origem = pq.top().second;
+            lastVisited = origem;
             if(origem == destino){
                 for(int i = 0; i < lista.size(); i++){
                     if(i == backup)
@@ -235,19 +237,17 @@ public:
                 }
                 if(lista[adj].aberto == true){
                     pq.push(make_pair(lista[adj].distancia, adj));
-
-//                    lista[adj].ordem = counter;
-//                    counter++;
                 }
             }
         }
 
         // Este bloco está causando violação de segmentação às vezes!
         // Aparentemente apenas quando o vértice é isolado (nenhum out-arco).
+
         for(int i = 0; i < lista.size(); i++){
             if(i == backup)
                 lista[i].anterior = backup;
-            cout<<"\n"<<"Vertice: "<<nomes[i]<<" - Anterior: "<<nomes[lista[i].anterior]<<" - Distancia: "<<lista[i].distancia;
+            //cout<<"\n"<<"Vertice: "<<nomes[i]<<" - Anterior: "<<nomes[lista[i].anterior]<<" - Distancia: "<<lista[i].distancia;
         }
 
         cout<<"\n";
@@ -255,7 +255,15 @@ public:
         int navegador = destino;
 
         // Violação de segmentação (aparentemente quando o destino não é atingível)
+        // O problema é que lista[naoAlcançavel].anterior era -1, isso causava index out of range
+        // Pra resolver isso, criei uma variavel chamada lastVisited que guarda o ultimo vértice visitado
+        // e caso o vértice destino não seja alcançado, ela é utilizada como anterior
         while(navegador != backup){
+            if(lista[navegador].aberto == true){
+                retorno.insert(retorno.begin(), Arco(lastVisited, navegador));
+                navegador = lastVisited;
+                continue;
+            }
             retorno.insert(retorno.begin(), Arco(lista[navegador].anterior, navegador));
             navegador = lista[navegador].anterior;
         }

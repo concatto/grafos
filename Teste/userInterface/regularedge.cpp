@@ -7,7 +7,7 @@
 RegularEdge::RegularEdge(Edge edge)
 {
     setModel(edge);
-    setStyle(Qt::black, 2);
+    setStyle(Qt::black, 4);
     setZValue(-1);
 
     QPointF center = edge.getV1()->getCenter();
