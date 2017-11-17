@@ -114,6 +114,7 @@ struct MGrafo : public Grafo {
     int obterGrau(int vertice) override {
         return obterVerticesAdjacentes(vertice).size();
     }
+
 };
 
 #endif // MGRAFO_H

@@ -557,6 +557,7 @@ public:
         return false;
     }
 
+
     bool checkPlanarity(){
 
         if(nomes.size() <= 2)
@@ -567,7 +568,6 @@ public:
         }else {
             return obterConexoes().size() <= 2*nomes.size() - 4;
         }
-
     }
 
 };
