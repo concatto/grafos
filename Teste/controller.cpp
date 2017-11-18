@@ -1,11 +1,18 @@
 #include "controller.h"
-#include "graphdialog.h"
 #include <QDebug>
 #include <algorithm>
 #include <QStack>
 
 Controller::Controller()
 {
+}
+
+Grafo* Controller::instantiateGraph(GraphDialog::GraphType structure) {
+    if (structure == GraphDialog::GraphType::AdjacencyList) {
+        return new LGrafo();
+    } else {
+        return new MGrafo();
+    }
 }
 
 int Controller::exec(QApplication& a)
@@ -19,11 +26,7 @@ int Controller::exec(QApplication& a)
         qDebug() << "Ponderado: " << weighted << "\n";
         qDebug() << "Dirigido: " << directed << "\n";
 
-        if (dialog.getStructure() == GraphDialog::GraphType::AdjacencyList) {
-            graph = new LGrafo();
-        } else {
-            graph = new MGrafo();
-        }
+        graph = instantiateGraph(dialog.getStructure());
 
         window = new MainWindow(weighted, directed);
         GraphicsView& view = window->getView();
@@ -145,6 +148,13 @@ int Controller::exec(QApplication& a)
             vector<int> vertices = graph->buscaEmProfundidade(id);
 
             view.paintSequence(QVector<int>::fromStdVector(vertices));
+        });
+
+        connect(&view, &GraphicsView::computeMaxFlow, [&]() {
+            int source = graph->encontrarFonte();
+            int sink = graph->encontrarSorvedouro();
+            Grafo* g = graph->aplicarFordFulkerson(source, sink);
+            g->imprimir();
         });
 
         window->show();

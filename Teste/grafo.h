@@ -80,6 +80,7 @@ public:
     virtual int consultarPeso(int origem, int destino) = 0;
     virtual bool removerVertice(int vertice) = 0;
     virtual int obterGrau(int vertice) = 0;
+    virtual Grafo* clonar() = 0;
 
     vector<int> dsatur() {
         imprimir();
@@ -354,7 +355,8 @@ public:
         return sequencia;
     }
 
-    //Realiza uma busca em profundidade (DFS). Um destino igual a -1 indica nenhum destino.
+    // Realiza uma busca em profundidade (DFS). Um destino igual a -1 indica nenhum destino.
+    // Se houver um destino e o
     vector<int> buscaEmProfundidade(int origem, int destino = -1) {
         if (!existeVertice(origem))
             return vector<int>();
@@ -364,6 +366,7 @@ public:
 
         //Sem destino?
         if (destino == -1) {
+            // Reiniciar se não conseguiu atingir alguém
             for (int i = 0; i < visitados.size(); i++) {
                 if (visitados[i] == false){
                     vector<int> extra = buscaEmProfundidadePrincipal(i, visitados, destino);
@@ -428,7 +431,7 @@ public:
         return sequencia;
     }
 
-
+    // Obtém todas as arestas do grafo, sem repetições. A sequência origem-destino não é especificada.
     vector<Arco> obterConexoes() {
         vector<Arco> resultado;
 
@@ -454,6 +457,51 @@ public:
         return resultado;
     }
 
+    // Obtém todos os vértices que possuem uma aresta com destino em v.
+    vector<int> obterAdjacentesEntrantes(int v) {
+        vector<int> resultado;
+
+        for (int i = 0; i < nomes.size(); i++) {
+            if (existeArco(i, v)) {
+                resultado.push_back(i);
+            }
+        }
+
+        return resultado;
+    }
+
+    // Encontra o grafo residual com fluxo maximizado.
+    // O valor do fluxo máximo pode ser obtido com a soma dos pesos dos arcos da fonte.
+    Grafo* aplicarFordFulkerson(int fonte, int sorvedouro) {
+        Grafo* copia = this->clonar();
+        return copia;
+    }
+
+    // Descobre o primeiro vértice que não possui adjacentes entrantes.
+    int encontrarFonte() {
+        // TODO
+
+        for(int i=0; i< nomes.size(); i++){
+            if (obterAdjacentesEntrantes(i).empty()){
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    // Descobre o primeiro vértice que não possui vértices adjacentes de saída.
+    int encontrarSorvedouro() {
+        // TODO
+
+        for(int i=0; i<nomes.size(); i++){
+            if (obterVerticesAdjacentes(i).empty()){
+                return i;
+            }
+        }
+
+        return -1;
+    }
 
     // Computa a árvore geradora mínima por meio do Algoritmo de Prim.
     // Retorna a sequência de arestas adicionadas, onde o índice 0 corresponde à primeira aresta adicionada.
@@ -473,8 +521,6 @@ public:
        Arco menor;
 
        S.push_back(inicial);
-
-       vector<int>::iterator posicao;
 
         while(Q.size() != 0){
             menor.peso = intmax;
@@ -515,14 +561,14 @@ public:
         arestas = obterConexoes();
         sort(arestas.begin(), arestas.end(), CompareArco());
 
-        while(solucao.size() < nomes.size() - 1){
+        while (solucao.size() < nomes.size() - 1) {
             int g1 = buscar(ciclo, arestas.front().vorigem);
             int g2 = buscar(ciclo, arestas.front().vdestino);
 
             if(g1 != g2){
-                if(ciclo[g1] != -1){
+                if (ciclo[g1] != -1) {
                     ciclo[g2] = g1;
-                }else {
+                } else {
                     ciclo[g1] = g2;
                 }
                 total += arestas.front().peso;
@@ -533,7 +579,7 @@ public:
             arestas.erase(arestas.begin());
         }
 
-        for(Arco a: solucao){
+        for (Arco a : solucao){
             std::cout<<obterNome(a.vorigem)<<" , "<<obterNome(a.vdestino)<<"\n";
         }
 
@@ -543,11 +589,11 @@ public:
     }
 
     bool temCiclo3(){
-        for(int i = 0; i < nomes.size(); i++){
-            for(int v: obterVerticesAdjacentes(i)){
-                for(int v2: obterVerticesAdjacentes(v)){
-                    for(int v3: obterVerticesAdjacentes(v2)){
-                        if(v3 == i){
+        for (int i = 0; i < nomes.size(); i++) {
+            for (int v : obterVerticesAdjacentes(i)) {
+                for (int v2 : obterVerticesAdjacentes(v)) {
+                    for (int v3 : obterVerticesAdjacentes(v2)) {
+                        if (v3 == i){
                             return true;
                         }
                     }
@@ -557,17 +603,15 @@ public:
         return false;
     }
 
-    bool checkPlanarity(){
-
-        if(nomes.size() <= 2)
+    bool checkPlanarity() {
+        if (nomes.size() <= 2)
             return true;
 
-        if(temCiclo3()){
+        if (temCiclo3()) {
             return obterConexoes().size() <= 3*nomes.size() - 6;
-        }else {
+        } else {
             return obterConexoes().size() <= 2*nomes.size() - 4;
         }
-
     }
 
 };

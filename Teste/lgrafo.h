@@ -133,6 +133,13 @@ struct LGrafo : public Grafo {
     int obterGrau(int vertice) override {
         return adjacencias[vertice].size();
     }
+
+    Grafo* clonar() override {
+        LGrafo* g = new LGrafo;
+        g->adjacencias = this->adjacencias;
+        g->nomes = this->nomes;
+        return g;
+    }
 };
 
 

@@ -60,6 +60,7 @@ signals:
     void performPlanarityCheck();
     void performBFS(int id);
     void performDFS(int id);
+    void computeMaxFlow();
 };
 
 #endif // GRAPHICSVIEW_H

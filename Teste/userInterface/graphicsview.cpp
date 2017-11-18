@@ -18,6 +18,7 @@ GraphicsView::GraphicsView(bool isWeighted, bool isDirected) :
     this->viewMenuList.addAction("Kruskal")->setDisabled(isDirected);
     this->viewMenuList.addAction("Teste de planaridade");
     this->viewMenuList.addAction("Imprimir");
+    this->viewMenuList.addAction("Calcular fluxo máximo")->setDisabled(!(isDirected && isWeighted));
     this->viewMenuList.addAction("Resetar cores");
 
     vertexMenuList.addAction(isDirected ? "Inserir Arco" : "Inserir aresta");
@@ -137,7 +138,9 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
             emit performPlanarityCheck();
         }else if(action == 5){ // Print -- only for debugging
             emit printGraph();
-        }else if(action == 6){ // Resetar cores
+        }else if(action == 6){ // Fluxo máximo
+            emit computeMaxFlow();
+        }else if(action == 7){ // Resetar cores
             QBrush brush(Qt::red);
             scene.paintVertices(QVector <int>(), &brush);
         }

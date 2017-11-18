@@ -114,6 +114,13 @@ struct MGrafo : public Grafo {
     int obterGrau(int vertice) override {
         return obterVerticesAdjacentes(vertice).size();
     }
+
+    Grafo* clonar() override {
+        MGrafo* g = new MGrafo;
+        g->adjacencias = this->adjacencias;
+        g->nomes = this->nomes;
+        return g;
+    }
 };
 
 #endif // MGRAFO_H
