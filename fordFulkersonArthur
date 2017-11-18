@@ -1,0 +1,63 @@
+ void fordFulkerson(){
+        Grafo *grafo_residual = clonarGrafo();
+        int fluxoTotal = 0, origem = -1, destino = -1, menor = 0, peso = 0, indiceMenor = 0;
+
+        for(int i = 0; i < nomes.size(); i++){
+            if(origem != -1 && destino != -1)
+                break;
+            if(origem == -1 && obterVerticesAdjacentes(i).size() == 0)
+                origem = i;
+            if(destino == -1 && obterVerticesEntrantes(i).size() == 0)
+                destino = i;
+        }
+
+        while(true){
+            vector<int> path = buscaEmProfundidade(origem, destino);
+
+            if(path.back() != destino)
+                return grafo_residual;
+
+            for(int i = 0; i < path.size() - 1; i++){
+                peso = consultarPeso(path[i], path[i + 1]);
+                if(menor > peso){
+                    menor = peso;
+                    indiceMenor = path[i];
+                }
+            }
+            for(int i = 0; i < path.size() - 1; i++){
+                grafo_residual->inserirArco(path[i], path[i + 1], consultarPeso(path[i], path[i+1]) - menor);
+                grafo_residual->inserirArco(path[i + 1], path[i], menor + consultarPeso(path[i +1], path[i]));
+            }
+            fluxoTotal += menor;
+        }
+    }
+
+
+virtual Grafo *clonarGrafo() = 0;
+
+    vector<int> obterVerticesEntrantes(int v){
+        vector<int> retorno;
+        for(int i = 0; i < nomes.size(); i++){
+            if(existeArco(i, v)){
+                retorno.push_back(i);
+            }
+        }
+        return retorno;
+    }
+
+
+    LGrafo* clonarGrafo(){
+        LGrafo *grafo = new LGrafo();
+        grafo->adjacencias = this->adjacencias;
+        grafo->nomes = this->nomes;
+        return grafo;
+    }
+
+    MGrafo* clonarGrafo(){
+        MGrafo *grafo = new MGrafo();
+        grafo->adjacencias = this->adjacencias;
+        grafo->nomes = this->nomes;
+        return grafo;
+    }
+
+
