@@ -37,6 +37,11 @@ void Edge::setWeight(int weight)
     this->weight = weight;
 }
 
+void Edge::setFlow(int flow)
+{
+    this->flow = flow;
+}
+
 bool Edge::isWeighted() const
 {
     return weighted;
@@ -45,4 +50,18 @@ bool Edge::isWeighted() const
 bool Edge::isDirected() const
 {
     return directed;
+}
+
+bool Edge::hasFlow() const
+{
+    return flow != NoFlow;
+}
+
+QString Edge::format() const
+{
+    if (hasFlow()) {
+        return QString("%1/%2").arg(QString::number(flow), QString::number(weight));
+    } else {
+        return QString::number(weight);
+    }
 }

@@ -19,7 +19,7 @@ GraphicsView::GraphicsView(bool isWeighted, bool isDirected) :
     this->viewMenuList.addAction("Teste de planaridade");
     this->viewMenuList.addAction("Imprimir");
     this->viewMenuList.addAction("Calcular fluxo máximo")->setDisabled(!(isDirected && isWeighted));
-    this->viewMenuList.addAction("Resetar cores");
+    this->viewMenuList.addAction("Redefinir grafo");
 
     vertexMenuList.addAction(isDirected ? "Inserir Arco" : "Inserir aresta");
     vertexMenuList.addAction("Remover vértice");
@@ -140,9 +140,10 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
             emit printGraph();
         }else if(action == 6){ // Fluxo máximo
             emit computeMaxFlow();
-        }else if(action == 7){ // Resetar cores
+        }else if(action == 7){ // Redefinir
             QBrush brush(Qt::red);
             scene.paintVertices(QVector <int>(), &brush);
+            scene.resetFlow();
         }
     }
 }

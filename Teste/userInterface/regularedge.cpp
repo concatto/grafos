@@ -47,15 +47,17 @@ void RegularEdge::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
     QGraphicsPathItem::paint(painter, option, widget);
 
     if (edge.isWeighted()) {
-        qreal distance = 13;
+        qreal distance = 16;
         QPointF p = path().pointAtPercent(0.5);
 
         qreal angle1 = qDegreesToRadians(path().angleAtPercent(0.5) + 90);
         QPointF pn(p.x() + distance * cos(angle1), p.y() - distance * sin(angle1));
 
-        QString numStr = QString::number(edge.getWeight());
+        QString numStr = edge.format();
         if (edge.getWeight() != 0) {
-            painter->setFont(QFont("times", 12));
+            QFont font = painter->font();
+            font.setPixelSize(11);
+            painter->setFont(font);
             QRect rect = painter->fontMetrics().boundingRect(numStr);
             rect.moveCenter(pn.toPoint());
 

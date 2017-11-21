@@ -46,7 +46,8 @@ public:
     void finishConnectionCreation(int id1, int id2, int weight);
     void paintSequence(QVector<int> sequence);
     EdgeInterface* findLine(int id1, int id2);
-    Vertex* getVertex(int id);    
+    Vertex* getVertex(int id);
+    void resetFlow();
 private:
     Vertex* movingVertex = nullptr;
 

@@ -82,6 +82,7 @@ void GraphicsScene::finishConnectionCreation(int id1, int id2, int weight)
     model.setV1(vertices[id1]);
     model.setV2(vertices[id2]);
     model.setWeight(weight);
+    model.setFlow(weight / 2); // For testing purposes only.
     currentLine->setModel(model);
 
     EdgeInterface* line = currentLine;
@@ -189,6 +190,19 @@ void GraphicsScene::repaintViews()
     for (QGraphicsView* view : views()) {
         view->viewport()->repaint();
     }
+}
+
+void GraphicsScene::resetFlow()
+{
+    for (Vertex* v : vertices) {
+        for (EdgeInterface* edge : v->getLines()) {
+            Edge e = edge->getModel();
+            e.setFlow(Edge::NoFlow);
+            edge->setModel(e);
+        }
+    }
+
+    repaintViews();
 }
 
 void GraphicsScene::prepareDijkstra(Vertex *item)

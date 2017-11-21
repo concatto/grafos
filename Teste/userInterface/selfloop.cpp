@@ -20,11 +20,13 @@ void SelfLoop::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, 
     QGraphicsEllipseItem::paint(painter, option, widget);
 
     if (edge.isWeighted()) {
-        QPointF pn = rect().center();
+        QPointF pn = rect().translated(-3, -2).center();
 
-        QString numStr = QString::number(edge.getWeight());
+        QString numStr = edge.format();
         if (edge.getWeight() != 0) {
-            painter->setFont(QFont("times", 12));
+            QFont font = painter->font();
+            font.setPixelSize(11);
+            painter->setFont(font);
             QRect rect = painter->fontMetrics().boundingRect(numStr);
             rect.moveCenter(pn.toPoint());
 
