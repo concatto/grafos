@@ -48,15 +48,15 @@ inline bool welshPowellGreaterDegree (WashPowell w1, WashPowell w2){
 
 struct Arco {
     int peso;
-    int vorigem;
-    int vdestino;
+    int origem;
+    int destino;
 
     Arco() : Arco(-1, -1, 0) {}
 
-    Arco(int vorigem, int vdestino, int peso = 1) {
+    Arco(int origem, int destino, int peso = 1) {
         this->peso = peso;
-        this->vorigem = vorigem;
-        this->vdestino = vdestino;
+        this->origem = origem;
+        this->destino = destino;
     }
 };
 
@@ -358,6 +358,17 @@ public:
     // Realiza uma busca em profundidade (DFS). Um destino igual a -1 indica nenhum destino.
     // Se houver um destino e o
     vector<int> buscaEmProfundidade(int origem, int destino = -1) {
+        cout << "Arcos:\n";
+        for (Arco a : obterArcos()) {
+            cout << a.origem << " -> " << a.destino << "   w: " << a.peso << "\n";
+        }
+
+        cout << "Arestas:\n";
+        for (Arco a : obterArestas()) {
+            cout << a.origem << " -> " << a.destino << "   w: " << a.peso << "\n";
+        }
+
+
         if (!existeVertice(origem))
             return vector<int>();
 
@@ -432,25 +443,32 @@ public:
     }
 
     // Obtém todas as arestas do grafo, sem repetições. A sequência origem-destino não é especificada.
-    vector<Arco> obterConexoes() {
+    vector<Arco> obterArestas() {
+        vector<Arco> resultado;
+
+        for (Arco a : obterArcos()) {
+            auto it = find_if(resultado.begin(), resultado.end(), [&](Arco b) {
+                return (a.origem == b.origem && a.destino == b.destino) ||
+                       (a.origem == b.destino && a.destino == b.origem);
+            });
+
+            // Se resultado não contém o arco
+            if (it == resultado.end()) {
+                resultado.push_back(a);
+            }
+        }
+
+        return resultado;
+    }
+
+    // Obtém todos os arcos do grafo. Em um grafo não dirigido, o resultado possuirá dois
+    // elementos para cada par de vértices conectados.
+    vector<Arco> obterArcos() {
         vector<Arco> resultado;
 
         for (int i = 0; i < nomes.size(); i++) {
             for (Arco a : obterVerticesAdjacentesComPeso(i)) {
-                bool contemInverso = false;
-
-                // Verifica se as conexões encontradas até o momento contém a conexão atual ou a inversa
-                for (Arco b : resultado) {
-                    if ((a.vorigem == b.vorigem && a.vdestino == b.vdestino) ||
-                        (a.vdestino == b.vorigem && a.vorigem == b.vdestino)) {
-                        contemInverso = true;
-                        break;
-                    }
-                }
-
-                if (!contemInverso) {
-                    resultado.push_back(a);
-                }
+                resultado.push_back(a);
             }
         }
 
@@ -474,6 +492,9 @@ public:
     // O valor do fluxo máximo pode ser obtido com a soma dos pesos dos arcos da fonte.
     Grafo* aplicarFordFulkerson(int fonte, int sorvedouro) {
         Grafo* copia = this->clonar();
+        for (Arco a : copia->obterArcos()) {
+            copia->inserirArco(a.origem, a.destino, a.peso * 0.25);
+        }
         return copia;
     }
 
@@ -528,15 +549,15 @@ public:
             for (int e : S){
                 for (Arco k : obterVerticesAdjacentesComPeso(e)){
                     if(k.peso < menor.peso){
-                        if(find(Q.begin(), Q.end(), k.vdestino) != Q.end()){
+                        if(find(Q.begin(), Q.end(), k.destino) != Q.end()){
                                 menor = k;
                           }
                     }
                 }
             }
 
-            Q.erase(remove(Q.begin(), Q.end(), menor.vdestino), Q.end());
-            S.push_back(menor.vdestino);
+            Q.erase(remove(Q.begin(), Q.end(), menor.destino), Q.end());
+            S.push_back(menor.destino);
             retorno.push_back(menor);
 
         }
@@ -558,12 +579,12 @@ public:
 
         vector<int> ciclo(nomes.size(), -1);
 
-        arestas = obterConexoes();
+        arestas = obterArestas();
         sort(arestas.begin(), arestas.end(), CompareArco());
 
         while (solucao.size() < nomes.size() - 1) {
-            int g1 = buscar(ciclo, arestas.front().vorigem);
-            int g2 = buscar(ciclo, arestas.front().vdestino);
+            int g1 = buscar(ciclo, arestas.front().origem);
+            int g2 = buscar(ciclo, arestas.front().destino);
 
             if(g1 != g2){
                 if (ciclo[g1] != -1) {
@@ -580,7 +601,7 @@ public:
         }
 
         for (Arco a : solucao){
-            std::cout<<obterNome(a.vorigem)<<" , "<<obterNome(a.vdestino)<<"\n";
+            std::cout<<obterNome(a.origem)<<" , "<<obterNome(a.destino)<<"\n";
         }
 
         std::cout<<"Total: "<<total<<"\n";
@@ -608,9 +629,9 @@ public:
             return true;
 
         if (temCiclo3()) {
-            return obterConexoes().size() <= 3*nomes.size() - 6;
+            return obterArestas().size() <= 3*nomes.size() - 6;
         } else {
-            return obterConexoes().size() <= 2*nomes.size() - 4;
+            return obterArestas().size() <= 2*nomes.size() - 4;
         }
     }
 

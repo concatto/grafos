@@ -124,16 +124,21 @@ int Vertex::getId()
     return this->id;
 }
 
-bool Vertex::hasLine(int origin, int destination) const
+bool Vertex::hasLine(int origin, int destination)
+{
+    return getLine(origin, destination) != nullptr;
+}
+
+EdgeInterface* Vertex::getLine(int origin, int destination)
 {
     for (EdgeInterface* edge : lines) {
         Edge line = edge->getModel();
         if (line.getV1()->getId() == origin && line.getV2()->getId() == destination) {
-            return true;
+            return edge;
         }
     }
 
-    return false;
+    return nullptr;
 }
 
 const QVector<EdgeInterface*>& Vertex::getLines() const

@@ -47,7 +47,9 @@ public:
     void paintSequence(QVector<int> sequence);
     EdgeInterface* findLine(int id1, int id2);
     Vertex* getVertex(int id);
+    void displayFlow(QVector<Arco> residuals);
     void resetFlow();
+
 private:
     Vertex* movingVertex = nullptr;
 

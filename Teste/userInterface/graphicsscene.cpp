@@ -82,7 +82,6 @@ void GraphicsScene::finishConnectionCreation(int id1, int id2, int weight)
     model.setV1(vertices[id1]);
     model.setV2(vertices[id2]);
     model.setWeight(weight);
-    model.setFlow(weight / 2); // For testing purposes only.
     currentLine->setModel(model);
 
     EdgeInterface* line = currentLine;
@@ -150,9 +149,9 @@ void GraphicsScene::paintPath(QVector<Arco> path)
     QPen pen(Qt::blue, 4);
 
     for(Arco a: path){
-        vertices[a.vorigem]->setPen(pen);
-        vertices[a.vorigem]->paintEdge(a.vdestino);
-        vertices[a.vdestino]->setPen(pen);
+        vertices[a.origem]->setPen(pen);
+        vertices[a.origem]->paintEdge(a.destino);
+        vertices[a.destino]->setPen(pen);
         repaintViews();
         sleep(500);
     }
@@ -164,6 +163,20 @@ void GraphicsScene::paintSequence(QVector<int> sequence) {
         repaintViews();
         sleep(750);
     }
+}
+
+void GraphicsScene::displayFlow(QVector<Arco> residuals)
+{
+    for (Arco a : residuals) {
+        EdgeInterface* e = vertices[a.origem]->getLine(a.origem, a.destino);
+        if (e != nullptr) {
+            Edge model = e->getModel();
+            model.setFlow(model.getWeight() - a.peso);
+            e->setModel(model);
+        }
+    }
+
+    repaintViews();
 }
 
 EdgeInterface* GraphicsScene::findLine(int id1, int id2)

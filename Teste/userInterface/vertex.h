@@ -47,7 +47,8 @@ public:
     void setPressed(bool value);
 
     float getRadius() const;
-    bool hasLine(int origin, int destination) const;
+    bool hasLine(int origin, int destination);
+    EdgeInterface* getLine(int origin, int destination);
 
     const QVector<EdgeInterface*>& getLines() const;
 

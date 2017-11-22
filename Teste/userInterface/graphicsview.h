@@ -16,6 +16,7 @@ public:
     void paintSequence(QVector<int> sequence);
     void paintVertices(QVector <int> colors);
     void paintPath(QVector<Arco> path);
+    void displayFlow(QVector<Arco> residuals);
     void createVertex(QString name);
     void createConnection(int id1, int id2, int weight);
     void destroyVertex(int id);

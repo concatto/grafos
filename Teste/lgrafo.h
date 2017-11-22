@@ -38,7 +38,7 @@ struct LGrafo : public Grafo {
 
         if (existeVertice(origem)) {
             for (Arco a : adjacencias[origem]) {
-                copia.push_back(a.vdestino);
+                copia.push_back(a.destino);
             }
         }
 
@@ -59,7 +59,7 @@ struct LGrafo : public Grafo {
         }
 
         for (int i = 0; i < adjacencias[origem].size(); i++){
-            if (adjacencias[origem][i].vdestino == destino) {
+            if (adjacencias[origem][i].destino == destino) {
                 adjacencias[origem].erase(adjacencias[origem].begin() + i);
                 return true;
             }
@@ -86,8 +86,8 @@ struct LGrafo : public Grafo {
         //Reduz em 1 o identificador dos vértices que estavam à frente do removido.
         for (int i = 0; i < adjacencias.size(); i++) {
             for (int j = 0; j < adjacencias[i].size(); j++) {
-                if (adjacencias[i][j].vdestino > vertice) {
-                    adjacencias[i][j].vdestino--;
+                if (adjacencias[i][j].destino > vertice) {
+                    adjacencias[i][j].destino--;
                 }
             }
         }
@@ -105,7 +105,7 @@ struct LGrafo : public Grafo {
                 }
 
                 Arco a = adjacencias[i][j];
-                cout << nomes[a.vdestino] << "(" << a.peso << ")";
+                cout << nomes[a.destino] << "(" << a.peso << ")";
             }
 
             cout<<"\n";
@@ -122,7 +122,7 @@ struct LGrafo : public Grafo {
         }
 
         for (Arco a : adjacencias[origem]) {
-            if (a.vdestino == destino) {
+            if (a.destino == destino) {
                 return a.peso;
             }
         }

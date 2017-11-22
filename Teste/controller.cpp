@@ -110,7 +110,7 @@ int Controller::exec(QApplication& a)
             vector <Arco> list = graph->dijkstra(origem, destino);
 
             for(Arco a: list){
-                qDebug()<<a.vorigem;
+                qDebug()<<a.origem;
             }
 
             view.paintPath(QVector<Arco>::fromStdVector(list));
@@ -155,6 +155,8 @@ int Controller::exec(QApplication& a)
             int sink = graph->encontrarSorvedouro();
             Grafo* g = graph->aplicarFordFulkerson(source, sink);
             g->imprimir();
+
+            view.displayFlow(QVector<Arco>::fromStdVector(g->obterArcos()));
         });
 
         window->show();

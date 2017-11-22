@@ -59,6 +59,11 @@ void GraphicsView::paintSequence(QVector<int> sequence)
     scene.paintSequence(sequence);
 }
 
+void GraphicsView::displayFlow(QVector<Arco> residuals)
+{
+    scene.displayFlow(residuals);
+}
+
 void GraphicsView::createVertex(QString name)
 {
     scene.addVertex(name, storedMousePosition);
