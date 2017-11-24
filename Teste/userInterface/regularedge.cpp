@@ -61,7 +61,8 @@ void RegularEdge::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
             QRect rect = painter->fontMetrics().boundingRect(numStr);
             rect.moveCenter(pn.toPoint());
 
-            painter->drawText(rect, Qt::AlignCenter, numStr);
+            QMargins margins(4, 0, 4, 0);
+            painter->drawText(rect.marginsAdded(margins), Qt::AlignCenter, numStr);
         }
     }
 

@@ -27,6 +27,10 @@ struct LGrafo : public Grafo {
             return false;
         }
 
+        if (peso == 0) {
+            return removerArco(origem, destino);
+        }
+
         Arco arco(origem, destino, peso);
         adjacencias[origem].push_back(arco);
 

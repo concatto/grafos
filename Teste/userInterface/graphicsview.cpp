@@ -226,8 +226,10 @@ void GraphicsView::askConnectionWeight(int id1, int id2)
         bool ok = false;
         weight = QInputDialog::getInt(this, tr("Peso da aresta"),
                                             tr("Peso da aresta:"), 1, 0, 999, 1, &ok);
-        if(!ok)
+        if(!ok) {
+            scene.removeCurrentLine();
             return;
+        }
     }
 
     emit addConnection(id1, id2, weight);

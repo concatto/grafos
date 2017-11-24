@@ -1,0 +1,23 @@
+Grafo *grafo_residual = clonar();
+int fluxoTotal = 0, menor = 0, peso = 0;
+
+while(true) {
+    menor = numeric_limits<int>::max();
+    vector<int> path = grafo_residual->buscaEmProfundidade(fonte, sorvedouro);
+
+    if(path.back() != sorvedouro)
+        return grafo_residual;
+
+    for(int i = 0; i < path.size() - 1; i++){
+        peso = grafo_residual->consultarPeso(path[i], path[i + 1]);
+        if (menor > peso) {
+            menor = peso;
+        }
+    }
+    for(int i = 0; i < path.size() - 1; i++){
+        grafo_residual->inserirArco(path[i], path[i + 1], grafo_residual->consultarPeso(path[i], path[i+1]) - menor);
+        grafo_residual->inserirArco(path[i + 1], path[i], menor + grafo_residual->consultarPeso(path[i +1], path[i]));
+    }
+    fluxoTotal += menor;
+    cout << "Fluxo " << fluxoTotal << "\n";
+}

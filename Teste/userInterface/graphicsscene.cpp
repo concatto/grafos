@@ -89,9 +89,8 @@ void GraphicsScene::finishConnectionCreation(int id1, int id2, int weight)
     if (id1 == id2) {
         // It's a self loop!
         line = new SelfLoop(model);
-        removeItem(currentLine);
         addItem(line->getItem());
-        delete currentLine; // Careful
+        removeCurrentLine();
     }
 
     vertices[id1]->addConnection(line);
@@ -167,12 +166,21 @@ void GraphicsScene::paintSequence(QVector<int> sequence) {
 
 void GraphicsScene::displayFlow(QVector<Arco> residuals)
 {
-    for (Arco a : residuals) {
-        EdgeInterface* e = vertices[a.origem]->getLine(a.origem, a.destino);
-        if (e != nullptr) {
-            Edge model = e->getModel();
-            model.setFlow(model.getWeight() - a.peso);
-            e->setModel(model);
+    for (Vertex* v : vertices) {
+        for (EdgeInterface* edge : v->getLines()) {
+            Edge e = edge->getModel();
+
+            QVector<Arco>::iterator it = std::find_if(residuals.begin(), residuals.end(), [&](Arco a) {
+                return a.origem == e.getV1()->getId() && a.destino == e.getV2()->getId();
+            });
+
+            if (it == residuals.end()) {
+                e.setFlow(e.getWeight());
+            } else {
+                e.setFlow(e.getWeight() - it->peso);
+            }
+
+            edge->setModel(e);
         }
     }
 
