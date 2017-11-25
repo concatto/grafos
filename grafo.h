@@ -32,19 +32,6 @@ struct Path{
     }
 };
 
-struct Prim {
-    int id;
-    int key;
-    bool adicionado;
-
-    Prim(int id){
-        adicionado = false;
-        this->id = id;
-        this->key = INF;
-    }
-
-};
-
 struct ComparePair {
     bool operator()(pair <int, int> p1, pair <int, int> p2){
         return p1.first > p2.first;
@@ -59,25 +46,17 @@ inline bool welshPowellGreaterDegree (WashPowell w1, WashPowell w2){
     return w1.grau > w2.grau;
 }
 
-
-
-struct ComparePrim {
-    bool operator()(Prim p1, Prim p2){
-        return p1.key < p1.key;
-    }
-};
-
 struct Arco {
     int peso;
-    int vorigem;
-    int vdestino;
+    int origem;
+    int destino;
 
     Arco() : Arco(-1, -1, 0) {}
 
-    Arco(int vorigem, int vdestino, int peso = 1) {
+    Arco(int origem, int destino, int peso = 1) {
         this->peso = peso;
-        this->vorigem = vorigem;
-        this->vdestino = vdestino;
+        this->origem = origem;
+        this->destino = destino;
     }
 };
 
@@ -101,6 +80,7 @@ public:
     virtual int consultarPeso(int origem, int destino) = 0;
     virtual bool removerVertice(int vertice) = 0;
     virtual int obterGrau(int vertice) = 0;
+    virtual Grafo* clonar() = 0;
 
     vector<int> dsatur() {
         imprimir();
@@ -227,6 +207,7 @@ public:
         vector <Path> lista(nomes.size());
         priority_queue <pair<int, int>, std::vector<pair<int, int>>, ComparePair> pq;
         vector <Arco> retorno;
+        int lastVisited = 0;
 
         int backup = origem;
 
@@ -237,6 +218,7 @@ public:
 
         while(!pq.empty()){
             origem = pq.top().second;
+            lastVisited = origem;
             if(origem == destino){
                 for(int i = 0; i < lista.size(); i++){
                     if(i == backup)
@@ -256,19 +238,17 @@ public:
                 }
                 if(lista[adj].aberto == true){
                     pq.push(make_pair(lista[adj].distancia, adj));
-
-//                    lista[adj].ordem = counter;
-//                    counter++;
                 }
             }
         }
 
         // Este bloco está causando violação de segmentação às vezes!
         // Aparentemente apenas quando o vértice é isolado (nenhum out-arco).
+
         for(int i = 0; i < lista.size(); i++){
             if(i == backup)
                 lista[i].anterior = backup;
-            cout<<"\n"<<"Vertice: "<<nomes[i]<<" - Anterior: "<<nomes[lista[i].anterior]<<" - Distancia: "<<lista[i].distancia;
+            //cout<<"\n"<<"Vertice: "<<nomes[i]<<" - Anterior: "<<nomes[lista[i].anterior]<<" - Distancia: "<<lista[i].distancia;
         }
 
         cout<<"\n";
@@ -276,7 +256,15 @@ public:
         int navegador = destino;
 
         // Violação de segmentação (aparentemente quando o destino não é atingível)
+        // O problema é que lista[naoAlcançavel].anterior era -1, isso causava index out of range
+        // Pra resolver isso, criei uma variavel chamada lastVisited que guarda o ultimo vértice visitado
+        // e caso o vértice destino não seja alcançado, ela é utilizada como anterior
         while(navegador != backup){
+            if(lista[navegador].aberto == true){
+                retorno.insert(retorno.begin(), Arco(lastVisited, navegador));
+                navegador = lastVisited;
+                continue;
+            }
             retorno.insert(retorno.begin(), Arco(lista[navegador].anterior, navegador));
             navegador = lista[navegador].anterior;
         }
@@ -367,8 +355,20 @@ public:
         return sequencia;
     }
 
-    //Realiza uma busca em profundidade (DFS). Um destino igual a -1 indica nenhum destino.
+    // Realiza uma busca em profundidade (DFS). Um destino igual a -1 indica nenhum destino.
+    // Se houver um destino e o
     vector<int> buscaEmProfundidade(int origem, int destino = -1) {
+        cout << "Arcos:\n";
+        for (Arco a : obterArcos()) {
+            cout << a.origem << " -> " << a.destino << "   w: " << a.peso << "\n";
+        }
+
+        cout << "Arestas:\n";
+        for (Arco a : obterArestas()) {
+            cout << a.origem << " -> " << a.destino << "   w: " << a.peso << "\n";
+        }
+
+
         if (!existeVertice(origem))
             return vector<int>();
 
@@ -377,6 +377,7 @@ public:
 
         //Sem destino?
         if (destino == -1) {
+            // Reiniciar se não conseguiu atingir alguém
             for (int i = 0; i < visitados.size(); i++) {
                 if (visitados[i] == false){
                     vector<int> extra = buscaEmProfundidadePrincipal(i, visitados, destino);
@@ -441,32 +442,122 @@ public:
         return sequencia;
     }
 
-
-    vector<Arco> obterConexoes() {
+    // Obtém todas as arestas do grafo, sem repetições. A sequência origem-destino não é especificada.
+    vector<Arco> obterArestas() {
         vector<Arco> resultado;
 
-        for (int i = 0; i < nomes.size(); i++) {
-            for (Arco a : obterVerticesAdjacentesComPeso(i)) {
-                bool contemInverso = false;
+        for (Arco a : obterArcos()) {
+            auto it = find_if(resultado.begin(), resultado.end(), [&](Arco b) {
+                return (a.origem == b.origem && a.destino == b.destino) ||
+                       (a.origem == b.destino && a.destino == b.origem);
+            });
 
-                // Verifica se as conexões encontradas até o momento contém a conexão atual ou sua irmã
-                for (Arco b : resultado) {
-                    if ((a.vorigem == b.vorigem && a.vdestino == b.vdestino) ||
-                        (a.vdestino == b.vorigem && a.vorigem == b.vdestino)) {
-                        contemInverso = true;
-                        break;
-                    }
-                }
-
-                if (!contemInverso) {
-                    resultado.push_back(a);
-                }
+            // Se resultado não contém o arco
+            if (it == resultado.end()) {
+                resultado.push_back(a);
             }
         }
 
         return resultado;
     }
 
+    // Obtém todos os arcos do grafo. Em um grafo não dirigido, o resultado possuirá dois
+    // elementos para cada par de vértices conectados.
+    vector<Arco> obterArcos() {
+        vector<Arco> resultado;
+
+        for (int i = 0; i < nomes.size(); i++) {
+            for (Arco a : obterVerticesAdjacentesComPeso(i)) {
+                resultado.push_back(a);
+            }
+        }
+
+        return resultado;
+    }
+
+    // Obtém todos os vértices que possuem uma aresta com destino em v.
+    vector<int> obterAdjacentesEntrantes(int v) {
+        vector<int> resultado;
+
+        for (int i = 0; i < nomes.size(); i++) {
+            if (existeArco(i, v)) {
+                resultado.push_back(i);
+            }
+        }
+
+        return resultado;
+    }
+
+    // Encontra o grafo residual com fluxo maximizado.
+    // O valor do fluxo máximo pode ser obtido com a soma dos pesos dos arcos da fonte.
+    Grafo* aplicarFordFulkerson(int fonte, int sorvedouro) {
+        Grafo* copia = this->clonar();
+
+        int temp;
+        int solucao = 0;
+        vector<int> caminho;
+
+
+        do{
+            int menor = numeric_limits<int>::max();
+            caminho = copia->buscaEmProfundidade(fonte, sorvedouro);
+            if (sorvedouro != caminho.back()){
+                break;
+            }
+            for(int i=0; i< caminho.size()-1; i++){
+                temp = copia->consultarPeso(caminho[i], caminho[i+1]);
+                if(temp < menor ){
+                    menor = temp;
+                }
+            }
+             solucao += menor;
+
+             for(int i=0; i<caminho.size()-1;i++){
+                 int u = caminho[i];
+                 int v = caminho[i+1];
+                 temp = copia->consultarPeso(u,v);
+                 copia->inserirArco(u, v, temp-menor);
+                 if(copia->existeArco(v,u)){
+                    temp = copia->consultarPeso(v,u);
+                    copia->inserirArco(v,u, temp+menor);
+                 }
+                 else{
+                     copia->inserirArco(v,u,menor);
+                 }
+
+             }
+
+        }while(true);
+
+
+        return copia;
+    }
+
+    // Descobre o primeiro vértice que não possui adjacentes entrantes.
+    int encontrarFonte() {
+        // TODO
+
+        for(int i=0; i< nomes.size(); i++){
+            if (obterAdjacentesEntrantes(i).empty()){
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    // Descobre o primeiro vértice que não possui vértices adjacentes de saída.
+    int encontrarSorvedouro() {
+        // TODO
+
+        for(int i=0; i<nomes.size(); i++){
+            if (obterVerticesAdjacentes(i).empty()){
+                return i;
+            }
+        }
+
+        return -1;
+    }
 
     // Computa a árvore geradora mínima por meio do Algoritmo de Prim.
     // Retorna a sequência de arestas adicionadas, onde o índice 0 corresponde à primeira aresta adicionada.
@@ -487,93 +578,96 @@ public:
 
        S.push_back(inicial);
 
-       vector<int>::iterator posicao;
-
         while(Q.size() != 0){
             menor.peso = intmax;
 
             for (int e : S){
                 for (Arco k : obterVerticesAdjacentesComPeso(e)){
                     if(k.peso < menor.peso){
-                        if(find(Q.begin(), Q.end(), k.vdestino)!= Q.end()){
+                        if(find(Q.begin(), Q.end(), k.destino) != Q.end()){
                                 menor = k;
                           }
                     }
                 }
             }
 
-                Q.erase(remove(Q.begin(), Q.end(), menor.vdestino), Q.end());
-                S.push_back(menor.vdestino);
-                retorno.push_back(menor);
+            Q.erase(remove(Q.begin(), Q.end(), menor.destino), Q.end());
+            S.push_back(menor.destino);
+            retorno.push_back(menor);
 
         }
-
-
-        // TODO implementar
 
         return retorno;
     }
 
-    // Compute a AGM a partir do Algoritmo de Kruskal. Similar ao Prim.
+    int buscar(vector<int> ciclo, int i){
+        if(ciclo[i] == -1)
+            return i;
+        return buscar(ciclo, ciclo[i]);
+    }
+
+    // Computa a AGM a partir do Algoritmo de Kruskal. Similar ao Prim.
     vector<Arco> kruskal() {
         vector<Arco> arestas;
         vector<Arco> solucao;
+        int total = 0;
 
         vector<int> ciclo(nomes.size(), -1);
 
-        arestas = obterConexoes();
+        arestas = obterArestas();
         sort(arestas.begin(), arestas.end(), CompareArco());
 
+        while (solucao.size() < nomes.size() - 1) {
+            int g1 = buscar(ciclo, arestas.front().origem);
+            int g2 = buscar(ciclo, arestas.front().destino);
 
-        while(solucao.size() < nomes.size() - 1){
-            if(ciclo[arestas.front().vorigem] != ciclo[arestas.front().vdestino]
-                    || (ciclo[arestas.front().vorigem] == -1 && ciclo[arestas.front().vdestino] == -1)){
-
-                for(int &a: ciclo){
-                    if(a != -1 && (a == ciclo[arestas.front().vdestino])){
-                        a = ciclo[arestas.front().vorigem];
-                    }
+            if(g1 != g2){
+                if (ciclo[g1] != -1) {
+                    ciclo[g2] = g1;
+                } else {
+                    ciclo[g1] = g2;
                 }
-
-                ciclo[arestas.front().vorigem] = arestas.front().vorigem;
-                ciclo[arestas.front().vdestino] = arestas.front().vorigem;
+                total += arestas.front().peso;
                 solucao.push_back(arestas.front());
             }
+
+
             arestas.erase(arestas.begin());
         }
 
-        for(Arco a: solucao){
-            std::cout<<obterNome(a.vorigem)<<" , "<<obterNome(a.vdestino)<<"\n";
+        for (Arco a : solucao){
+            std::cout<<obterNome(a.origem)<<" , "<<obterNome(a.destino)<<"\n";
         }
+
+        std::cout<<"Total: "<<total<<"\n";
 
         return solucao;
     }
 
     bool temCiclo3(){
-        for(int i = 0; i < nomes.size(); i++){
-            for(int v: obterVerticesAdjacentes(i)){
-                for(int v2: obterVerticesAdjacentes(v)){
-                    for(int v3: obterVerticesAdjacentes(v2)){
-                        if(v3 == i){
+        for (int i = 0; i < nomes.size(); i++) {
+            for (int v : obterVerticesAdjacentes(i)) {
+                for (int v2 : obterVerticesAdjacentes(v)) {
+                    for (int v3 : obterVerticesAdjacentes(v2)) {
+                        if (v3 == i){
                             return true;
                         }
                     }
                 }
             }
         }
+        return false;
     }
 
-    bool checkPlanarity(){
-
-        if(nomes.size() <= 2)
+    bool checkPlanarity() {
+        if (nomes.size() <= 2)
             return true;
 
-        if(temCiclo3()){
-            return obterConexoes().size() <= 3*nomes.size() - 6;
-        }else {
-            return obterConexoes().size() <= 2*nomes.size() - 4;
+        if (temCiclo3()) {
+            return obterArestas().size() <= 3*nomes.size() - 6;
+        } else {
+            return obterArestas().size() <= 2*nomes.size() - 4;
         }
-
     }
 
 };
