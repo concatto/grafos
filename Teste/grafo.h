@@ -327,26 +327,36 @@ public:
     }
 
     //Procedimento que executa a busca em profundidade propriamente dita.
-    vector<int> buscaEmProfundidadePrincipal(int vertice, vector <bool> &visitados, int destino) {
+    vector<int> buscaEmProfundidadePrincipal(int vertice, vector <bool> &visitados, int destino, bool caminho = false) {
         visitados[vertice] = true;
 
         //A sequência de vértices visitados desta invocação começa com o próprio vértice
         vector<int> sequencia{vertice};
+
+        vector<int> adj = obterVerticesAdjacentes(vertice);
+        cout << "Adjacentes de " << nomes[vertice] << ":\n";
+        for (int a : adj) {
+            cout << nomes[a] << ", ";
+        }
+        cout << "\n";
+
         if (vertice == destino) {
             return sequencia;
         }
 
-        vector<int> adj = obterVerticesAdjacentes(vertice);
-
         for (int i = 0; i < adj.size(); i++) {
             if (visitados[adj[i]] == false) {
-                vector<int> adicoes = buscaEmProfundidadePrincipal(adj[i], visitados, destino);
+                vector<int> adicoes = buscaEmProfundidadePrincipal(adj[i], visitados, destino, caminho);
 
-                //Insere os vértices visitados pela chamada recursiva na própria sequência
-                sequencia.insert(sequencia.end(), adicoes.begin(), adicoes.end());
+                bool atingiuDestino = adicoes.back() == destino;
+
+                if (!caminho || (caminho && atingiuDestino)) {
+                    //Insere os vértices visitados pela chamada recursiva na própria sequência
+                    sequencia.insert(sequencia.end(), adicoes.begin(), adicoes.end());
+                }
 
                 //Se o destino foi atingido, parar
-                if (sequencia.back() == destino) {
+                if (atingiuDestino) {
                     return sequencia;
                 }
             }
@@ -357,23 +367,12 @@ public:
 
     // Realiza uma busca em profundidade (DFS). Um destino igual a -1 indica nenhum destino.
     // Se houver um destino e o
-    vector<int> buscaEmProfundidade(int origem, int destino = -1) {
-        cout << "Arcos:\n";
-        for (Arco a : obterArcos()) {
-            cout << a.origem << " -> " << a.destino << "   w: " << a.peso << "\n";
-        }
-
-        cout << "Arestas:\n";
-        for (Arco a : obterArestas()) {
-            cout << a.origem << " -> " << a.destino << "   w: " << a.peso << "\n";
-        }
-
-
+    vector<int> buscaEmProfundidade(int origem, int destino = -1, bool caminho = false) {
         if (!existeVertice(origem))
             return vector<int>();
 
         vector<bool> visitados(nomes.size(), false);
-        vector<int> sequencia = buscaEmProfundidadePrincipal(origem, visitados, destino);
+        vector<int> sequencia = buscaEmProfundidadePrincipal(origem, visitados, destino, caminho);
 
         //Sem destino?
         if (destino == -1) {
@@ -492,9 +491,50 @@ public:
     // O valor do fluxo máximo pode ser obtido com a soma dos pesos dos arcos da fonte.
     Grafo* aplicarFordFulkerson(int fonte, int sorvedouro) {
         Grafo* copia = this->clonar();
-        for (Arco a : copia->obterArcos()) {
-            copia->inserirArco(a.origem, a.destino, a.peso * 0.25);
-        }
+
+        int temp;
+        int solucao = 0;
+        vector<int> caminho;
+
+
+        do {
+            int menor = numeric_limits<int>::max();
+            caminho = copia->buscaEmProfundidade(fonte, sorvedouro, true);
+            if (sorvedouro != caminho.back()){
+                break;
+            }
+
+            for(int i=0; i< caminho.size()-1; i++){
+                temp = copia->consultarPeso(caminho[i], caminho[i+1]);
+                cout << nomes[i] << " -> " << nomes[i+1] << " (" << temp << "), ";
+                if(temp < menor ){
+                    menor = temp;
+                }
+            }
+            cout << "\n";
+             solucao += menor;
+
+             for(int i=0; i<caminho.size()-1;i++){
+                 int u = caminho[i];
+                 int v = caminho[i+1];
+                 temp = copia->consultarPeso(u,v);
+                 copia->inserirArco(u, v, temp-menor);
+                 cout << "Arco (" << nomes[u] << ", " << nomes[v] << ") alterado de " << temp << " para " << (temp - menor) << "\n";
+                 if(copia->existeArco(v,u)){
+                    temp = copia->consultarPeso(v,u);
+                    copia->inserirArco(v,u, temp+menor);
+                    cout << "Arco (" << nomes[v] << ", " << nomes[u] << ") alterado de " << temp << " para " << (temp + menor) << "\n";
+                 }
+                 else{
+                     copia->inserirArco(v,u,menor);
+                     cout << "Arco (" << nomes[v] << ", " << nomes[u] << ") criado com peso " << menor << "\n";
+                 }
+
+             }
+
+        }while(true);
+
+
         return copia;
     }
 

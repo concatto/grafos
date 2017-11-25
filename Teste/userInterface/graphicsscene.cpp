@@ -177,7 +177,7 @@ void GraphicsScene::displayFlow(QVector<Arco> residuals)
             if (it == residuals.end()) {
                 e.setFlow(e.getWeight());
             } else {
-                e.setFlow(e.getWeight() - it->peso);
+                e.setFlow(max(0, e.getWeight() - it->peso));
             }
 
             edge->setModel(e);
