@@ -332,13 +332,7 @@ public:
 
         //A sequência de vértices visitados desta invocação começa com o próprio vértice
         vector<int> sequencia{vertice};
-
         vector<int> adj = obterVerticesAdjacentes(vertice);
-        cout << "Adjacentes de " << nomes[vertice] << ":\n";
-        for (int a : adj) {
-            cout << nomes[a] << ", ";
-        }
-        cout << "\n";
 
         if (vertice == destino) {
             return sequencia;
@@ -506,35 +500,35 @@ public:
 
             for(int i=0; i< caminho.size()-1; i++){
                 temp = copia->consultarPeso(caminho[i], caminho[i+1]);
-                cout << nomes[i] << " -> " << nomes[i+1] << " (" << temp << "), ";
+                cout << nomes[caminho[i]] << " -> " << nomes[caminho[i+1]] << " (" << temp << "), ";
                 if(temp < menor ){
                     menor = temp;
                 }
             }
             cout << "\n";
-             solucao += menor;
+            solucao += menor;
 
-             for(int i=0; i<caminho.size()-1;i++){
-                 int u = caminho[i];
-                 int v = caminho[i+1];
-                 temp = copia->consultarPeso(u,v);
-                 copia->inserirArco(u, v, temp-menor);
-                 cout << "Arco (" << nomes[u] << ", " << nomes[v] << ") alterado de " << temp << " para " << (temp - menor) << "\n";
-                 if(copia->existeArco(v,u)){
+            for(int i=0; i<caminho.size()-1;i++){
+                int u = caminho[i];
+                int v = caminho[i+1];
+                temp = copia->consultarPeso(u,v);
+                copia->inserirArco(u, v, temp-menor);
+                cout << "Arco (" << nomes[u] << ", " << nomes[v] << ") alterado de " << temp << " para " << (temp - menor) << "\n";
+                if(copia->existeArco(v,u)){
                     temp = copia->consultarPeso(v,u);
                     copia->inserirArco(v,u, temp+menor);
                     cout << "Arco (" << nomes[v] << ", " << nomes[u] << ") alterado de " << temp << " para " << (temp + menor) << "\n";
-                 }
-                 else{
-                     copia->inserirArco(v,u,menor);
-                     cout << "Arco (" << nomes[v] << ", " << nomes[u] << ") criado com peso " << menor << "\n";
-                 }
+                }
+                else{
+                    copia->inserirArco(v,u,menor);
+                    cout << "Arco (" << nomes[v] << ", " << nomes[u] << ") criado com peso " << menor << "\n";
+                }
 
-             }
+            }
 
         }while(true);
 
-
+        cout << "Fluxo maximo: " << solucao << "\n";
         return copia;
     }
 

@@ -23,12 +23,16 @@ struct LGrafo : public Grafo {
     }
 
     bool inserirArco(int origem, int destino, int peso) override {
-        if (!existeVertice(origem) || !existeVertice(destino) || existeArco(origem, destino)) {
+        if (!existeVertice(origem) || !existeVertice(destino)) {
             return false;
         }
 
         if (peso == 0) {
             return removerArco(origem, destino);
+        }
+
+        if (existeArco(origem, destino)) {
+            removerArco(origem, destino);
         }
 
         Arco arco(origem, destino, peso);
