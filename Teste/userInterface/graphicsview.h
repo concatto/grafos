@@ -62,6 +62,7 @@ signals:
     void performBFS(int id);
     void performDFS(int id);
     void computeMaxFlow();
+    void performTravelingSalesman();
 };
 
 #endif // GRAPHICSVIEW_H

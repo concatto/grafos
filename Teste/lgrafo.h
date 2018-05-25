@@ -148,6 +148,11 @@ struct LGrafo : public Grafo {
         g->nomes = this->nomes;
         return g;
     }
+
+    set<vector<int>> obterPopulacaoInicial(int n) override
+    {
+    }
+
 };
 
 

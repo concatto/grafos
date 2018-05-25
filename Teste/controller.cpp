@@ -159,6 +159,19 @@ int Controller::exec(QApplication& a)
             view.displayFlow(QVector<Arco>::fromStdVector(g->obterArcos()));
         });
 
+        connect(&view, &GraphicsView::performTravelingSalesman, [&](){
+           std::set<std::vector<int>> r = graph->obterPopulacaoInicial(5);
+           for(const auto &p : r)
+           {
+               for(const auto &v : p)
+               {
+                std::cout<<v<<" - ";
+               }
+               std::cout<<std::endl;
+           }
+
+        });
+
         window->show();
     }
 

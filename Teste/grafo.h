@@ -82,6 +82,8 @@ public:
     virtual int obterGrau(int vertice) = 0;
     virtual Grafo* clonar() = 0;
 
+    virtual std::set<std::vector<int>> obterPopulacaoInicial(int n) = 0;
+
     vector<int> dsatur() {
         imprimir();
 

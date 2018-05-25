@@ -2,6 +2,8 @@
 #define MGRAFO_H
 #include "grafo.h"
 #include <iostream>
+#include <algorithm>
+#include <random>
 
 using namespace std;
 
@@ -121,6 +123,36 @@ struct MGrafo : public Grafo {
         g->nomes = this->nomes;
         return g;
     }
+
+    int factorial(const int &n)
+    {
+        if(n <= 1)
+            return 1;
+        return n * factorial(n - 1);
+    }
+
+    set<vector<int>> obterPopulacaoInicial(int n) override
+    {
+        set<vector<int>> result;
+        vector<int> path;
+        // verify if it's a complete graph
+        if(n > factorial(this->nomes.size()) || this->nomes.size() == 0)
+            return result;
+
+        for(int i = 0; i < nomes.size(); i++)
+        {
+            path.push_back(i);
+        }
+
+        auto rng = std::default_random_engine{};
+        while(result.size() < n)
+        {
+            std::shuffle(path.begin(), path.end(), rng);
+            result.insert(path);
+        }
+        return result;
+    }
+
 };
 
 #endif // MGRAFO_H
