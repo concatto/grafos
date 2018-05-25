@@ -84,6 +84,30 @@ public:
 
     virtual std::set<std::vector<int>> obterPopulacaoInicial(int n) = 0;
 
+    std::set<std::vector<int>> selecaoNatural(int distanciaMaxima, std::set<std::vector<int>> populacaoAtual)
+    {
+        std::set<std::vector<int>> ret;
+        int distance = 0;
+
+        // calcular distancia entre os vertices de um path
+        // se a distancia for menor que a distancia máxima
+        // adiciono ao retorno
+
+        return ret;
+    }
+
+    std::vector<int> caixeiroViajante(int quantidadeCaminhos, int distanciaMaxima)
+    {
+        std::vector<int> ret;
+        auto populacaoInicial = obterPopulacaoInicial(quantidadeCaminhos);
+
+        if(populacaoInicial.size() == 0)
+            return ret;
+
+        populacaoInicial = selecaoNatural(distanciaMaxima, populacaoInicial);
+
+    }
+
     vector<int> dsatur() {
         imprimir();
 
