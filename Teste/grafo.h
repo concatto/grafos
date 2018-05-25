@@ -87,11 +87,18 @@ public:
     std::set<std::vector<int>> selecaoNatural(int distanciaMaxima, std::set<std::vector<int>> populacaoAtual)
     {
         std::set<std::vector<int>> ret;
-        int distance = 0;
+        int distancia = 0;
 
-        // calcular distancia entre os vertices de um path
-        // se a distancia for menor que a distancia máxima
-        // adiciono ao retorno
+        for(const auto &p: populacaoAtual)
+        {
+            for(int i = 0; i < nomes.size() - 1; i++)
+            {
+                distancia += consultarPeso(p[i], p[i+1]);
+            }
+            if(distancia <= distanciaMaxima)
+                ret.insert(p);
+            distancia = 0;
+        }
 
         return ret;
     }
@@ -99,12 +106,15 @@ public:
     std::vector<int> caixeiroViajante(int quantidadeCaminhos, int distanciaMaxima)
     {
         std::vector<int> ret;
-        auto populacaoInicial = obterPopulacaoInicial(quantidadeCaminhos);
+        auto populacao = obterPopulacaoInicial(quantidadeCaminhos);
 
-        if(populacaoInicial.size() == 0)
-            return ret;
+        while(populacao.size() > 0)
+        {
+            populacao = selecaoNatural(distanciaMaxima, populacao);
+        }
 
-        populacaoInicial = selecaoNatural(distanciaMaxima, populacaoInicial);
+        // tenho que ver sobre quando parar...
+        // se é quando achei a rota c o peso desejado ou oq
 
     }
 
