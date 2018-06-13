@@ -9,6 +9,9 @@
 #include <set>
 #include <limits>
 #include <algorithm>
+#include <cstdlib>
+#include <time.h>
+
 #define INF 9999999
 
 using namespace std;
@@ -84,38 +87,78 @@ public:
 
     virtual std::set<std::vector<int>> obterPopulacaoInicial(int n) = 0;
 
-    std::set<std::vector<int>> selecaoNatural(int distanciaMaxima, std::set<std::vector<int>> populacaoAtual)
+    std::set<std::vector<int>> selecaoNatural(std::set<std::vector<int>> populacaoAtual)
     {
         std::set<std::vector<int>> ret;
-        int distancia = 0;
+//        int distancia = 0;
 
-        for(const auto &p: populacaoAtual)
-        {
-            for(int i = 0; i < nomes.size() - 1; i++)
-            {
-                distancia += consultarPeso(p[i], p[i+1]);
-            }
-            if(distancia <= distanciaMaxima)
-                ret.insert(p);
-            distancia = 0;
-        }
+//        for(const auto &p: populacaoAtual)
+//        {
+//            for(int i = 0; i < nomes.size() - 1; i++)
+//            {
+//                distancia += consultarPeso(p[i], p[i+1]);
+//            }
+//            if(distancia <= distanciaMaxima)
+//                ret.insert(p);
+//            distancia = 0;
+//        }
 
         return ret;
+    }
+
+    std::vector<int> selecaoPais(const std::vector<std::set<int>> &populacaoAtual)
+    {
+        int pesoTotal = 0;
+        int pesoAtual = 0;
+        std::vector<int> pesos;
+        std::vector<int> luckyOnes;
+
+        for(const auto &s : populacaoAtual)
+        {
+            int distanciaSolucao = 0;
+            for(int i = 0; i < s.size(); i++)
+            {
+                distanciaSolucao -= consultarPeso(s[i], s[i + 1]);
+            }
+            pesoTotal -= distanciaSolucao;
+            pesos.push_back(distanciaSolucao);
+        }
+
+        srand (time(NULL));
+
+        int randomNumber = 0;
+
+        for(int i = 0; i < pesos.size() / 2; i++)
+        {
+            randomNumber = (rand() % pesoTotal) * -1;
+            if(randomNumber <= pesoAtual && randomNumber >= pesoAtual - pesos[i])
+            {
+                luckyOnes.push_back(i);
+            }
+            pesoAtual -= pesos[i];
+        }
+
+        return luckyOnes;
+    }
+
+    void cruzar(std::vector<std::set<int>> &populacaoAtual, const std::vector<std::set<int>> &pais)
+    {
+        // cruzar os pais
+        // substituir os filhos onde eles ficavam
     }
 
     std::vector<int> caixeiroViajante(int quantidadeCaminhos, int distanciaMaxima)
     {
         std::vector<int> ret;
         auto populacao = obterPopulacaoInicial(quantidadeCaminhos);
+        std::vector<int> pais;
 
-        while(populacao.size() > 0)
-        {
-            populacao = selecaoNatural(distanciaMaxima, populacao);
-        }
+        // loop
 
-        // tenho que ver sobre quando parar...
-        // se é quando achei a rota c o peso desejado ou oq
+        pais = selecaoPais(populacao);
+        cruzar(populacao, pais);
 
+        // end loop
     }
 
     vector<int> dsatur() {
