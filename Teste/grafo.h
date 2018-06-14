@@ -143,6 +143,16 @@ public:
 
     void cruzar(std::vector<std::set<int>> &populacaoAtual, const std::vector<std::set<int>> &pais)
     {
+        int tamanhoCorteEsquerdo = pais.back().size() / 2;
+
+        for(int i = 0; i < pais.size() - 1; i++)
+        {
+//            std::set<int>::iterator it;
+
+//            it = find(populacaoAtual[i].begin(), populacaoAtual[i].end(), )
+
+        }
+
         // cruzar os pais
         // substituir os filhos onde eles ficavam
     }
