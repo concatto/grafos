@@ -12,6 +12,10 @@
 #include <cstdlib>
 #include <time.h>
 
+double gerarAleatorio() {
+    return std::rand() / static_cast<double>(RAND_MAX);
+}
+
 #define INF 9999999
 
 using namespace std;
@@ -106,40 +110,71 @@ public:
         return ret;
     }
 
-    std::vector<int> selecaoPais(const std::vector<std::set<int>> &populacaoAtual)
+    int avaliar(std::set<int> path)
     {
-        int pesoTotal = 0;
-        int pesoAtual = 0;
-        std::vector<int> pesos;
-        std::vector<int> luckyOnes;
+        int ret = 0;
+        std::set<int>::iterator it = path.begin();
 
-        for(const auto &s : populacaoAtual)
+        auto last = --path.end();
+
+        for(; it != last; ++it)
         {
-            int distanciaSolucao = 0;
-            for(int i = 0; i < s.size(); i++)
-            {
-                distanciaSolucao -= consultarPeso(s[i], s[i + 1]);
-            }
-            pesoTotal -= distanciaSolucao;
-            pesos.push_back(distanciaSolucao);
+            auto it2 = it;
+            ++it2;
+            ret += consultarPeso(*it, *it2);
         }
 
-        srand (time(NULL));
-
-        int randomNumber = 0;
-
-        for(int i = 0; i < pesos.size() / 2; i++)
-        {
-            randomNumber = (rand() % pesoTotal) * -1;
-            if(randomNumber <= pesoAtual && randomNumber >= pesoAtual - pesos[i])
-            {
-                luckyOnes.push_back(i);
-            }
-            pesoAtual -= pesos[i];
-        }
-
-        return luckyOnes;
+        return ret;
     }
+
+    std::set<int> torneio(const std::vector<std::set<int>> &populacaoAtual)
+    {
+        std::set<int> i1;
+        std::set<int> i2;
+        int melhor = 0;
+        int pior = 0;
+
+        const double p = 0.8;
+
+        if(avaliar(i1) > avaliar(i2))
+        {
+            melhor = i2;
+            pior = i1;
+        }
+        else
+        {
+            melhor = i1;
+            pior = i2;
+        }
+
+        if(gerarAleatorio() > p)
+        {
+            return pior;
+        }
+        else
+        {
+            return melhor;
+        }
+    }
+
+    std::vector<std::set<int>> selecao(const std::vector<std::set<int>> &populacaoAtual)
+    {
+        std::vector<std::set<int>> ret;
+        std::set<int> pai1;
+        std::set<int> pai2;
+
+        pai1 = torneio(populacaoAtual);
+
+        do
+        {
+            pai2 = torneio(populacaoAtual);
+        }while(pai1 == pai2);
+
+        ret.push_back(pai1);
+        ret.push_back(pai2);
+
+    }
+
 
     void cruzar(std::vector<std::set<int>> &populacaoAtual, const std::vector<std::set<int>> &pais)
     {
@@ -161,14 +196,15 @@ public:
     {
         std::vector<int> ret;
         auto populacao = obterPopulacaoInicial(quantidadeCaminhos);
+        std::vector<std::set<novaPopulacao>> novaPopulacao;
         std::vector<int> pais;
 
-        // loop
+        while(novaPopulacao.size() < populacao.size())
+        {
+            // chamar selecao
+            // chamar cruzamento
+        }
 
-        pais = selecaoPais(populacao);
-        cruzar(populacao, pais);
-
-        // end loop
     }
 
     vector<int> dsatur() {
