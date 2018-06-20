@@ -160,7 +160,7 @@ int Controller::exec(QApplication& a)
         });
 
         connect(&view, &GraphicsView::performTravelingSalesman, [&](){
-            std::vector<int> p = graph->caixeiroViajante(5, 5);
+            std::vector<int> p = graph->caixeiroViajante(10, 5);
 
             for(const int v : p)
                 qDebug()<<v;

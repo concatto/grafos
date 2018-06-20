@@ -76,7 +76,7 @@ struct CompareArco {
 };
 
 struct Solucao {
-    int aptidao;
+    int distancia;
     std::vector<int> path;
 };
 
@@ -120,7 +120,7 @@ public:
             tmp.path.insert(tmp.path.begin(), verticeInicial);
             tmp.path.push_back(verticeInicial);
 
-            tmp.aptidao = avaliar(tmp);
+            tmp.distancia = avaliar(tmp);
 
             result.push_back(tmp);
         }
@@ -133,7 +133,7 @@ public:
 
         for(int i = 0; i < s.path.size() - 1; i++)
         {
-            ret += consultarPeso(s.path[i], s.path[i] + 1);
+            ret += consultarPeso(s.path[i], s.path[i + 1]);
         }
 
         return ret;
@@ -180,7 +180,7 @@ public:
         do
         {
             pai2 = torneio(populacaoAtual);
-        }while(pai1 == pai2);
+        }while(populacaoAtual[pai1].path == populacaoAtual[pai2].path);
 
         ret.push_back(populacaoAtual[pai1]);
         ret.push_back(populacaoAtual[pai2]);
@@ -218,12 +218,22 @@ public:
             if(i < pais.front().path.size() / 2)
             {
                 f1.path.push_back(pais.front().path[i]);
-                f2.path.push_back(pais.back().path[i]);
             }
             else
             {
-                f1.path.push_back(pais.back().path[i]);
                 f2.path.push_back(pais.front().path[i]);
+            }
+        }
+
+        for(const int i : pais.back().path)
+        {
+            if(std::find(f1.path.begin(), f1.path.end(), i) == f1.path.end())
+            {
+                f1.path.push_back(i);
+            }
+            if(std::find(f2.path.begin(), f2.path.end(), i) == f2.path.end())
+            {
+                f2.path.push_back(i);
             }
         }
 
@@ -240,10 +250,10 @@ public:
         int melhor = 0;
         for(int i = 0; i < populacao.size(); i++)
         {
-            if(populacao[i].aptidao < distancia)
+            if(populacao[i].distancia < distancia)
             {
                 melhor = i;
-                distancia = populacao[i].aptidao;
+                distancia = populacao[i].distancia;
             }
         }
     }
@@ -266,6 +276,7 @@ public:
                 for(auto &f : filhos)
                 {
                     mutar(f);
+                    f.distancia = avaliar(f);
                     novaPopulacao.push_back(f);
                 }
 
