@@ -89,54 +89,54 @@ public:
     virtual int obterGrau(int vertice) = 0;
     virtual Grafo* clonar() = 0;
 
-    virtual std::set<std::vector<int>> obterPopulacaoInicial(int n) = 0;
-
-    std::set<std::vector<int>> selecaoNatural(std::set<std::vector<int>> populacaoAtual)
+    std::vector<std::vector<int>> obterPopulacaoInicial(int n)
     {
-        std::set<std::vector<int>> ret;
-//        int distancia = 0;
+        int verticeInicial = 0;
+        std::vector<std::vector<int>> result;
+        std::vector<int> path;
+        // verify if it's a complete graph
+        if(this->nomes.size() == 0)
+            return result;
 
-//        for(const auto &p: populacaoAtual)
-//        {
-//            for(int i = 0; i < nomes.size() - 1; i++)
-//            {
-//                distancia += consultarPeso(p[i], p[i+1]);
-//            }
-//            if(distancia <= distanciaMaxima)
-//                ret.insert(p);
-//            distancia = 0;
-//        }
+        for(int i = 0; i < nomes.size(); i++)
+        {
+            if(i != verticeInicial)
+                path.push_back(i);
+        }
 
-        return ret;
+        auto rng = std::default_random_engine{};
+        while(result.size() < n)
+        {
+            std::shuffle(path.begin(), path.end(), rng);
+            path.insert(path.begin(), verticeInicial);
+            path.push_back(verticeInicial);
+            result.push_back(path);
+        }
+        return result;
     }
 
-    int avaliar(std::set<int> path)
+    int avaliar(std::vector<int> path)
     {
         int ret = 0;
-        std::set<int>::iterator it = path.begin();
 
-        auto last = --path.end();
-
-        for(; it != last; ++it)
+        for(int i = 0; i < path.size() - 1; i++)
         {
-            auto it2 = it;
-            ++it2;
-            ret += consultarPeso(*it, *it2);
+            ret += consultarPeso(i, i + 1);
         }
 
         return ret;
     }
 
-    std::set<int> torneio(const std::vector<std::set<int>> &populacaoAtual)
+    int torneio(const std::vector<std::vector<int>> &populacaoAtual)
     {
-        std::set<int> i1;
-        std::set<int> i2;
+        int i1 = rand() % populacaoAtual.size();
+        int i2 = rand() % populacaoAtual.size();
         int melhor = 0;
         int pior = 0;
 
         const double p = 0.8;
 
-        if(avaliar(i1) > avaliar(i2))
+        if(avaliar(populacaoAtual[i1]) > avaliar(populacaoAtual[i2]))
         {
             melhor = i2;
             pior = i1;
@@ -157,11 +157,11 @@ public:
         }
     }
 
-    std::vector<std::set<int>> selecao(const std::vector<std::set<int>> &populacaoAtual)
+    std::vector<std::vector<int>> selecaoPais(const std::vector<std::vector<int>> &populacaoAtual)
     {
-        std::vector<std::set<int>> ret;
-        std::set<int> pai1;
-        std::set<int> pai2;
+        std::vector<std::vector<int>> ret;
+        int pai1;
+        int pai2;
 
         pai1 = torneio(populacaoAtual);
 
@@ -170,39 +170,62 @@ public:
             pai2 = torneio(populacaoAtual);
         }while(pai1 == pai2);
 
-        ret.push_back(pai1);
-        ret.push_back(pai2);
+        ret.push_back(populacaoAtual[pai1]);
+        ret.push_back(populacaoAtual[pai2]);
 
+        return ret;
     }
 
-
-    void cruzar(std::vector<std::set<int>> &populacaoAtual, const std::vector<std::set<int>> &pais)
+    std::vector<int> mutar()
     {
-        int tamanhoCorteEsquerdo = pais.back().size() / 2;
+    }
 
-        for(int i = 0; i < pais.size() - 1; i++)
+     std::vector<std::vector<int>> cruzar(const std::vector<std::vector<int>> &pais)
+    {
+        std::vector<std::vector<int>> ret;
+
+        const double p = 0.8;
+
+        if(gerarAleatorio() > p)
+            return pais;
+
+        std::vector<int> f1;
+        std::vector<int> f2;
+
+        for(int i = 0; i < pais.front().size(); i++)
         {
-//            std::set<int>::iterator it;
-
-//            it = find(populacaoAtual[i].begin(), populacaoAtual[i].end(), )
+            if(i < pais.front().size() / 2)
+            {
+                f1.push_back(pais.front()[i]);
+                f2.push_back(pais.back()[i]);
+            }
+            else
+            {
+                f1.push_back(pais.back()[i]);
+                f2.push_back(pais.front()[i]);
+            }
 
         }
 
-        // cruzar os pais
-        // substituir os filhos onde eles ficavam
+        ret.push_back(f1);
+        ret.push_back(f2);
+
+        return ret;
+
     }
 
     std::vector<int> caixeiroViajante(int quantidadeCaminhos, int distanciaMaxima)
     {
         std::vector<int> ret;
         auto populacao = obterPopulacaoInicial(quantidadeCaminhos);
-        std::vector<std::set<novaPopulacao>> novaPopulacao;
-        std::vector<int> pais;
+        std::vector<std::vector<int>> novaPopulacao;
+        std::vector<std::vector<int>> pais;
+        std::vector<std::vector<int>> filhos;
 
         while(novaPopulacao.size() < populacao.size())
         {
-            // chamar selecao
-            // chamar cruzamento
+            pais = selecaoPais(populacao);
+            filhos = cruzar(pais);
         }
 
     }

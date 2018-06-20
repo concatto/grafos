@@ -131,31 +131,6 @@ struct MGrafo : public Grafo {
         return n * factorial(n - 1);
     }
 
-    std::vector<std::set<int>> obterPopulacaoInicial(int n) override
-    {
-        int verticeInicial = 0;
-        std::vector<std::set<int>> result;
-        std::set<int> path;
-        // verify if it's a complete graph
-        if(this->nomes.size() == 0)
-            return result;
-        for(int i = 0; i < nomes.size(); i++)
-        {
-            if(i != verticeInicial)
-                path.insert(i);
-        }
-
-        auto rng = std::default_random_engine{};
-        while(result.size() < n)
-        {
-            std::shuffle(path.begin(), path.end(), rng);
-            path.insert(path.begin(), verticeInicial);
-            path.push_back(verticeInicial);
-            result.push_back(path);
-        }
-        return result;
-    }
-
 };
 
 #endif // MGRAFO_H

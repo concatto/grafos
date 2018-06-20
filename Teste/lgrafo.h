@@ -149,10 +149,6 @@ struct LGrafo : public Grafo {
         return g;
     }
 
-    set<vector<int>> obterPopulacaoInicial(int n) override
-    {
-    }
-
 };
 
 
