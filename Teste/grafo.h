@@ -12,9 +12,6 @@
 #include <cstdlib>
 #include <time.h>
 
-double gerarAleatorio() {
-    return std::rand() / static_cast<double>(RAND_MAX);
-}
 
 #define INF 9999999
 
@@ -38,6 +35,11 @@ struct Path{
         aberto = true;
     }
 };
+
+inline double gerarAleatorio() {
+    return std::rand() / static_cast<double>(RAND_MAX);
+}
+
 
 struct ComparePair {
     bool operator()(pair <int, int> p1, pair <int, int> p2){
@@ -176,8 +178,17 @@ public:
         return ret;
     }
 
-    std::vector<int> mutar()
+    void mutar(std::vector<int> &path)
     {
+        const double p = 0.95;
+
+        for(int i = 0; i < path.size() - 1; i++)
+        {
+            if(gerarAleatorio() > p)
+            {
+                std::swap(path[i], path[i + 1]);
+            }
+        }
     }
 
      std::vector<std::vector<int>> cruzar(const std::vector<std::vector<int>> &pais)
@@ -204,7 +215,6 @@ public:
                 f1.push_back(pais.back()[i]);
                 f2.push_back(pais.front()[i]);
             }
-
         }
 
         ret.push_back(f1);
@@ -214,20 +224,59 @@ public:
 
     }
 
-    std::vector<int> caixeiroViajante(int quantidadeCaminhos, int distanciaMaxima)
+    std::vector<int> caixeiroViajante(int quantidadeCaminhos, int geracoes)
     {
         std::vector<int> ret;
+        int distancia = std::numeric_limits<int>::max();
+//        int melhorDistancia = std::numeric_limits<int>::max();
+//        std::vector<int> melhor;
         auto populacao = obterPopulacaoInicial(quantidadeCaminhos);
-        std::vector<std::vector<int>> novaPopulacao;
-        std::vector<std::vector<int>> pais;
-        std::vector<std::vector<int>> filhos;
 
-        while(novaPopulacao.size() < populacao.size())
+//        for(const auto & p: populacao)
+//        {
+//            int dist = avaliar(p);
+//            if(dist < melhorDistancia)
+//            {
+//                melhorDistancia = dist;
+//                melhor = p;
+//            }
+
+//        }
+
+        for(int i = 0; i < geracoes; i++)
         {
-            pais = selecaoPais(populacao);
-            filhos = cruzar(pais);
+            std::vector<std::vector<int>> novaPopulacao;
+            std::vector<std::vector<int>> pais;
+            std::vector<std::vector<int>> filhos;
+            while(novaPopulacao.size() < populacao.size())
+            {
+                pais = selecaoPais(populacao);
+                filhos = cruzar(pais);
+                for(auto &f : filhos)
+                {
+                    mutar(f);
+//                    int dist = avaliar(f);
+//                    if(dist < melhor)
+//                    {
+//                        melhorDistancia = dist;
+//                        melhor = f;
+//                    }
+                }
+            }
+
+
+
+            populacao = novaPopulacao;
         }
 
+        for(const auto &path : populacao)
+        {
+            if(avaliar(path) < distancia)
+            {
+                ret = path;
+            }
+        }
+        return ret;
     }
 
     vector<int> dsatur() {
