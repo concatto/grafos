@@ -75,6 +75,11 @@ struct CompareArco {
     }
 };
 
+struct Solucao {
+    int aptidao;
+    std::vector<int> path;
+};
+
 struct Grafo{
 public:
     vector<string> nomes;
@@ -91,11 +96,12 @@ public:
     virtual int obterGrau(int vertice) = 0;
     virtual Grafo* clonar() = 0;
 
-    std::vector<std::vector<int>> obterPopulacaoInicial(int n)
+    std::vector<Solucao> obterPopulacaoInicial(int n)
     {
         int verticeInicial = 0;
-        std::vector<std::vector<int>> result;
-        std::vector<int> path;
+        std::vector<Solucao> result;
+        Solucao s;
+
         // verify if it's a complete graph
         if(this->nomes.size() == 0)
             return result;
@@ -103,33 +109,36 @@ public:
         for(int i = 0; i < nomes.size(); i++)
         {
             if(i != verticeInicial)
-                path.push_back(i);
+                s.path.push_back(i);
         }
 
         auto rng = std::default_random_engine{};
         while(result.size() < n)
         {
-            std::shuffle(path.begin(), path.end(), rng);
-            path.insert(path.begin(), verticeInicial);
-            path.push_back(verticeInicial);
-            result.push_back(path);
+            std::shuffle(s.path.begin(), s.path.end(), rng);
+            s.path.insert(s.path.begin(), verticeInicial);
+            s.path.push_back(verticeInicial);
+
+            s.aptidao = avaliar(s);
+
+            result.push_back(s);
         }
         return result;
     }
 
-    int avaliar(std::vector<int> path)
+    int avaliar(Solucao s)
     {
         int ret = 0;
 
-        for(int i = 0; i < path.size() - 1; i++)
+        for(int i = 0; i < s.path.size() - 1; i++)
         {
-            ret += consultarPeso(i, i + 1);
+            ret += consultarPeso(s.path[i], s.path[i] + 1);
         }
 
         return ret;
     }
 
-    int torneio(const std::vector<std::vector<int>> &populacaoAtual)
+    int torneio(const std::vector<Solucao> &populacaoAtual)
     {
         int i1 = rand() % populacaoAtual.size();
         int i2 = rand() % populacaoAtual.size();
@@ -159,9 +168,9 @@ public:
         }
     }
 
-    std::vector<std::vector<int>> selecaoPais(const std::vector<std::vector<int>> &populacaoAtual)
+    std::vector<Solucao> selecaoPais(const std::vector<Solucao> &populacaoAtual)
     {
-        std::vector<std::vector<int>> ret;
+        std::vector<Solucao> ret;
         int pai1;
         int pai2;
 
@@ -178,42 +187,42 @@ public:
         return ret;
     }
 
-    void mutar(std::vector<int> &path)
+    void mutar(Solucao &s)
     {
         const double p = 0.95;
 
-        for(int i = 0; i < path.size() - 1; i++)
+        for(int i = 0; i < s.path.size() - 1; i++)
         {
             if(gerarAleatorio() > p)
             {
-                std::swap(path[i], path[i + 1]);
+                std::swap(s.path[i], s.path[i + 1]);
             }
         }
     }
 
-     std::vector<std::vector<int>> cruzar(const std::vector<std::vector<int>> &pais)
+    std::vector<Solucao> cruzar(const std::vector<Solucao> &pais)
     {
-        std::vector<std::vector<int>> ret;
+        std::vector<Solucao> ret;
 
         const double p = 0.8;
 
         if(gerarAleatorio() > p)
             return pais;
 
-        std::vector<int> f1;
-        std::vector<int> f2;
+        Solucao f1;
+        Solucao f2;
 
-        for(int i = 0; i < pais.front().size(); i++)
+        for(int i = 0; i < pais.front().path.size(); i++)
         {
-            if(i < pais.front().size() / 2)
+            if(i < pais.front().path.size() / 2)
             {
-                f1.push_back(pais.front()[i]);
-                f2.push_back(pais.back()[i]);
+                f1.path.push_back(pais.front().path[i]);
+                f2.path.push_back(pais.back().path[i]);
             }
             else
             {
-                f1.push_back(pais.back()[i]);
-                f2.push_back(pais.front()[i]);
+                f1.path.push_back(pais.back().path[i]);
+                f2.path.push_back(pais.front().path[i]);
             }
         }
 
@@ -245,9 +254,9 @@ public:
 
         for(int i = 0; i < geracoes; i++)
         {
-            std::vector<std::vector<int>> novaPopulacao;
-            std::vector<std::vector<int>> pais;
-            std::vector<std::vector<int>> filhos;
+            std::vector<Solucao> novaPopulacao;
+            std::vector<Solucao> pais;
+            std::vector<Solucao> filhos;
             while(novaPopulacao.size() < populacao.size())
             {
                 pais = selecaoPais(populacao);
@@ -273,7 +282,7 @@ public:
         {
             if(avaliar(path) < distancia)
             {
-                ret = path;
+                ret = path.path;
             }
         }
         return ret;
