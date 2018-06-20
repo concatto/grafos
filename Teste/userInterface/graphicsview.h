@@ -41,6 +41,7 @@ private:
     QPointF consumeMousePosition();
     int showMenu(QMenu &menu);
     void handleVertexCreation();
+    void handleSalesmanRequest();
     void handleVertexRemoval(Vertex *vertex);
 
 public slots:
@@ -62,7 +63,7 @@ signals:
     void performBFS(int id);
     void performDFS(int id);
     void computeMaxFlow();
-    void performTravelingSalesman();
+    void performTravelingSalesman(double initialPopulationSize, double generations);
 };
 
 #endif // GRAPHICSVIEW_H

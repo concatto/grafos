@@ -159,11 +159,29 @@ int Controller::exec(QApplication& a)
             view.displayFlow(QVector<Arco>::fromStdVector(g->obterArcos()));
         });
 
-        connect(&view, &GraphicsView::performTravelingSalesman, [&](){
-            std::vector<int> p = graph->caixeiroViajante(10, 5);
+        connect(&view, &GraphicsView::performTravelingSalesman, [&](double initialPopulationSize, double generations){
+            std::vector<Arco> arcos = graph->caixeiroViajante(initialPopulationSize, generations);
 
-            for(const int v : p)
-                qDebug()<<v;
+            int distanciaTotal = 0;
+
+            qDebug()<<"----------- Caixeiro Viajante Solução -----------------";
+
+            QString str = "";
+
+            for(const Arco &a : arcos)
+            {
+
+                str.append(QString::fromStdString(graph->nomes[a.origem]) + "->");
+                distanciaTotal += a.peso;
+            }
+
+            str.append(QString::fromStdString(graph->nomes[arcos.back().destino]));
+
+            qDebug().noquote()<<str;
+
+            qDebug()<<"Distância total: "<<distanciaTotal;
+
+            view.paintPath(QVector<Arco>::fromStdVector(arcos));
 
         });
 

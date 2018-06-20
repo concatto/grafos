@@ -147,7 +147,7 @@ void GraphicsView::contextMenuEvent(QContextMenuEvent *event)
         }else if(action == 6){ // Fluxo máximo
             emit computeMaxFlow();
         }else if(action == 7){
-            emit performTravelingSalesman();
+            handleSalesmanRequest();
         }else if(action == 8){ // Redefinir
             QBrush brush(Qt::red);
             scene.paintVertices(QVector <int>(), &brush);
@@ -194,6 +194,31 @@ void GraphicsView::handleVertexCreation()
     }
 
     emit addVertex(text);
+}
+
+void GraphicsView::handleSalesmanRequest()
+{
+    bool ok = false;
+    double generations = 0;
+    double initialPopulationSize = 0;
+    while (initialPopulationSize == 0) {
+        initialPopulationSize = QInputDialog::getDouble(this, tr("Caixeiro viajante - Não estou checando se o grafo é completo"),
+                                             tr("Tamanho da população inicial:"), 0, 0, std::numeric_limits<int>::max(), 0, &ok);
+
+        if (!ok)
+            return;
+    }
+
+    while (generations == 0) {
+        generations = QInputDialog::getDouble(this, tr("Caixeiro viajante - Não estou checando se o grafo é completo"),
+                                             tr("Número de gerações:"), 0, 0, std::numeric_limits<int>::max(), 0, &ok);
+
+        if (!ok)
+            return;
+    }
+
+    emit performTravelingSalesman(initialPopulationSize, generations);
+
 }
 
 void GraphicsView::handleVertexRemoval(Vertex* vertex)

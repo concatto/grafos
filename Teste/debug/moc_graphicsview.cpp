@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_GraphicsView_t {
-    QByteArrayData data[26];
-    char stringdata0[308];
+    QByteArrayData data[28];
+    char stringdata0[342];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -55,8 +55,10 @@ QT_MOC_LITERAL(20, 214, 10), // "performBFS"
 QT_MOC_LITERAL(21, 225, 10), // "performDFS"
 QT_MOC_LITERAL(22, 236, 14), // "computeMaxFlow"
 QT_MOC_LITERAL(23, 251, 24), // "performTravelingSalesman"
-QT_MOC_LITERAL(24, 276, 11), // "resetCursor"
-QT_MOC_LITERAL(25, 288, 19) // "askConnectionWeight"
+QT_MOC_LITERAL(24, 276, 21), // "initialPopulationSize"
+QT_MOC_LITERAL(25, 298, 11), // "generations"
+QT_MOC_LITERAL(26, 310, 11), // "resetCursor"
+QT_MOC_LITERAL(27, 322, 19) // "askConnectionWeight"
 
     },
     "GraphicsView\0addVertex\0\0str\0addConnection\0"
@@ -66,8 +68,8 @@ QT_MOC_LITERAL(25, 288, 19) // "askConnectionWeight"
     "destino\0printGraph\0performKruskal\0"
     "performPrim\0performPlanarityCheck\0"
     "performBFS\0performDFS\0computeMaxFlow\0"
-    "performTravelingSalesman\0resetCursor\0"
-    "askConnectionWeight"
+    "performTravelingSalesman\0initialPopulationSize\0"
+    "generations\0resetCursor\0askConnectionWeight"
 };
 #undef QT_MOC_LITERAL
 
@@ -100,11 +102,11 @@ static const uint qt_meta_data_GraphicsView[] = {
       20,    1,  138,    2, 0x06 /* Public */,
       21,    1,  141,    2, 0x06 /* Public */,
       22,    0,  144,    2, 0x06 /* Public */,
-      23,    0,  145,    2, 0x06 /* Public */,
+      23,    2,  145,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      24,    0,  146,    2, 0x0a /* Public */,
-      25,    2,  147,    2, 0x0a /* Public */,
+      26,    0,  150,    2, 0x0a /* Public */,
+      27,    2,  151,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -122,7 +124,7 @@ static const uint qt_meta_data_GraphicsView[] = {
     QMetaType::Void, QMetaType::Int,    9,
     QMetaType::Void, QMetaType::Int,    9,
     QMetaType::Void,
-    QMetaType::Void,
+    QMetaType::Void, QMetaType::Double, QMetaType::Double,   24,   25,
 
  // slots: parameters
     QMetaType::Void,
@@ -152,7 +154,7 @@ void GraphicsView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 12: _t->performBFS((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 13: _t->performDFS((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 14: _t->computeMaxFlow(); break;
-        case 15: _t->performTravelingSalesman(); break;
+        case 15: _t->performTravelingSalesman((*reinterpret_cast< double(*)>(_a[1])),(*reinterpret_cast< double(*)>(_a[2]))); break;
         case 16: _t->resetCursor(); break;
         case 17: _t->askConnectionWeight((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         default: ;
@@ -258,7 +260,7 @@ void GraphicsView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
             }
         }
         {
-            using _t = void (GraphicsView::*)();
+            using _t = void (GraphicsView::*)(double , double );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&GraphicsView::performTravelingSalesman)) {
                 *result = 15;
                 return;
@@ -396,9 +398,10 @@ void GraphicsView::computeMaxFlow()
 }
 
 // SIGNAL 15
-void GraphicsView::performTravelingSalesman()
+void GraphicsView::performTravelingSalesman(double _t1, double _t2)
 {
-    QMetaObject::activate(this, &staticMetaObject, 15, nullptr);
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
+    QMetaObject::activate(this, &staticMetaObject, 15, _a);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

@@ -192,7 +192,7 @@ public:
     {
         const double p = 0.95;
 
-        for(int i = 0; i < s.path.size() - 1; i++)
+        for(int i = 1; i < s.path.size() - 2; i++)
         {
             if(gerarAleatorio() > p)
             {
@@ -237,6 +237,9 @@ public:
             }
         }
 
+        f1.path.push_back(f1.path.front());
+        f2.path.push_back(f2.path.front());
+
         ret.push_back(f1);
         ret.push_back(f2);
 
@@ -256,12 +259,11 @@ public:
                 distancia = populacao[i].distancia;
             }
         }
+        return melhor;
     }
 
-    std::vector<int> caixeiroViajante(int quantidadeCaminhos, int geracoes)
+    std::vector<Arco> caixeiroViajante(int quantidadeCaminhos, int geracoes)
     {
-        std::vector<int> ret;
-        int distancia = std::numeric_limits<int>::max();
         auto populacao = obterPopulacaoInicial(quantidadeCaminhos);
 
         for(int i = 0; i < geracoes; i++)
@@ -272,10 +274,22 @@ public:
             while(novaPopulacao.size() < populacao.size())
             {
                 pais = selecaoPais(populacao);
+
+                if(pais.size() > 2)
+                    qDebug()<<"Pais.size: "<<pais.size();
+
                 filhos = cruzar(pais);
+
                 for(auto &f : filhos)
                 {
+                    if(f.path.size() < 5)
+                        qDebug()<<"Antes mutar Filhos.size: "<<filhos.size();
+
                     mutar(f);
+
+                    if(f.path.size() < 5)
+                        qDebug()<<"Filhos.size: "<<filhos.size();
+
                     f.distancia = avaliar(f);
                     novaPopulacao.push_back(f);
                 }
@@ -292,14 +306,21 @@ public:
 
         }
 
-        for(const auto &path : populacao)
+        int idx = obterMelhorSolucao(populacao);
+
+        std::vector<int> solucao = populacao[idx].path;
+
+        std::vector<Arco> arcos;
+
+        for(int i = 0; i < solucao.size() - 1; i++)
         {
-            if(avaliar(path) < distancia)
-            {
-                ret = path.path;
-            }
+            Arco a;
+            a.origem = solucao[i];
+            a.destino = solucao[i + 1];
+            a.peso = consultarPeso(a.origem, a.destino);
+            arcos.push_back(a);
         }
-        return ret;
+        return arcos;
     }
 
     vector<int> dsatur() {
