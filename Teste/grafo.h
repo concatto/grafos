@@ -101,6 +101,7 @@ public:
         int verticeInicial = 0;
         std::vector<Solucao> result;
         Solucao s;
+        Solucao tmp;
 
         // verify if it's a complete graph
         if(this->nomes.size() == 0)
@@ -111,17 +112,17 @@ public:
             if(i != verticeInicial)
                 s.path.push_back(i);
         }
-
         auto rng = std::default_random_engine{};
         while(result.size() < n)
         {
             std::shuffle(s.path.begin(), s.path.end(), rng);
-            s.path.insert(s.path.begin(), verticeInicial);
-            s.path.push_back(verticeInicial);
+            tmp = s;
+            tmp.path.insert(tmp.path.begin(), verticeInicial);
+            tmp.path.push_back(verticeInicial);
 
-            s.aptidao = avaliar(s);
+            tmp.aptidao = avaliar(tmp);
 
-            result.push_back(s);
+            result.push_back(tmp);
         }
         return result;
     }
@@ -265,7 +266,9 @@ public:
                 for(auto &f : filhos)
                 {
                     mutar(f);
+                    novaPopulacao.push_back(f);
                 }
+
             }
 
             int mi = obterMelhorSolucao(populacao);

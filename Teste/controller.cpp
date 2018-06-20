@@ -160,15 +160,10 @@ int Controller::exec(QApplication& a)
         });
 
         connect(&view, &GraphicsView::performTravelingSalesman, [&](){
-//           std::vector<int> r = graph->obterPopulacaoInicial(5);
-//           for(const auto &p : r)
-//           {
-//               for(const auto &v : p)
-//               {
-//                std::cout<<v<<" - ";
-//               }
-//               std::cout<<std::endl;
-//           }
+            std::vector<int> p = graph->caixeiroViajante(5, 5);
+
+            for(const int v : p)
+                qDebug()<<v;
 
         });
 
