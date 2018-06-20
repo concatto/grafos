@@ -233,24 +233,25 @@ public:
 
     }
 
+    int obterMelhorSolucao(std::vector<Solucao> populacao)
+    {
+        int distancia = std::numeric_limits<int>::max();
+        int melhor = 0;
+        for(int i = 0; i < populacao.size(); i++)
+        {
+            if(populacao[i].aptidao < distancia)
+            {
+                melhor = i;
+                distancia = populacao[i].aptidao;
+            }
+        }
+    }
+
     std::vector<int> caixeiroViajante(int quantidadeCaminhos, int geracoes)
     {
         std::vector<int> ret;
         int distancia = std::numeric_limits<int>::max();
-//        int melhorDistancia = std::numeric_limits<int>::max();
-//        std::vector<int> melhor;
         auto populacao = obterPopulacaoInicial(quantidadeCaminhos);
-
-//        for(const auto & p: populacao)
-//        {
-//            int dist = avaliar(p);
-//            if(dist < melhorDistancia)
-//            {
-//                melhorDistancia = dist;
-//                melhor = p;
-//            }
-
-//        }
 
         for(int i = 0; i < geracoes; i++)
         {
@@ -264,18 +265,17 @@ public:
                 for(auto &f : filhos)
                 {
                     mutar(f);
-//                    int dist = avaliar(f);
-//                    if(dist < melhor)
-//                    {
-//                        melhorDistancia = dist;
-//                        melhor = f;
-//                    }
                 }
             }
 
+            int mi = obterMelhorSolucao(populacao);
 
+            int pos = rand() % novaPopulacao.size();
+
+            novaPopulacao[pos] = populacao[mi];
 
             populacao = novaPopulacao;
+
         }
 
         for(const auto &path : populacao)
